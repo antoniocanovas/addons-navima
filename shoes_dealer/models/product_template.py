@@ -6,16 +6,7 @@ from odoo.exceptions import UserError
 
 
 class ProductTemplate(models.Model):
-    _inherit = [
-        "product.template",
-        "website.seo.metadata",
-        "website.published.multi.mixin",
-        "website.searchable.mixin",
-        "rating.mixin",
-    ]
-    _name = "product.template"
-    _mail_post_access = "read"
-    _check_company_auto = True
+    _inherit = "product.template"
 
     exwork_euro = fields.Monetary(
         "Exwork €",
