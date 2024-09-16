@@ -201,23 +201,23 @@ class ProductTemplate(models.Model):
             record['exwork_currency_id'] = currency
     exwork_currency_id = fields.Many2one("res.currency",compute=_get_exwork_currency)
 
-    exwork = fields.Monetary("Exwork", store=True, copy=True, tracking="10")
+    exwork = fields.Monetary("Exwork", store=True, copy=True, tracking=10)
     exwork_single = fields.Monetary(
         "Exwork single",
         store=True,
         copy=True,
-        tracking="10",
+        tracking=10,
         related="product_tmpl_single_id.exwork",
         readonly=False,
     )
     shipping_price = fields.Monetary(
-        "Shipping price", store=True, copy=True, tracking="10"
+        "Shipping price", store=True, copy=True, tracking=10
     )
     shipping_single_price = fields.Monetary(
         "Shipping single price",
         store=True,
         copy=True,
-        tracking="10",
+        tracking=10,
         related="product_tmpl_single_id.shipping_price",
         readonly=False,
     )
