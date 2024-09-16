@@ -119,6 +119,19 @@
                 <field name="pairs_sold"/>
             </xpath>
 
+            <!-- Campo puente desde PT a PTAL para pasar material y filtrar valores: -->
+            <xpath expr="//field[@name='value_count']" position="after">
+                <field name="material_id" column_invisible="1"/>
+            </xpath>
+            <!-- Filtro de valores de atributo por material y partner, según el campo anterior: -->
+            <xpath expr="//field[@name='value_ids']" position="attributes">
+                <attribute name="domain">[
+                    ('attribute_id','=',attribute_id),
+                    ('material_id','=',material_id),
+                    '|',('partner_id','=',False),('partner_id','=',partner_id)]</attribute>
+            </xpath>
+
+
         </field>
     </record>
 
