@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="product_attribute_partner_ptav_inh_form" model="ir.ui.view">
+    <record id="product_partner_ptav_attribute_inh_form" model="ir.ui.view">
         <field name="name">product.attribute.partner.ptav.inh.form</field>
         <field name="model">product.attribute</field>
         <field name="type">form</field>
