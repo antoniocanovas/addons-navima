@@ -15,4 +15,4 @@ class ProductAttributeValue(models.Model):
         self.set_hidden = set_hidden
     set_hidden = fields.Boolean('Set hidden', store=False, compute='_get_set_hidden')
 
-    material_id = fields.Many2one('Material', 'product.material')
+    material_id = fields.Many2one('product.material', string='Material')
