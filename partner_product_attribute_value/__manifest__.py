@@ -24,7 +24,6 @@
     "version": '1.0',
     "depends": [
         'product',
-        'product_manufacturer',
     ],
     "author": "Punt Sistemes",
     "category": 'Stock',
