@@ -47,7 +47,7 @@
             <xpath expr="//header" position="inside">
                 <button name="create_shoe_pairs" string="Create Pairs" type="object"
                         icon="fa-tasks" class="oe_stat_button"
-                        invisible="is_product_variant or product_tmpl_single_idor not is_assortment"
+                        invisible="is_product_variant or product_tmpl_single_id or not is_assortment"
                         groups="sales_team.group_sale_salesman_all_leads">
                 </button>
 
