@@ -14,3 +14,5 @@ class ProductAttributeValue(models.Model):
         if (company_bom_attribute.id) and (company_bom_attribute.id == self.attribute_id.id): set_hidden = False
         self.set_hidden = set_hidden
     set_hidden = fields.Boolean('Set hidden', store=False, compute='_get_set_hidden')
+
+    material_id = fields.Many2one('Material', 'product.material')

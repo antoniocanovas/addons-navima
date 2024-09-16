@@ -24,6 +24,7 @@
         "uom",
         # PUNT:
         "partner_commission_manager_ee",
+        "partner_product_attribute_value",
         # OCA:
         "product_brand",
         "product_net_weight",
@@ -42,6 +43,7 @@
         "views/product_product_views.xml",
         "views/res_company_views.xml",
         "views/product_attribute_views.xml",
+        "views/product_attribute_value_views.xml",
         "views/sale_order_views.xml",
         "views/sale_order_line_views.xml",
         "views/purchase_order_views.xml",
