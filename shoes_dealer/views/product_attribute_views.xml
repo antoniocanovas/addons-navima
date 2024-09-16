@@ -11,6 +11,9 @@
                 <field name="set_template_id" invisible="set_hidden"/>
                 <field name="set_hidden" invisible="1"/>
             </xpath>
+            <xpath expr="//field[@name='value_ids']/tree" position="inside">
+                <field name="material_id" optional="hide"/>
+            </xpath>
         </field>
     </record>
 
