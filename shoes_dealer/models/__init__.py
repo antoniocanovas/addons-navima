@@ -23,4 +23,4 @@ from . import stock_move
 from . import stock_warehouse_orderpoint
 from . import shoes_hs_code
 from . import shoes_pair_weight
-form . import product_template_attribute_line
+from . import product_template_attribute_line
