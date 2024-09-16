@@ -16,6 +16,9 @@
                 <attribute name="domain">[('attribute_id','=',attribute_id),'|',('partner_id','=',False),('partner_id','=',partner_id)]</attribute>
             </xpath>
 
+            <field name="barcode" position="after">
+                <field name="manufacturer_id"/>
+            </field>
         </field>
         <field name="priority">99</field>
     </record>

@@ -120,9 +120,6 @@ class ProductTemplate(models.Model):
     material_id = fields.Many2one(
         "product.material", string="Material", store=True, copy=True
     )
-    manufacturer_id = fields.Many2one(
-        "res.partner", string="Manufacturer", store=True, copy=True
-    )
 
     @api.constrains('shoes_pair_weight_id',)
     def _get_pair_and_variants_weight_sync(self):
