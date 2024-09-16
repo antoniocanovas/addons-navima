@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <record id="shoes_dealer_sync_assortment_pair_attributes" model="base.automation">
-        <field name="name">=> Sync shoes attributes from assortment to pairs</field>
+    # BASE AUTOMATION al borrar atributos de productos:
+    <record id="shoes_dealer_sync_assortment_pair_attributes_aa" model="base.automation">
+        <field name="name">=> Auto Sync shoes attributes from assortment to pairs</field>
         <field name="model_id" ref="product.model_product_template_attribute_value"/>
+        <field name="trigger">on_unlink</field>
+    </record>
+    # SERVER ACTION para el automatismo borrar atributos de productos:
+    <record id="shoes_dealer_sync_assortment_pair_attributes_as" model="ir.actions.server">
+        <field name="name">=> AS Sync shoes attributes from assortment to pairs</field>
+        <field name="model_id" ref="product.model_product_template_attribute_value"/>
+        <field name="evaluation_type">value</field>
         <field name="state">code</field>
         <field name="code">
             record._unlink_unused_attributes_from_assortment_to_pairs()
         </field>
-        <field name="trigger">on_unlink</field>
-        <field name="filter_pre_domain"></field>
-        <field name="filter_domain"></field>
-        <field name="active" eval="True"/>
+        <field name="base_automation_id" ref="shoes_dealer.shoes_dealer_sync_assortment_pair_attributes_aa"/>
     </record>
 
-    <record id="shoes_dealer_update_standard_price" model="base.automation">
-        <field name="name">=> Update cost prices</field>
+
+
+    # BASE AUTOMATION actualizar precios de coste en variantes:
+    <record id="shoes_dealer_update_standard_price_aa" model="base.automation">
+        <field name="name">=> Auto Update cost prices</field>
         <field name="model_id" ref="product.model_product_template"/>
-        <field name="state">code</field>
-        <field name="code">
-            record.update_standard_price_on_variants()
-        </field>
         <field name="trigger">on_write</field>
         <field name="trigger_field_ids" eval="[(6,0, [ref('shoes_dealer.field_product_template__shoes_campaign_id'),
                                                     ref('shoes_dealer.field_product_template__exwork'),
@@ -28,28 +32,17 @@
                                                     ref('product.field_product_template__product_variant_ids'),
                                                     ref('shoes_dealer.field_product_template__manufacturer_id')])]"
         />
-        <field name="filter_pre_domain"></field>
-        <field name="filter_domain"></field>
-        <field name="active" eval="True"/>
     </record>
-
-    <!--
-    <record id="shoes_dealer_update_supplier_info" model="base.automation">
-        <field name="name">=> Update Supplier info</field>
+    # SERVER ACTION para el automatismo actualizar precios de coste en variantes:
+    <record id="shoes_dealer_update_standard_price_as" model="ir.actions.server">
+        <field name="name">=> AS Update cost prices</field>
         <field name="model_id" ref="product.model_product_template"/>
+        <field name="evaluation_type">value</field>
         <field name="state">code</field>
         <field name="code">
-            record.update_supplier_info()
+            record.update_standard_price_on_variants()
         </field>
-        <field name="trigger">on_write</field>
-        <field name="trigger_field_ids" eval="[(6,0, [ref('shoes_dealer.field_product_template__exwork_single'),
-                                                    ref('product.field_product_template__product_variant_ids'),
-                                                    ref('shoes_dealer.field_product_template__manufacturer_id')])]"
-                                                    />
-        <field name="filter_pre_domain"></field>
-        <field name="filter_domain"></field>
-        <field name="active" eval="True"/>
+        <field name="base_automation_id" ref="shoes_dealer.shoes_dealer_update_standard_price_aa"/>
     </record>
-    -->
 
 </odoo>
