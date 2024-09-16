@@ -138,8 +138,9 @@
             <xpath expr="//field[@name='value_ids']" position="attributes">
                 <attribute name="domain">[
                     ('attribute_id','=',attribute_id),
-                    ('material_id','=',material_id),
-                    '|',('partner_id','=',False),('partner_id','=',partner_id)]</attribute>
+                    '|',('material_id','=',False),('material_id','=',material_id),
+                    '|',('partner_id','=',False),('partner_id','=',partner_id)]
+                </attribute>
             </xpath>
         </field>
     </record>
