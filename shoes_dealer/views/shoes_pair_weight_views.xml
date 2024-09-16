@@ -74,7 +74,6 @@
                 <field name="pair_net_weight"/>
             </tree>
         </field>
-        <field name="field_parent" eval="False"/>
         <field name="groups_id" eval="[(6, 0, [])]"/>
         <field name="inherit_id" eval="False"/>
         <field name="key" eval="False"/>
@@ -92,7 +91,6 @@
                 <field name="number"/>
             </tree>
         </field>
-        <field name="field_parent" eval="False"/>
         <field name="groups_id" eval="[(6, 0, [])]"/>
         <field name="inherit_id" eval="False"/>
         <field name="key" eval="False"/>
