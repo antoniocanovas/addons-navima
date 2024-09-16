@@ -20,7 +20,7 @@
     <record id="product_kanban_view_inh" model="ir.ui.view">
         <field name="name">product.kanban.view.inh</field>
         <field name="model">product.product</field>
-        <field name="type">form</field>
+        <field name="type">kanban</field>
         <field name="inherit_id" ref="product.product_kanban_view"/>
         <field name="priority">90</field>
         <field name="arch" type="xml">
