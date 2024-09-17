@@ -867,7 +867,7 @@ msgstr "Comisión Encargado %"
 
 #. module: shoes_dealer
 #: model:ir.model.fields,field_description:shoes_dealer.field_product_product__manufacturer_id
-#: model:ir.model.fields,field_description:shoes_dealer.field_product_template__manufacturer_id
+#: model:ir.model.fields,field_description:partner_product_attribute_value.field_product_template__manufacturer_id
 #: model:ir.model.fields,field_description:shoes_dealer.field_sale_order_line__manufacturer_id
 #: model:ir.model.fields,field_description:shoes_dealer.field_sale_report__manufacturer_id
 #: model:ir.model.fields,field_description:shoes_dealer.field_shoes_sale_report__manufacturer_ids
