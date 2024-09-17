@@ -22,3 +22,10 @@ class MrpBom(models.Model):
                                      related='product_id.assortment_attribute_id.set_template_id.pairs_count')
 
     is_assortment = fields.Boolean(related='product_tmpl_id.is_assortment')
+
+    @api.depends('bom_line_ids.product_qty')
+    def _get_assortment_pair(self):
+        for record in self:
+            cleanvalues = []
+            record['assortment_pair'] = cleanvalues
+    assortment_pair = fields.Char('Assortment pairs', store=True, compute='_get_assortment_pair')

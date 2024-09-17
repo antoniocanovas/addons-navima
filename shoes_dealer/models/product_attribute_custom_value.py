@@ -12,6 +12,7 @@ class ProductAttributeCustomValue(models.Model):
     @api.depends('custom_value')
     def _get_assortment_pair(self):
         for record in self:
+            cleanvalues, sizes, pairs, pairs_count = [], [], [], 0
             size_attribute = self.env.company.size_attribute_id
             sale_line_product = record.sale_order_line_id.product_id
             sale_line_product_color = sale_line_product.color_attribute_id
@@ -23,7 +24,6 @@ class ProductAttributeCustomValue(models.Model):
                 customvalues = customvalue.split(",")
 
                 # Chequear que las tallas o cantidades introducidas son válidas y el par está creado:
-                cleanvalues, sizes, pairs, pairs_count = [], [], [], 0
                 for li in customvalues:
                     element = li.split("x")
                     # Para tallas (encontrar si existe la talla y color en el par):
