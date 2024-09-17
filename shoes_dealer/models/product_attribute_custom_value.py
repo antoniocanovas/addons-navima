@@ -8,7 +8,7 @@ class ProductAttributeCustomValue(models.Model):
 
     assortment_pair = fields.Char('Assortment pairs', readonly=True, store=True, compute='_get_assortment_pair')
     pairs_count = fields.Integer('Pairs count', readonly=True)
-    
+
     @api.depends('custom_value')
     def _get_assortment_pair(self):
         for record in self:
@@ -28,14 +28,14 @@ class ProductAttributeCustomValue(models.Model):
                     element = li.split("x")
                     # Para tallas (encontrar si existe la talla y color en el par):
                     color_attribute_value_id = sale_line_product_color
-                    size_attribute_value_id = env['product.attribute.value'].search(
+                    size_attribute_value_id = self.env['product.attribute.value'].search(
                         [('attribute_id', '=', size_attribute.id), ('name', '=', element[0])])
                     if not size_attribute_value_id.id:
                         raise UserError("La talla " + str(element[0]) + " no existe en el sistema.")
 
-                    pppair = env['product.product'].search([('color_attribute_id', '=', color_attribute_value_id.id),
-                                                            ('size_attribute_id', '=', size_attribute_value_id.id),
-                                                            ('product_tmpl_id', '=', shoes_pair_model.id)])
+                    pppair = self.env['product.product'].search([('color_attribute_id', '=', color_attribute_value_id.id),
+                                                                 ('size_attribute_id', '=', size_attribute_value_id.id),
+                                                                 ('product_tmpl_id', '=', shoes_pair_model.id)])
                     if not pppair.id:
                         raise UserError("No encuentro el par suelto de talla " + str(
                             element[0]) + " y color " + color_attribute_value_id.name + " en este modelo.")
