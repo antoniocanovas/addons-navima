@@ -12,13 +12,17 @@
             <!-- Pestaña inicial para datos generales de productos y variantes, de shoes_dealer: -->
             <xpath expr="//page[@name='general_information']" position="before">
                 <page name="shoes_delaer" string="Shoes dealer" groups="product.group_product_variant">
-                </page>
-            </xpath>
+                    <group>
+                        <group>
 
-            <xpath expr="//group[@name='group_standard_price']/label" position="before">
-                <field invisible="product_tmpl_set_id" name="product_tmpl_single_id"/>
-                <field invisible="product_tmpl_single_id" name="product_tmpl_set_id"/>
-                <field name="campaign_code" readonly="1"/>
+                        </group>
+                        <group>
+                            <field invisible="product_tmpl_set_id" name="product_tmpl_single_id"/>
+                            <field invisible="product_tmpl_single_id" name="product_tmpl_set_id"/>
+                            <field name="campaign_code" readonly="1"/>
+                        </group>
+                    </group>
+                </page>
             </xpath>
 
         </field>
@@ -121,9 +125,6 @@
 
             <xpath expr="//field[@name='uom_po_id']" position="after">
                 <field name="material_id"/>
-                <!-- Ya va en otro módulo
-                <field name="manufacturer_id"/>
-                -->
                 <field name="pairs_sold"/>
             </xpath>
 
