@@ -25,3 +25,4 @@ from . import shoes_hs_code
 from . import shoes_pair_weight
 from . import product_template_attribute_line
 from . import assortment_pair
+from . import product_attribute_custom_value
