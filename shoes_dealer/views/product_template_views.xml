@@ -11,24 +11,41 @@
 
             <!-- Pestaña inicial para datos generales de productos y variantes, de shoes_dealer: -->
             <xpath expr="//page[@name='general_information']" position="before">
-                <page name="shoes_delaer" string="Shoes dealer" groups="product.group_product_variant">
+                <page name="shoes_delaer" string="Shoes dealer">
                     <group>
                         <group>
-
+                            <field name="shoes_campaign_id" readonly="is_pair"/>
+                            <field name="gender" readonly="is_pair"/>
+                            <field name="manufacturer_id" readonly="is_pair"/>
+                            <field name="material_id" readonly="is_pair"/>
+                            <field name="product_tmpl_single_list_price" invisible="not product_tmpl_single_id"/>
+                            <field name="exwork" invisible="product_tmpl_single_id"
+                                   options="{'currency_field':'exwork_currency_id'}"/>
+                            <field name="exwork_single" invisible="not product_tmpl_single_id"
+                                   options="{'currency_field':'exwork_currency_id'}"/>
+                            <field name="exwork_euro" invisible="product_tmpl_single_id"
+                                   options="{'currency_field':'currency_id'}"/>
+                            <field name="exwork_single_euro" invisible="not product_tmpl_single_id"
+                                   options="{'currency_field':'currency_id'}"/>
+                            <field name="shipping_price" invisible="product_tmpl_single_id"/>
+                            <field name="shipping_single_price" invisible="not product_tmpl_single_id"/>
                         </group>
                         <group>
-
+                            <field invisible="product_tmpl_set_id" name="product_tmpl_single_id"/>
+                            <field invisible="product_tmpl_single_id" name="product_tmpl_set_id"/>
+                            <field name="campaign_code" readonly="1"/>
+                            <field name="pairs_sold"/>
+                            <!-- Campos comunes en pares y surtidos que han de ser replicados: -->
+                            <field name="shoes_pair_weight_id"/>
+                            <field name="shoes_hscode_id"/>
+                            <!-- Campos requeridos, invisibles: -->
+                            <field name="exwork_currency_id" invisible="1"/>
+                            <field name="is_pair" invisible="1"/>
+                            <field name="is_assortment" invisible="1"/>
                         </group>
                     </group>
                 </page>
             </xpath>
-
-            <xpath expr="//group[@name='group_standard_price']/label" position="before">
-                <field invisible="product_tmpl_set_id" name="product_tmpl_single_id"/>
-                <field invisible="product_tmpl_single_id" name="product_tmpl_set_id"/>
-                <field name="campaign_code" readonly="1"/>
-            </xpath>
-
         </field>
     </record>
 
@@ -78,6 +95,7 @@
                 </button>
             </xpath>
 
+            <!-- Se quita para poner en página shoes_dealer
             <xpath expr="//div[@name='options']" position="after">
                 <div name="product_shoes_dealer">
                     <span class="d-inline-block">
@@ -90,6 +108,7 @@
                     </span>
                 </div>
             </xpath>
+            -->
 
             <xpath expr="//group[@name='group_standard_price']/label" position="before">
                 <field name="product_tmpl_single_list_price" invisible="not product_tmpl_single_id"/>
