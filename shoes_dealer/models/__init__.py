@@ -24,3 +24,4 @@ from . import stock_warehouse_orderpoint
 from . import shoes_hs_code
 from . import shoes_pair_weight
 from . import product_template_attribute_line
+from . import assortment_pair
