@@ -20,6 +20,7 @@ from . import shoes_report
 from . import res_users
 from . import stock_picking
 from . import stock_move
+from . import stock_move_line
 from . import stock_warehouse_orderpoint
 from . import shoes_hs_code
 from . import shoes_pair_weight

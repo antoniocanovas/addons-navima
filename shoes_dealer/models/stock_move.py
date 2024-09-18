@@ -18,3 +18,5 @@ class StockMove(models.Model):
     pairs_count = fields.Integer(
         "Pairs", store=True, compute="_get_shoes_stock_move_pair_count"
     )
+
+    assortment_pair_ids = fields.One2many('assortment.pair','sm_id', string='Assortment pairs')
