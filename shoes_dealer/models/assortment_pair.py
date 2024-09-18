@@ -17,11 +17,11 @@ class AssortmentPair(models.Model):
     sml_id = fields.Many2one('stock.move.line', string='Stock move line')
     sm_id = fields.Many2one('stock.move', string='Stock move', related='sml_id.move_id')
 
-    @api.depends('sml_id.qty_done', 'product_id')
+    @api.depends('sml_id.quantity_product_uom', 'product_id')
     def _get_sml_qty(self):
         for record in self:
             factor = 1
             if (record.x_sml_id.location_usage in ('internal', 'transit')) and (
                     record.sml_id.location_dest_usage not in ('internal', 'transit')):
                 factor = -1
-            record['qty'] = record.bom_qty * record.sml_id.qty_done * factor
+            record['qty'] = record.bom_qty * record.sml_id.quantity_product_uom * factor
