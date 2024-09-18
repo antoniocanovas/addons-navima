@@ -7,3 +7,24 @@ class StockMoveLine(models.Model):
     _inherit = "stock.move.line"
 
     assortment_pair_ids = fields.One2many('assortment.pair','sml_id', string='Assortment pairs')
+
+
+    @api.depends('create_date')
+    def _create_assortment_pair(self):
+        for record in self:
+            # Sólo para surtidos:
+            if not record.product_id.is_assortment:
+                raise UserError('No es surtido')
+            # Si el valor del surtido es personalizado, crear assortment.pair desde valor custom:
+            if record.product_id.assortment_attribute_id.is_custom and record.move_id.sale_line_id.product_custom_attribute_value_ids.ids:
+                customvalue = record.move_id.sale_line_id.product_custom_attribute_value_ids[0].assortment_pair
+                elements = [list(map(int, item.split(","))) for item in customvalue.split(";")]
+                sizes, quantity, products, i = elements[0], elements[1], elements[2], 0
+
+                for p in products:
+                    env['assortment.pair'].create({'product_id': p, 'bom_qty': quantity[i], 'sml_id': record.id})
+
+            # Surtido normal:
+            if record.product_id.assortment_attribute_id.is_custom == False:
+                # raise UserError('surtido estándar')
+                return True
