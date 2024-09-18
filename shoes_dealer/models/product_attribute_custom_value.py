@@ -46,7 +46,7 @@ class ProductAttributeCustomValue(models.Model):
                     except:
                         raise UserError(element[1] + ", no parece una cantidad válida. Indica un número entero válido.")
                     sizes.append(element[0])
-                    pairs.append(element[1])
+                    pairs.append(int(element[1]))
                     pairs_count += int(element[1])
 
                 # OK, guardamos valores, tras quitar la última coma:
