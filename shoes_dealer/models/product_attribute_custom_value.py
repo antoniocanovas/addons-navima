@@ -45,8 +45,8 @@ class ProductAttributeCustomValue(models.Model):
                         qty = int(element[1])
                     except:
                         raise UserError(element[1] + ", no parece una cantidad válida. Indica un número entero válido.")
-                    sizes += (element[0]) + ","
-                    pairs += (int(element[1])) + ","
+                    sizes += element[0] + ","
+                    pairs += element[1] + ","
                     pairs_count += int(element[1])
 
                 # OK, guardamos valores, tras quitar la última coma:
