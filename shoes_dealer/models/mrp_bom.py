@@ -31,7 +31,7 @@ class MrpBom(models.Model):
                 for li in record.bom_line_ids:
                     if li.product_id.is_pair:
                         sizes += li.product_id.size_attribute_id.name + ","
-                        pairs += str(li.product_qty) + ","
+                        pairs += str(int(li.product_qty)) + ","
                         pair_products += str(li.product_id.id) + ","
                 if len(sizes) > 0: sizes = sizes[:-1]
                 if len(pairs) > 0: pairs = pairs[:-1]
