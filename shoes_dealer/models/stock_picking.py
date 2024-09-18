@@ -23,7 +23,7 @@ class StockPicking(models.Model):
         for record in self:
             count = 0
             for li in record.move_ids_without_package:
-                count += li.quantity_done
+                count += li.quantity
             record["packages_count"] = count
 
     packages_count = fields.Integer(

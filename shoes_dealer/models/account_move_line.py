@@ -146,4 +146,13 @@ class AccountMoveLine(models.Model):
 
                      record.manager_commission = sign * amount
 
-
+    @api.depends('create_date')
+    def _create_assortment_pair_if_is_assortment(self):
+        for record in self:
+            if not record.product_id.is_assortment:
+                continue
+            # Si el valor del surtido es personalizado:
+            if record.product_id.assortment_attribute_id.is_custom:
+                raise UserError('producto custom')
+            if record.product_id.assortment_attribute_id.is_custom == False:
+                raise UserError('surtido estándar')
