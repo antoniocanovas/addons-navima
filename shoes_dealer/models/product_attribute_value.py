@@ -24,4 +24,4 @@ class ProductAttributeValue(models.Model):
             color_attribute = self.env.company.color_attribute_id
             size_attribute = self.env.company.size_attribute_id
             if record.is_custom and record.attribute_id.id in [color_attribute.id, size_attribute.id]:
-                raise UserError('No se permiten valores personalizados en los valores de color y talla.')
+                raise UserError('Custom color and size values are not allowed, please review.')
