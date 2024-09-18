@@ -45,4 +45,26 @@
         <field name="base_automation_id" ref="shoes_dealer.shoes_dealer_update_standard_price_aa"/>
     </record>
 
+
+
+    # BASE AUTOMATION crear ASSORTMENT.PAIR para surtidos desde SML:
+    <record id="shoes_dealer_create_assortment_pair_aa" model="base.automation">
+        <field name="name">=> Create Assortment Pairs</field>
+        <field name="model_id" ref="product.model_stock_move_line"/>
+        <field name="trigger">on_create</field>
+    </record>
+    # SERVER ACTION para el automatismo actualizar precios de coste en variantes:
+    <record id="shoes_dealer_create_assortment_pair_as" model="ir.actions.server">
+        <field name="name">=> AS Create Assortment Pairs</field>
+        <field name="model_id" ref="product.model_stock_move_line"/>
+        <field name="evaluation_type">value</field>
+        <field name="state">code</field>
+        <field name="code">
+            record._create_assortment_pair()
+        </field>
+        <field name="base_automation_id" ref="shoes_dealer.shoes_dealer_create_assortment_pair_aa"/>
+    </record>
+
+
+
 </odoo>
