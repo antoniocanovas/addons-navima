@@ -9,7 +9,6 @@ class StockMoveLine(models.Model):
     assortment_pair_ids = fields.One2many('assortment.pair','sml_id', string='Assortment pairs')
 
 
-    @api.depends('create_date')
     def _create_assortment_pair(self):
         for record in self:
             # Sólo para surtidos:
