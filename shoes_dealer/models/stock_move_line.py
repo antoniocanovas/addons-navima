@@ -21,7 +21,7 @@ class StockMoveLine(models.Model):
                 sizes, quantity, products, i = elements[0], elements[1], elements[2], 0
 
                 for p in products:
-                    env['assortment.pair'].create({'product_id': p, 'bom_qty': quantity[i], 'sml_id': record.id})
+                    self.env['assortment.pair'].create({'product_id': p, 'bom_qty': quantity[i], 'sml_id': record.id})
 
             # Surtido normal:
             if record.product_id.assortment_attribute_id.is_custom == False:
