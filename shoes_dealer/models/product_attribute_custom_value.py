@@ -12,7 +12,7 @@ class ProductAttributeCustomValue(models.Model):
     @api.depends('custom_value')
     def _get_assortment_pair(self):
         for record in self:
-            cleanvalues, sizes, pairs, pair_products, pairs_count = [], [], [], [], 0
+            cleanvalues, sizes, pairs, pair_products, pairs_count = "", "", "", "", 0
             size_attribute = self.env.company.size_attribute_id
             sale_line_product = record.sale_order_line_id.product_id
             sale_line_product_color = sale_line_product.color_attribute_id
@@ -45,13 +45,15 @@ class ProductAttributeCustomValue(models.Model):
                         qty = int(element[1])
                     except:
                         raise UserError(element[1] + ", no parece una cantidad válida. Indica un número entero válido.")
-                    sizes.append(element[0])
-                    pairs.append(int(element[1]))
-                    pair_products.append(pppair.id)
+                    sizes += element[0] + ","
+                    pairs += element[1] + ","
+                    pair_products += str(pppair.id) + ","
                     pairs_count += int(element[1])
 
                 # OK, guardamos valores, tras quitar la última coma:
-                cleanvalues.append(sizes)
-                cleanvalues.append(pairs)
-                cleanvalues.append(pair_products)
+                if len(sizes) > 0: sizes = sizes[:-1]
+                if len(pairs) > 0: pairs = pairs[:-1]
+                if len(pair_products) > 0: pair_products = pair_products[:-1]
+
+                cleanvalues = sizes + ";" + pairs + ";" + pair_products
                 record.write({'assortment_pair': cleanvalues, 'pairs_count': pairs_count})
