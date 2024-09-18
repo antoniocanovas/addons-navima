@@ -14,9 +14,13 @@ class StockMoveLine(models.Model):
             # Sólo para surtidos:
             if not record.product_id.is_assortment:
                 raise UserError('No es surtido')
+            # Diferencia entre compra y ventas:
+            if record.move_id.sale_line_id.id: origin = record.move_id.sale_line_id
+            if record.move_id.purchase_line_id.id: origin = record.move_id.purchase_line_id.sale_line_id
+
             # Si el valor del surtido es personalizado, crear assortment.pair desde valor custom:
-            if record.product_id.assortment_attribute_id.is_custom and record.move_id.sale_line_id.product_custom_attribute_value_ids.ids:
-                customvalue = record.move_id.sale_line_id.product_custom_attribute_value_ids[0].assortment_pair
+            if record.product_id.assortment_attribute_id.is_custom and origin.product_custom_attribute_value_ids.ids:
+                customvalue = origin.product_custom_attribute_value_ids[0].assortment_pair
                 elements = [list(map(int, item.split(","))) for item in customvalue.split(";")]
                 sizes, quantity, products, i = elements[0], elements[1], elements[2], 0
 
