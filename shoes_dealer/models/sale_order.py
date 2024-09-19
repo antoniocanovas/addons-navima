@@ -56,7 +56,7 @@ class SaleOrder(models.Model):
     @api.constrains('state')
     def _check_no_custom_product_lines_without_purchase_order(self):
         for record in self:
-            if state in ['sale']:
+            if record.state in ['sale']:
                 for li in record.order_line:
                     if (li.product_id.is_assortment) and (not li.purchase_line_id.id) and (li.product_custom_attribute_value_ids):
                         raise UserError('Please, buy custom productos before confirm.')
