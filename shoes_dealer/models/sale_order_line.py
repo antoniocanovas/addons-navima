@@ -122,6 +122,6 @@ class SaleOrderLine(models.Model):
         self.product_id = self.product_saleko_id.id
 
 
-    @api.constrains('product_custom_attribute_value_ids')
+    @api.constrains('custom_value')
     def _check_valid_pairs(self):
         raise UserError('funciona el constrains')
