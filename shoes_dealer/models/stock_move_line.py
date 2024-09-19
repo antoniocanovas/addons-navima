@@ -25,13 +25,13 @@ class StockMoveLine(models.Model):
 
             # Surtido estándar (no custom):
             if (record.product_id.assortment_attribute_id.is_custom == False) and (record.product_id.bom_ids.ids):
-                    customvalue = record.product_id.bom_ids[0].assortment_pair
+                customvalue = record.product_id.bom_ids[0].assortment_pair
 
             # assortment.pair lines creation:
             if customvalue != "":
                 elements = [list(map(int, item.split(","))) for item in customvalue.split(";")]
                 sizes, quantity, products, i = elements[0], elements[1], elements[2], 0
                 for p in products:
-                    env['assortment.pair'].create(
+                    self.env['assortment.pair'].create(
                         {'product_id': p, 'bom_qty': quantity[i], 'sml_id': record.id})
                     i += 1
