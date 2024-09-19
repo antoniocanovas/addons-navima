@@ -47,3 +47,11 @@ class SaleOrder(models.Model):
         if user.top_sales == False:
             top_sales = True
         user.top_sales = top_sales
+
+    def action_confirm(self):
+        self._check_no_custom_product_lines_without_purchase_order()
+        return super().action_confirm()
+
+    # Restricción de validar pedidos de venta si tienen productos CUSTOM, primero crear compra para llevar línea:
+    def _check_no_custom_product_lines_without_purchase_order(self):
+        return True

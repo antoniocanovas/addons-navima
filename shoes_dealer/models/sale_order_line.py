@@ -1,7 +1,7 @@
 # Copyright 2023 Serincloud SL - Ingenieriacloud.com
 
 from odoo import fields, models, api
-
+from odoo.exceptions import UserError
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
@@ -120,3 +120,8 @@ class SaleOrderLine(models.Model):
     @api.onchange("product_saleko_id")
     def change_saleproductok_2_saleproductko(self):
         self.product_id = self.product_saleko_id.id
+
+
+    @api.constrains('product_custom_attribute_value_ids')
+    def _check_valid_pairs(self):
+        raise UserError('funciona el constrains')
