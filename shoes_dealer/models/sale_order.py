@@ -76,4 +76,4 @@ class SaleOrder(models.Model):
                         {'order_id': po.id, 'product_id': li.product_id.id, 'sale_line_id': li.id,
                          'product_qty': li.product_uom_qty})
                     # Indicar en SOL para que no vuelva a crear el pedido:
-                    li['purchase_line_id'] = li.id
+                    li['purchase_line_id'] = new_purchase_line.id
