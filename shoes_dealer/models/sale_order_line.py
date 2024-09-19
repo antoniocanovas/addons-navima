@@ -1,7 +1,6 @@
 # Copyright 2023 Serincloud SL - Ingenieriacloud.com
 
 from odoo import fields, models, api
-from odoo.exceptions import UserError
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
@@ -9,6 +8,8 @@ class SaleOrderLine(models.Model):
     referrer_id = fields.Many2one(
         "res.partner", related="order_id.referrer_id", store=True
     )
+
+    purchase_line_id = fields.Many2one("purchase.order.line", string="Purchase line")
 
     # Comercialmente en cada pedido quieren saber cuántos pares se han vendido:
     @api.depends("product_id", "product_uom_qty")
@@ -120,8 +121,3 @@ class SaleOrderLine(models.Model):
     @api.onchange("product_saleko_id")
     def change_saleproductok_2_saleproductko(self):
         self.product_id = self.product_saleko_id.id
-
-
-    @api.constrains('custom_value')
-    def _check_valid_pairs(self):
-        raise UserError('funciona el constrains')

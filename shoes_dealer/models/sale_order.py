@@ -48,10 +48,32 @@ class SaleOrder(models.Model):
             top_sales = True
         user.top_sales = top_sales
 
-    def action_confirm(self):
-        self._check_no_custom_product_lines_without_purchase_order()
-        return super().action_confirm()
+#    def action_confirm(self):
+#        self._check_no_custom_product_lines_without_purchase_order()
+#        return super().action_confirm()
 
     # Restricción de validar pedidos de venta si tienen productos CUSTOM, primero crear compra para llevar línea:
+    @api.constrains('state')
     def _check_no_custom_product_lines_without_purchase_order(self):
-        return True
+        for record in self:
+            for li in record.order_line:
+                if li.product_id.is_assortment and not li.purchase_line_id.id and li.product_custom_attribute_value_ids:
+                    raise UserError('Please, buy custom productos before confirm.')
+
+
+    def _create_purchase_lines_for_custom_products(self):
+        for record in self:
+            for li in record.order_line:
+                if (li.product_id.is_assortment) and (li.product_custom_attribute_value_ids.ids):
+                    manufacturer = li.product_id.manufacturer_id
+                    draft_purchases = self.env['purchase.order'].search([
+                        ('partner_id', '=', manufacturer.id), ('state', '=', 'draft')])
+                    if draft_purchases.ids:
+                        po = pos[0]
+                    else:   # Hay que crear un nuevo pedido
+                        po = self.env['purchase.order'].create({'partner_id': manufacturer.id})
+                    new_purchase_line = self.env['purchase.order.line'].create(
+                        {'order_id': po.id, 'product_id': li.product_id.id, 'sale_line_id': li.id,
+                         'product_qty': li.product_uom_qty})
+                    # Indicar en SOL para que no vuelva a crear el pedido:
+                    li['purchase_line_id'] = li.id

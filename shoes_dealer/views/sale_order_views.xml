@@ -25,6 +25,11 @@
                         icon="fa-delicious" class="oe_stat_button"
                         type="object" string="Top sales">
                 </button>
+                <button name="_create_purchase_lines_for_custom_products"
+                        icon="fa-shopping-cart" class="oe_stat_button"
+                        type="object" string="Customs purchase"
+                        invisible="state in ['sale','cancel']">
+                </button>
             </xpath>
             <field name="partner_id" position="before">
                 <field name="shoes_campaign_id" options="{'no_quick_create':1, 'no_create_edit':1}"/>
