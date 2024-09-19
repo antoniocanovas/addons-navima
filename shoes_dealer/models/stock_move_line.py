@@ -13,7 +13,7 @@ class StockMoveLine(models.Model):
         for record in self:
             # Sólo para surtidos:
             if not record.product_id.is_assortment:
-                raise UserError('No es surtido')
+                continue
             # Diferencia entre compra y ventas:
             if record.move_id.sale_line_id.id: origin = record.move_id.sale_line_id
             if record.move_id.purchase_line_id.id: origin = record.move_id.purchase_line_id.sale_line_id

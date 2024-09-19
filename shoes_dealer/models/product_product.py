@@ -48,6 +48,7 @@ class ProductProduct(models.Model):
         store=True,
     )
 
+    """ Revisar si se queda en custom o en SD después de migrar a v17
     def _get_pnt_total_reserved_plus_sold(self):
         for record in self:
             r = record.pnt_reservation_count
@@ -79,6 +80,7 @@ class ProductProduct(models.Model):
         compute="_get_pnt_virtual_stock_avaiable",
         string="Virtual Available",
     )
+    """
 
     def _get_assortment_attribute_value(self):
         for record in self:
