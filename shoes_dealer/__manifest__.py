@@ -58,7 +58,7 @@
         "reports/pnt_product_report_template.xml",
         "views/res_users_views.xml",
         "views/stock_picking_views.xml",
-        # Quito esta vista hasta que arreglemos product.product:
+        # Quito esta vista hasta que arreglemos product.product; migración v17:
 #        "views/stock_orderpoint_views.xml",
         "views/account_move_line_views.xml",
         "views/shoes_pair_weight_views.xml",
