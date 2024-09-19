@@ -14,7 +14,7 @@
         <field name="type">tree</field>
     </record>
 
-    <record id="shoes_dealer_sale_orderinh_form" model="ir.ui.view">
+    <record id="shoes_dealer_sale_order_inh_form" model="ir.ui.view">
         <field name="name">shoes.dealer.saleorder.inh.form</field>
         <field name="model">sale.order</field>
         <field name="type">form</field>
@@ -25,7 +25,7 @@
                         icon="fa-delicious" class="oe_stat_button"
                         type="object" string="Top sales">
                 </button>
-                <button name="_create_purchase_lines_for_custom_products"
+                <button name="create_purchase_lines_for_custom_products"
                         icon="fa-shopping-cart" class="oe_stat_button"
                         type="object" string="Customs purchase"
                         invisible="state in ['sale','cancel']">
