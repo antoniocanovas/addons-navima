@@ -258,6 +258,9 @@
                 <div t-else="" name="product_single_lst_price" class="mt-1">
                     Price: <field name="product_tmpl_single_list_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
                 </div>
+                <xpath expr="//t/div" position="inside">
+                    <field name="id" widget="open_tab"/>
+                </xpath>
             </xpath>
         </field>
     </record>
