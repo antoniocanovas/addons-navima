@@ -66,5 +66,15 @@
     </record>
 
 
+        <!-- DELETE NULL ASSORTMENT.PAIR DAILY -->
+        <record id="shoes_dealer_data_delete_assortment_pair_ir_cron" model="ir.cron">
+            <field name="name">=> Delete null assortment.pair</field>
+            <field name="model_id" ref="model_assortment_pair"/>
+            <field name="state">code</field>
+            <field name="code">model._delete_null_assortment_pair()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
 
 </odoo>

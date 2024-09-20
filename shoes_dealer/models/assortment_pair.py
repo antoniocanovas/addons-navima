@@ -15,6 +15,7 @@ class AssortmentPair(models.Model):
     qty = fields.Integer('Pairs', compute='_get_sml_qty')
     partner_id = fields.Many2one('res.partner', string='Partner')
     sml_id = fields.Many2one('stock.move.line', string='Stock move line')
+    sml_qty = fields.Float(related='sml_id.quantity_product_uom')
     sm_id = fields.Many2one('stock.move', string='Stock move', related='sml_id.move_id')
 
     @api.depends('sml_id.quantity_product_uom', 'product_id')
@@ -24,4 +25,8 @@ class AssortmentPair(models.Model):
             if (record.sml_id.location_usage in ('internal', 'transit')) and (
                     record.sml_id.location_dest_usage not in ('internal', 'transit')):
                 factor = -1
-            record['qty'] = record.bom_qty * record.sml_id.quantity_product_uom * factor
+            record['qty'] = record.bom_qty * record.sml_qty * factor
+
+    def _delete_null_assortment_pair(self):
+        null_assortmennt_pair = self.env['assortment.pair'].search([('sml_qty','=', 0)])
+        null_assortmennt_pair.unlink()
