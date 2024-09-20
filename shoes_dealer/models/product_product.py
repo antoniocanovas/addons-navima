@@ -9,6 +9,17 @@ class ProductProduct(models.Model):
     _inherit = "product.product"
 
     product_template_variant_value_ids = fields.Many2many(domain=[], store=True)
+    assortment_pair_qty = fields.Integer(
+        "Assortment pairs", compute="get_assortment_pair"
+    )
+
+    def get_assortment_pair(self):
+        for product in self:
+            ap = self.env["assortment.pair"].search([("product_id", "=", self.id)])
+            total = 0
+            for li in ap:
+                total += li.qty
+            product.assortment_pair_qty = total
 
     def create(self, vals_list):
         products = super().create(vals_list)
@@ -269,13 +280,19 @@ class ProductProduct(models.Model):
         "Pairs", store=False, compute="_get_shoes_product_product_pair_count"
     )
 
-    #Recalcula pesos de surtidos en función de  el número de pares
-    @api.constrains('pairs_count')
+    # Recalcula pesos de surtidos en función de  el número de pares
+    @api.constrains("pairs_count")
     def get_weight_by_pairs(self):
         for record in self:
             if record.is_assortment:
-                record.weight = record.pairs_count * record.product_tmpl_id.shoes_pair_weight_id.pair_weight
-                record.net_weight = record.pairs_count * record.product_tmpl_id.shoes_pair_weight_id.pair_net_weight
+                record.weight = (
+                    record.pairs_count
+                    * record.product_tmpl_id.shoes_pair_weight_id.pair_weight
+                )
+                record.net_weight = (
+                    record.pairs_count
+                    * record.product_tmpl_id.shoes_pair_weight_id.pair_net_weight
+                )
 
     # Product assortment (to be printed on sale.order and account.move reports):
     # 2024/02 REVISAR ESTO, POSIBLEMENTE SE PUEDE CAMBIAR POR UN RELATED DE assortment_attribute_id.set_template_id.code
