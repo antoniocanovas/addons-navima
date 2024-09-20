@@ -63,26 +63,6 @@
     </record>
 
     <!-- VISTAS FORM SÓLO PRODUCT.PRODUCT: -->
-    <!--
-    <record id="product_product_shoes_dealer_inh_form" model="ir.ui.view">
-        <field name="name">product.product.shoes.dealer.inh.form</field>
-        <field name="model">product.product</field>
-        <field name="type">form</field>
-        <field name="inherit_id" ref="product.product_normal_form_view"/>
-        <field name="priority">90</field>
-        <field name="arch" type="xml">
-            <xpath expr="//page[@name='shoes_dealer']" position="inside">
-                <group>
-                    <field name="assortment_attribute_id" readonly="1" invisible="1"/>
-                    <field name="color_attribute_id" invisible="1"/>
-                    <field name="size_attribute_id" invisible="1"/>
-                    <field name="assortment_pair_qty" invisible="1"/>
-                </group>
-            </xpath>
-        </field>
-    </record>
-    -->
-
     <!-- Vista que indica el número de pares en surtidos, desde el botón de stock: -->
     <record id="product_product_shoes_dealer_stock_inh_form" model="ir.ui.view">
         <field name="name">product.product.shoes.dealer.stock.inh.form</field>
