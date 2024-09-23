@@ -59,13 +59,14 @@ class SaleOrder(models.Model):
             if record.state in ['sale']:
                 for li in record.order_line:
                     if (li.product_id.is_assortment) and (not li.purchase_line_id.id) and (li.product_custom_attribute_value_ids):
-                        raise UserError('Please, buy custom productos before confirm.')
+                        raise UserError('Please, buy CUSTOM PRODUCTS before confirm, or personalized values will be lost.')
 
 
     def create_purchase_lines_for_custom_products(self):
         for record in self:
             for li in record.order_line:
                 if (li.product_id.is_assortment) and (li.product_custom_attribute_value_ids.ids):
+                    assortment_pair = li.product_custom_attribute_value_ids[0]
                     manufacturer = li.product_id.manufacturer_id
                     draft_purchases = self.env['purchase.order'].search([
                         ('partner_id', '=', manufacturer.id), ('state', '=', 'draft')])
@@ -75,6 +76,6 @@ class SaleOrder(models.Model):
                         po = self.env['purchase.order'].create({'partner_id': manufacturer.id})
                     new_purchase_line = self.env['purchase.order.line'].create(
                         {'order_id': po.id, 'product_id': li.product_id.id, 'sale_line_id': li.id,
-                         'product_qty': li.product_uom_qty})
+                         'product_qty': li.product_uom_qty, 'assortment_pair':assortment_pair.id})
                     # Indicar en SOL para que no vuelva a crear el pedido:
                     li['purchase_line_id'] = new_purchase_line.id

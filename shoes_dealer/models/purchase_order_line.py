@@ -20,3 +20,6 @@ class PurchaseOrderLine(models.Model):
             if record.pairs_count != 0: total = record.price_subtotal / record.pairs_count
             record['pair_price'] = total
     pair_price = fields.Float('Pair price', store=True, compute='_get_shoes_pair_price')
+
+    # Campo de texto para escribir los valores personalizados de tallas y cantidad, desde el pedido de venta:
+    assortment_pair_id = fields.Many2one('assortment.pair', string='Assortment pair', store=True)
