@@ -71,7 +71,7 @@ class SaleOrder(models.Model):
                     draft_purchases = self.env['purchase.order'].search([
                         ('partner_id', '=', manufacturer.id), ('state', '=', 'draft')])
                     if draft_purchases.ids:
-                        po = pos[0]
+                        po = draft_purchases[0]
                     else:   # Hay que crear un nuevo pedido
                         po = self.env['purchase.order'].create({'partner_id': manufacturer.id})
                     new_purchase_line = self.env['purchase.order.line'].create(
