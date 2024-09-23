@@ -110,7 +110,7 @@ class AccountMoveLine(models.Model):
                 sign = -1
 
             amount = 0
-            rule = record._get_commission_referrer_rule()
+            rule = record._get_commission_rule()
             if rule:
                 amount = move.currency_id.round(
                     record.price_subtotal * rule.rate / 100.0)
