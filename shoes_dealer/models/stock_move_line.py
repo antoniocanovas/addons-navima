@@ -8,6 +8,8 @@ class StockMoveLine(models.Model):
 
     assortment_pair_ids = fields.One2many('assortment.pair','sml_id', string='Assortment pairs')
 
+    # 23/10 .- FALTAN LOS AJUSTES DE INVENTARIO (requieren trazabilidad, de otra forma no se puede)!!
+    # LAS COMPRAS NO FUNCIONAN:
 
     def _create_assortment_pair(self):
         for record in self:
@@ -17,7 +19,7 @@ class StockMoveLine(models.Model):
                 continue
             # Si el valor del surtido es personalizado, crear assortment.pair desde valor custom:
             if (record.product_id.assortment_attribute_id.is_custom) and (origin.product_custom_attribute_value_ids.ids):
-                # Diferencia entre compra y ventas:
+                # Diferencia entre compra y venta:
                 if record.move_id.sale_line_id.id: origin = record.move_id.sale_line_id
                 if record.move_id.purchase_line_id.id: origin = record.move_id.purchase_line_id.sale_line_id
                 customvalue = origin.product_custom_attribute_value_ids[0].assortment_pair

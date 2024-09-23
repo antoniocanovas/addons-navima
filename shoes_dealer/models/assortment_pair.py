@@ -27,7 +27,7 @@ class AssortmentPair(models.Model):
                 factor = -1
             record['qty'] = record.bom_qty * record.sml_qty * factor
 
-    # CRON ACTION TO DELETE NULL ASSORTMENT PAIRS:
+    # CRON ACTION TO DELETE NULL ASSORTMENT PAIRS (revisar no es así porque los sm y sml son fijos, se van adicionando):
     def _delete_null_assortment_pair(self):
         null_assortmennt_pair = self.env['assortment.pair'].search([('sml_qty','=', 0)])
         null_assortmennt_pair.unlink()

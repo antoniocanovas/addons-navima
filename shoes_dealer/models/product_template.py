@@ -525,6 +525,15 @@ class ProductTemplate(models.Model):
             for template in self
         ]
 
+    @api.constrains('attribute_line_ids.value_ids')
+    def _avoid_custom_assortment_values_if_no_tracking(self):
+        if self.tracking != 'serial':
+            for li in self.attribute_line_ids:
+                if li.attribute_id == self.env.company.bom_attribute_id:
+                    for value in li.value_ids:
+                        if value.is_custom:
+                            raise UserError('Serial tracking required to assign custom assortment values.')
+
     # Notas del desarrollo:
     # =====================
     # product template genera PRODUCT.PRODUCT en: product_variant_ids
