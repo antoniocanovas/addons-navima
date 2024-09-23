@@ -8,7 +8,7 @@ class StockMoveLine(models.Model):
 
     assortment_pair_ids = fields.One2many('assortment.pair','sml_id', string='Assortment pairs')
 
-    # 23/10 .- FALTAN LOS AJUSTES DE INVENTARIO (requieren trazabilidad, de otra forma no se puede)!!
+    # 23/10 OK A LOS AJUSTES DE INVENTARIO (constrains trazabilidad en PTAL).
     # LAS COMPRAS NO FUNCIONAN:
 
     def _create_assortment_pair(self):

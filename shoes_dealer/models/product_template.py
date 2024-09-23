@@ -311,7 +311,10 @@ class ProductTemplate(models.Model):
                 [("product_tmpl_id", "=", self.id), ("variant_bom_ids", "=", False)]
             )
             for p in nobomproducts:
-                p.create_set_bom()
+                for li in p.product_template_variant_value_ids:
+                    if not li.is_custom:
+                        p.create_set_bom()
+
             # Limpieza de BOMS huérfanas:
             bomsdelete = (
                 self.env["mrp.bom"]
