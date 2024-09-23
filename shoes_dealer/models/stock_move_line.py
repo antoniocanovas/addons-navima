@@ -8,9 +8,6 @@ class StockMoveLine(models.Model):
 
     assortment_pair_ids = fields.One2many('assortment.pair','sml_id', string='Assortment pairs')
 
-    # 23/10 OK A LOS AJUSTES DE INVENTARIO (constrains trazabilidad en PTAL).
-    # LAS COMPRAS NO FUNCIONAN:
-
     def _create_assortment_pair(self):
         for record in self:
             customvalue = ""
