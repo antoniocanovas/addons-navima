@@ -17,4 +17,5 @@ class ProductTemplateAttributeLine(models.Model):
                 if record.attribute_id == self.env.company.bom_attribute_id:
                     for value in record.value_ids:
                         if value.is_custom:
-                            raise UserError('Serial tracking required to assign custom assortment values.')
+                            raise UserError('Product serial tracking required to assign custom assortment values.'
+                                            'Got to Inventory tab => Traceability => Serial number, and save again.')
