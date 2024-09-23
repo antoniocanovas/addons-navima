@@ -51,7 +51,9 @@
     <record id="shoes_dealer_create_assortment_pair_aa" model="base.automation">
         <field name="name">=> Create Assortment Pairs</field>
         <field name="model_id" ref="stock.model_stock_move_line"/>
-        <field name="trigger">on_create</field>
+        <field name="trigger">on_write</field>
+        <field name="trigger_field_ids" eval="[(6,0, [ref('stock.field_stock_move_line__state')])]"/>
+
     </record>
     # SERVER ACTION para el automatismo actualizar precios de coste en variantes:
     <record id="shoes_dealer_create_assortment_pair_as" model="ir.actions.server">

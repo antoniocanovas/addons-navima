@@ -15,7 +15,7 @@ class StockMoveLine(models.Model):
         for record in self:
             customvalue = ""
             # Sólo para surtidos:
-            if (not record.product_id.is_assortment) or (record.assortment_pair_ids.ids):
+            if (not record.product_id.is_assortment) or (record.assortment_pair_ids.ids) or (record.state not in ['done']):
                 continue
             # Si el valor del surtido es personalizado, crear assortment.pair desde valor custom:
             if (record.product_id.assortment_attribute_id.is_custom) and (origin.product_custom_attribute_value_ids.ids):
