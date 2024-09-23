@@ -15,7 +15,7 @@ class ProductProduct(models.Model):
 
     def get_assortment_pair(self):
         for product in self:
-            ap = self.env["assortment.pair"].search([("product_id", "=", self.id)])
+            ap = self.env["assortment.pair"].search([("product_id", "=", product.id)])
             total = 0
             for li in ap:
                 total += li.qty
