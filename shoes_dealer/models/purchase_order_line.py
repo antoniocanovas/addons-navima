@@ -22,4 +22,4 @@ class PurchaseOrderLine(models.Model):
     pair_price = fields.Float('Pair price', store=True, compute='_get_shoes_pair_price')
 
     # Campo de texto para escribir los valores personalizados de tallas y cantidad, desde el pedido de venta:
-    assortment_pair_id = fields.Many2one('assortment.pair', string='Assortment pair', store=True)
+    assortment_pair_id = fields.Many2one('product.attribute.custom.value', string='Assortment pair', store=True)
