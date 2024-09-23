@@ -13,7 +13,7 @@ class ProductTemplateAttributeLine(models.Model):
     def _avoid_custom_assortment_values_if_no_tracking(self):
         for record in self:
             if record.product_tmpl_id.tracking != 'serial':
-                if li.attribute_id == self.env.company.bom_attribute_id:
-                    for value in li.value_ids:
+                if record.attribute_id == self.env.company.bom_attribute_id:
+                    for value in record.value_ids:
                         if value.is_custom:
                             raise UserError('Serial tracking required to assign custom assortment values.')
