@@ -76,9 +76,3 @@ class SaleOrder(models.Model):
                          'product_qty': li.product_uom_qty, 'assortment_pair_id':assortment_pair.id})
                     # Indicar en SOL para que no vuelva a crear el pedido:
                     li['purchase_line_id'] = new_purchase_line.id
-
-    @api.onchange('order_line')
-    def _check_valid_custom_assortment(self):
-        for li in self.order_line:
-            if li.product_custom_attribute_value_ids.ids:
-                raise UserError('Este es personalizado')

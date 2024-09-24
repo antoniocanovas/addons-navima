@@ -1,6 +1,7 @@
 # Copyright 2023 Serincloud SL - Ingenieriacloud.com
 
 from odoo import fields, models, api
+from odoo.exceptions import UserError, ValidationError
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
@@ -123,3 +124,6 @@ class SaleOrderLine(models.Model):
         self.product_id = self.product_saleko_id.id
 
 
+    @api.constrains('name')
+    def _text(self):
+        raise UserError('cambias el nombre')
