@@ -126,4 +126,5 @@ class SaleOrderLine(models.Model):
 
     @api.onchange('name')
     def _text(self):
-        raise UserError('cambias el nombre')
+        if self.name:
+            raise UserError('cambias el nombre')
