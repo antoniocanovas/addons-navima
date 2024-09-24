@@ -23,6 +23,7 @@
     "name": 'Shoes Dealer Campaign',
     "version": '1.0',
     "depends": [
+        'product',
         'project',
         'product_brand',
         'shoes_dealer',
