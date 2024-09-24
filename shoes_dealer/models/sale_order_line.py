@@ -121,3 +121,5 @@ class SaleOrderLine(models.Model):
     @api.onchange("product_saleko_id")
     def change_saleproductok_2_saleproductko(self):
         self.product_id = self.product_saleko_id.id
+
+
