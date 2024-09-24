@@ -33,16 +33,17 @@ class ProjectTask(models.Model):
     shoes_product_tmpl_id = fields.Many2one('product.template', string="Product")
 
     def create_shoe_model(self):
-        for record in self:
-            if not self.shoes_product_tmpl_id.id:
-                newproduct = self.env['product.template'].create({
-                    'name': self.name,
-                    'shoes_campaign_id':self.project_id.id,
-                    'product_brand_id':self.product_brand_id.id,
-                    'manufacturer_id':self.manufacturer_id.id,
-                    'gender': self.gender,
-                    'shoes_pair_weight_id': self.shoes_pair_weight_id.id,
-                    'shoes_hscode_id': self.shoes_hscode_id.id,
-                    'material_id': self.material_id.id,
-                })
-                #record['shoes_product_tmpl_id'] = newproduct.id
+        if not self.shoes_product_tmpl_id.id:
+            newproduct = self.env['product.template'].create({
+                'name': self.name,
+                'detailed_type': 'product',
+                'service_tracking': False,
+                'shoes_campaign_id':self.project_id.id,
+                'product_brand_id':self.product_brand_id.id,
+                'manufacturer_id':self.manufacturer_id.id,
+                'gender': self.gender,
+                'shoes_pair_weight_id': self.shoes_pair_weight_id.id,
+                'shoes_hscode_id': self.shoes_hscode_id.id,
+                'material_id': self.material_id.id,
+            })
+            self.shoes_product_tmpl_id = newproduct.id
