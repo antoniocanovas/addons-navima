@@ -24,6 +24,7 @@
     "version": '1.0',
     "depends": [
         'project',
+        'product_brand',
         'shoes_dealer',
     ],
     "author": "Punt Sistemes",
