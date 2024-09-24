@@ -33,8 +33,8 @@
         Only empty values and manufacturer product attributes will be used in variants creation. 
     """,
     "data": [
-        'views/project_project_views.xml',
-        'views/project_task_views.xml',
+        'views/product_attribute_value_views.xml',
+        'views/product_attribute_views.xml',
         'views/product_template_views.xml',
         'views/res_partner_views.xml',
     ],
