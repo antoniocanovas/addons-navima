@@ -36,7 +36,7 @@ class ProjectTask(models.Model):
         if not self.shoes_product_tmpl_id.id:
             newproduct = self.env['product.template'].create({
                 'name': self.name,
-                'shoes_campaign_id':self.project_id.id,
+            #    'shoes_campaign_id':self.project_id.id,
                 'product_brand_id':self.product_brand_id.id,
                 'manufacturer_id':self.manufacturer_id.id,
                 'gender': self.gender,
