@@ -11,7 +11,7 @@
 
             <xpath expr="//field[@name='tag_ids']" position="after">
                 <field name="is_shoes_campaign"/>
-                <field name="brand_id"/>
+                <field name="product_brand_id"/>
             </xpath>
 
         </field>
