@@ -6,9 +6,6 @@ from odoo.exceptions import UserError
 class ProjectProject(models.Model):
     _inherit = "project.project"
 
-    # Datos comunes para creación de productos desde tareas:
-    brand_id = fields.Many2one('product.brand', string="Brand")
-
     # Cambio de moneda estimado para cálculo de precios de pares y surtidos en base a exwork:
     currency_exchange = fields.Float('Currency exchange', store=True, copy=False, default=1)
     # Secuencia del jefe para encontrar rápido los productos, es por campaña y numérica ordenada:

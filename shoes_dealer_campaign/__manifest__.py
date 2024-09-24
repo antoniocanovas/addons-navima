@@ -20,23 +20,21 @@
 ##############################################################################
 
 {
-    "name": 'Partner product attribute',
+    "name": 'Shoes Dealer Campaign',
     "version": '1.0',
     "depends": [
-        'product',
+        'project',
+        'shoes_dealer',
     ],
     "author": "Punt Sistemes",
-    "category": 'Stock',
+    "category": 'Project',
     "website": "https://www.puntsistemes.es",
     "description": """
-        Product attributes values by partner.
-        Only empty values and manufacturer product attributes will be used in variants creation. 
+        Project attributes to shoes dealer campaign and product creation from tasks. 
     """,
     "data": [
         'views/project_project_views.xml',
         'views/project_task_views.xml',
-        'views/product_template_views.xml',
-        'views/res_partner_views.xml',
     ],
     "demo": [],
     "installable": True,

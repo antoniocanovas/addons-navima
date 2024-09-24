@@ -31,6 +31,10 @@ class ProductTemplate(models.Model):
         "shoes.hs.code", string="Shoes HS Code", default=False
     )
 
+    material_id = fields.Many2one(
+        "product.material", string="Material", store=True, copy=True
+    )
+
     # Campos para calcular los pares vendidos y usarlo de base para sacar el TOP en la pantalla de ventas:
     sale_line_ids = fields.One2many(
         "sale.order.line",
@@ -124,10 +128,6 @@ class ProductTemplate(models.Model):
         self.is_pair = is_pair
 
     is_pair = fields.Boolean("Is Pair", store=True, compute="_get_is_pair")
-
-    material_id = fields.Many2one(
-        "product.material", string="Material", store=True, copy=True
-    )
 
     @api.constrains(
         "shoes_hscode_id",
