@@ -77,7 +77,7 @@ class SaleOrder(models.Model):
                     # Indicar en SOL para que no vuelva a crear el pedido:
                     li['purchase_line_id'] = new_purchase_line.id
 
-    @api.constrains('order_line')
+    @api.onchange('order_line')
     def _check_valid_custom_assortment(self):
         for li in self.order_line:
             if li.product_custom_attribute_value_ids.ids:
