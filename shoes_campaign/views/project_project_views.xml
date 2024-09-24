@@ -2,7 +2,7 @@
 <odoo>
 
     <!-- Normal project view : -->
-    <record id="shoes_dealer_campaign_project_inh_form" model="ir.ui.view">
+    <record id="shoes_campaign_project_inh_form" model="ir.ui.view">
         <field name="name">shoes.dealer.campaign.project.inh.form</field>
         <field name="model">project.project</field>
         <field name="type">form</field>
@@ -19,7 +19,7 @@
     </record>
 
     <!-- Simplified creation project view : -->
-    <record id="shoes_dealer_campaign_simplified_project_inh_form" model="ir.ui.view">
+    <record id="shoes_campaign_simplified_project_inh_form" model="ir.ui.view">
         <field name="name">shoes.dealer.campaign.simplified.project.inh.form</field>
         <field name="model">project.project</field>
         <field name="type">form</field>
