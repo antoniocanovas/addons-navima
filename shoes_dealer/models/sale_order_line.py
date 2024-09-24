@@ -124,6 +124,6 @@ class SaleOrderLine(models.Model):
         self.product_id = self.product_saleko_id.id
 
 
-    @api.constrains('name')
+    @api.onchange('name')
     def _text(self):
         raise UserError('cambias el nombre')
