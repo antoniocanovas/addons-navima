@@ -33,7 +33,7 @@ class ProjectTask(models.Model):
     shoes_product_tmpl_id = fields.Many2one('project.template', string="Product")
 
     def create_shoe_model(self):
-        if not self.product_tmpl_id.id:
+        if not self.shoes_product_tmpl_id.id:
             newproduct = self.env['product.template'].create({
                 'name': self.name,
                 'shoes_campaign_id':self.project_id.id,
