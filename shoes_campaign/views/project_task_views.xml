@@ -30,7 +30,9 @@
             </xpath>
 
             <xpath expr="//field[@name='active']" position="after">
-                <field name="shoes_product_tmpl_id" domain="[('detailed_type','=','product')]" invisible="not is_shoes_campaign"/>
+                <field name="shoes_product_tmpl_id"
+                       domain="[('detailed_type','=','product'),('is_pair','=',False)]"
+                       invisible="not is_shoes_campaign"/>
             </xpath>
 
         </field>
