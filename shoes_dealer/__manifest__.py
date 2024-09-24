@@ -42,7 +42,6 @@
         "views/product_template_views.xml",
         "views/product_product_views.xml",
         "views/res_company_views.xml",
-        "views/project_task_views.xml",
         "views/project_project_views.xml",
         "views/sale_order_views.xml",
         "views/sale_order_line_views.xml",
