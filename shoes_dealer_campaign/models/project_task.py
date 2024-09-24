@@ -29,3 +29,5 @@ class ProjectTask(models.Model):
     material_id = fields.Many2one(
         "product.material", string="Material", store=True, copy=True
     )
+
+    product_tmpl_id = fields.Many2one('project.template', string="Product")
