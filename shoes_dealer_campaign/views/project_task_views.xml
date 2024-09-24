@@ -22,7 +22,7 @@
                         <field name="shoes_hscode_id"/>
                     </group>
                 </group>
-                <field name="shoes_campaign_id" invisible="1"/>
+                <field name="is_shoes_campaign" invisible="1"/>
             </xpath>
 
         </field>
