@@ -126,7 +126,7 @@ class SaleOrderLine(models.Model):
         self.product_id = self.product_saleko_id.id
 
 
-    @api.onchange('name', 'product_custom_attribute_value_ids.name')
+    @api.onchange('name')
     def _check_valid_shoes_assortment_custom_attributes(self):
         for record in self:
             cleanvalues, sizes, pairs, pair_products, pairs_count = "", "", "", "", 0
