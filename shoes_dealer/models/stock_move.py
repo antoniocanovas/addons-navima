@@ -14,7 +14,7 @@ class StockMove(models.Model):
     @api.depends('move_line_ids.quantity')
     def _get_shoes_stock_move_pair_count(self):
         for move in self:
-            move.pairs_count = sum(line.quantity for line in move.move_line_ids) * self.product_id.pairs_count
+            move.pairs_count = sum(line.quantity for line in move.move_line_ids) * move.product_id.pairs_count
     pairs_count = fields.Integer(
         "Pairs", store=True, compute="_get_shoes_stock_move_pair_count"
     )
