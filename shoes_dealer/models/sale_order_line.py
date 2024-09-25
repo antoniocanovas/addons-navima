@@ -13,12 +13,12 @@ class SaleOrderLine(models.Model):
     purchase_line_id = fields.Many2one("purchase.order.line", string="Purchase line")
 
     # Comercialmente en cada pedido quieren saber cuántos pares se han vendido:
-    @api.depends("product_id", "product_uom_qty", "pairs_custom_assortment_count")
+    @api.depends("product_id", "product_uom_qty", "custom_assortment_pairs")
     def _get_shoes_sale_line_pair_count(self):
         for record in self:
             total = 0
             if record.product_custom_attribute_value_ids.ids:
-                total = record.pairs_custom_assortment_count * record.product_uom_qty
+                total = record.custom_assortment_pairs * record.product_uom_qty
             else:
                 total = record.product_id.pairs_count * record.product_uom_qty
             record["pairs_count"] = total
@@ -28,7 +28,7 @@ class SaleOrderLine(models.Model):
     )
 
     @api.depends('write_date')
-    def _get_pairs_custom_assortment(self):
+    def _get_custom_assortment_pairs(self):
         for record in self:
             pairs_count = 0
             if record.product_id.is_assortment and record.name:
@@ -44,9 +44,9 @@ class SaleOrderLine(models.Model):
                     for li in customvalues:
                         element = li.split("x")
                         pairs_count += int(element[1])
-                    record.pairs_custom_assortment_count = pairs_count
-    pairs_custom_assortment_count = fields.Integer("Custom assortment pairs", store=True,
-                                                   compute='_get_pairs_custom_assortment')
+                    record.custom_assortment_pairs = pairs_count
+    custom_assortment_pairs = fields.Integer("Custom assortment pairs", store=True,
+                                                   compute='_get_custom_assortment_pairs')
 
     @api.depends('write_date')
     def _get_assortment_pair(self):
@@ -82,7 +82,10 @@ class SaleOrderLine(models.Model):
                     if len(pair_products) > 0: pair_products = pair_products[:-1]
 
                     cleanvalues = sizes + ";" + pairs + ";" + pair_products
-                    record['assortment_pair'] = cleanvalues
+                # Caso de un surtido normal (no custom) con ldm:
+                elif not customvalue and record.product_id.bom_ids.ids:
+                    cleanvalues = record.product_id.bom_ids[0].assortment_pair
+                record['assortment_pair'] = cleanvalues
     assortment_pair = fields.Char('Assortment pairs', compute='_get_assortment_pair')
 
     # Precio especial del para en la línea de ventas, recalculará precio unitario del producto surtido:
@@ -188,13 +191,13 @@ class SaleOrderLine(models.Model):
 #    @api.onchange('name')
     def _check_valid_shoes_assortment_custom_attributes(self):
         for record in self:
-            cleanvalues, sizes, pairs, pair_products, pairs_count = "", "", "", "", 0
+#            cleanvalues, sizes, pairs, pair_products, pairs_count = "", "", "", "", 0
             size_attribute = self.env.company.size_attribute_id
             sale_line_product = record.product_id
             sale_line_product_color = sale_line_product.color_attribute_id
             shoes_pair_model = sale_line_product.product_tmpl_single_id
 
-            # Si pongo en el if record.product_custom_attribute_value_ids, no pasa !!
+            # Si pongo en el if record.product_custom_attribute_value_ids, no pasa (uso name) !!
             if sale_line_product.is_assortment and record.name:
                 try:
                     customvalue = record.product_custom_attribute_value_ids[0].custom_value
@@ -228,6 +231,7 @@ class SaleOrderLine(models.Model):
                             qty = int(element[1])
                         except:
                             raise UserError(element[1] + ", no parece una cantidad válida. Indica un número entero válido.")
+"""
                         sizes += element[0] + ","
                         pairs += element[1] + ","
                         pair_products += str(pppair.id) + ","
@@ -240,4 +244,5 @@ class SaleOrderLine(models.Model):
 
                     cleanvalues = sizes + ";" + pairs + ";" + pair_products
                     record.write(
-                        {'assortment_pair': cleanvalues, 'pairs_custom_assortment_count': pairs_count})
+                        {'assortment_pair': cleanvalues, 'custom_assortment_pairs': pairs_count})
+"""
