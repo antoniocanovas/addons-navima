@@ -133,9 +133,9 @@ class SaleOrderLine(models.Model):
             sale_line_product_color = sale_line_product.color_attribute_id
             shoes_pair_model = sale_line_product.product_tmpl_single_id
 
-            raise UserError('He llegado y ' + str(record.product_custom_attribute_value_ids.ids))
+            if sale_line_product.is_assortment and record.name:
+                raise UserError('He llegado y ' + str(record.product_custom_attribute_value_ids.ids))
 
-            if sale_line_product.is_assortment:
                 # Quitar espacios del campo custom del surtido:
                 customvalue = record.custom_value.replace(" ", "").lower()
                 customvalues = customvalue.split(",")
