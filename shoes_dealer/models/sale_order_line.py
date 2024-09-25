@@ -137,7 +137,7 @@ class SaleOrderLine(models.Model):
             if sale_line_product.is_assortment and record.name:
                 customvalue = record.product_custom_attribute_value_ids[0].custom_value
                 if customvalue:
-                    raise UserError('He llegado y ' + str(custom_value))
+                    raise UserError('He llegado y ' + str(customvalue))
                 else:
                     raise UserError('No custom value')
 
