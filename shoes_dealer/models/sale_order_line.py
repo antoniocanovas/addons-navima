@@ -45,7 +45,7 @@ class SaleOrderLine(models.Model):
                         element = li.split("x")
                         pairs_count += int(element[1])
                     record.pairs_custom_assortment_count = pairs_count
-    pairs_custom_assortment_count = fields.Integer("Custom assortment pairs", store=True,
+    pairs_custom_assortment_count = fields.Integer("Custom assortment pairs",
                                                    compute='_get_pairs_custom_assortment')
 
 
