@@ -48,8 +48,42 @@ class SaleOrderLine(models.Model):
     pairs_custom_assortment_count = fields.Integer("Custom assortment pairs", store=True,
                                                    compute='_get_pairs_custom_assortment')
 
+    @api.depends('write_date')
+    def _get_assortment_pair(self):
+        for record in self:
+            cleanvalues, sizes, pairs, pair_products, pairs_count = "", "", "", "", 0
+            if record.product_id.is_assortment and record.name:
+                try:
+                    customvalue = record.product_custom_attribute_value_ids[0].custom_value
+                except:
+                    continue
+                if customvalue:
+                    # Quitar espacios del campo custom del surtido:
+                    customvalue = customvalue.replace(" ", "").lower()
+                    customvalues = customvalue.split(",")
+                    for li in customvalues:
+                        element = li.split("x")
+                        # Para tallas (encontrar si existe la talla y color en el par):
+                        color_attribute_value_id = record.product_id.color_attribute_id
+                        size_attribute = self.env.company.size_attribute_id
+                        size_attribute_value_id = self.env['product.attribute.value'].search(
+                            [('attribute_id', '=', size_attribute.id), ('name', '=', element[0])])
 
-    assortment_pair = fields.Char('Assortment pairs')
+                        pppair = self.env['product.product'].search([('color_attribute_id', '=', color_attribute_value_id.id),
+                                                                     ('size_attribute_id', '=', size_attribute_value_id.id),
+                                                                     ('product_tmpl_id', '=', shoes_pair_model.id)])
+                        sizes += element[0] + ","
+                        pairs += element[1] + ","
+                        pair_products += str(pppair.id) + ","
+
+                    # OK, guardamos valores, tras quitar la última coma:
+                    if len(sizes) > 0: sizes = sizes[:-1]
+                    if len(pairs) > 0: pairs = pairs[:-1]
+                    if len(pair_products) > 0: pair_products = pair_products[:-1]
+
+                    cleanvalues = sizes + ";" + pairs + ";" + pair_products
+                    record['assortment_pair'] = cleanvalues
+    assortment_pair = fields.Char('Assortment pairs', compute='_get_assortment_pair')
 
     # Precio especial del para en la línea de ventas, recalculará precio unitario del producto surtido:
     special_pair_price = fields.Monetary("SPP", help="Special pair price")
