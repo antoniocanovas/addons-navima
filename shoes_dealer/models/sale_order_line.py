@@ -71,7 +71,7 @@ class SaleOrderLine(models.Model):
 
                         pppair = self.env['product.product'].search([('color_attribute_id', '=', color_attribute_value_id.id),
                                                                      ('size_attribute_id', '=', size_attribute_value_id.id),
-                                                                     ('product_tmpl_id', '=', shoes_pair_model.id)])
+                                                                     ('product_tmpl_id', '=', record.product_id.product_tmpl_single_id.id)])
                         sizes += element[0] + ","
                         pairs += element[1] + ","
                         pair_products += str(pppair.id) + ","
