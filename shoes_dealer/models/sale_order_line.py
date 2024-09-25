@@ -51,7 +51,7 @@ class SaleOrderLine(models.Model):
     @api.depends('write_date')
     def _get_assortment_pair(self):
         for record in self:
-            cleanvalues, sizes, pairs, pair_products, pairs_count = "", "", "", "", 0
+            customvalue, cleanvalues, sizes, pairs, pair_products, pairs_count = "", "", "", "", "", 0
             if record.product_id.is_assortment and record.name:
                 if record.product_custom_attribute_value_ids.ids:
                     customvalue =  record.product_custom_attribute_value_ids[0].custom_value
