@@ -23,6 +23,8 @@ class SaleOrderLine(models.Model):
     pairs_count = fields.Integer(
         "Pairs", store=True, compute="_get_shoes_sale_line_pair_count"
     )
+    pairs_custom_assortment_count = fields.Integer("Custom assortment pairs")
+    assortment_pair = fields.Char('Assortment pairs', readonly=True)
 
     # Precio especial del para en la línea de ventas, recalculará precio unitario del producto surtido:
     special_pair_price = fields.Monetary("SPP", help="Special pair price")
@@ -174,5 +176,5 @@ class SaleOrderLine(models.Model):
                     if len(pair_products) > 0: pair_products = pair_products[:-1]
 
                     cleanvalues = sizes + ";" + pairs + ";" + pair_products
-                    record.product_custom_attribute_value_ids[0].write(
-                        {'assortment_pair': cleanvalues, 'pairs_count': pairs_count})
+                    record.write(
+                        {'assortment_pair': cleanvalues, 'pairs_custom_assortment_count': pairs_count})
