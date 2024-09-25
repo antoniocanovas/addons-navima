@@ -124,7 +124,7 @@ class SaleOrderLine(models.Model):
         self.product_id = self.product_saleko_id.id
 
 
-    @api.onchange('name')
+    @api.onchange('name', 'product_custom_attribute_value_ids.name')
     def _check_valid_shoes_custom_attribute(self):
         for record in self:
             cleanvalues, sizes, pairs, pair_products, pairs_count = "", "", "", "", 0
@@ -133,7 +133,7 @@ class SaleOrderLine(models.Model):
             sale_line_product_color = sale_line_product.color_attribute_id
             shoes_pair_model = sale_line_product.product_tmpl_single_id
 
-            if sale_line_product.is_assortment and record.name:
+            if sale_line_product.is_assortment and record.name and record.product_custom_attribute_value_ids.ids:
                 raise UserError('He llegado y ' + str(record.product_custom_attribute_value_ids.ids))
 
                 # Quitar espacios del campo custom del surtido:
