@@ -6,8 +6,8 @@ from odoo import fields, models, api
 class ProductAttributeCustomValue(models.Model):
     _inherit = 'product.attribute.custom.value'
 
-    assortment_pair = fields.Char('Assortment pairs', readonly=True, store=True, compute='_get_assortment_pair')
-    pairs_count = fields.Integer('Pairs count', readonly=True)
+    assortment_pair = fields.Char(related='sale_order_line_id.assortment_pair')
+    pairs_count = fields.Integer(related='sale_order_line_id.pairs_custom_assortment_count')
 
 
     # Validación de datos introducidos pasada a líne de venta para evitar que el chequeo sea al guardar el pedido,

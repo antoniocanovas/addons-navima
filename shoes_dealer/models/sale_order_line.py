@@ -13,12 +13,15 @@ class SaleOrderLine(models.Model):
     purchase_line_id = fields.Many2one("purchase.order.line", string="Purchase line")
 
     # Comercialmente en cada pedido quieren saber cuántos pares se han vendido:
-    @api.depends("product_id", "product_uom_qty")
+    @api.depends("product_id", "product_uom_qty", "pairs_custom_assortment_count")
     def _get_shoes_sale_line_pair_count(self):
         for record in self:
-            record["pairs_count"] = (
-                record.product_id.pairs_count * record.product_uom_qty
-            )
+            total = 0
+            if record.product_custom_attribute_value_ids.ids:
+                total = record.pairs_custom_assortment_count * record.product_uom_qty
+            else:
+                total = record.product_id.pairs_count * record.product_uom_qty
+            record["pairs_count"] = total
 
     pairs_count = fields.Integer(
         "Pairs", store=True, compute="_get_shoes_sale_line_pair_count"
@@ -142,7 +145,7 @@ class SaleOrderLine(models.Model):
                 except:
                     continue
 
-                if customvalue != "":
+                if customvalue:
                     # Quitar espacios del campo custom del surtido:
                     customvalue = customvalue.replace(" ", "").lower()
                     customvalues = customvalue.split(",")
