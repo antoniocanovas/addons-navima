@@ -10,6 +10,9 @@ class ProductAttributeCustomValue(models.Model):
     assortment_pair = fields.Char('Assortment pairs', readonly=True, store=True, compute='_get_assortment_pair')
     pairs_count = fields.Integer('Pairs count', readonly=True)
 
+
+    # pasado a líne de venta para evitar que el chequeo sea al guardar el pedido completo (24/09/24):
+    """
     @api.depends('custom_value')
     def _get_assortment_pair(self):
         for record in self:
@@ -58,3 +61,4 @@ class ProductAttributeCustomValue(models.Model):
 
                 cleanvalues = sizes + ";" + pairs + ";" + pair_products
                 record.write({'assortment_pair': cleanvalues, 'pairs_count': pairs_count})
+    """
