@@ -46,7 +46,7 @@ class SaleOrderLine(models.Model):
                         pairs_count += int(element[1])
                     record.custom_assortment_pairs = pairs_count
     custom_assortment_pairs = fields.Integer("Custom assortment pairs", store=True,
-                                                   compute='_get_custom_assortment_pairs')
+                                             compute='_get_custom_assortment_pairs')
 
     @api.depends('write_date')
     def _get_assortment_pair(self):
@@ -88,7 +88,7 @@ class SaleOrderLine(models.Model):
                         cleanvalues = record.product_id.bom_ids[0].assortment_pair
                     except:
                         continue
-                record['assortment_pair'] = cleanvalues
+            record['assortment_pair'] = cleanvalues
     assortment_pair = fields.Char('Assortment pairs', compute='_get_assortment_pair')
 
     # Precio especial del para en la línea de ventas, recalculará precio unitario del producto surtido:
@@ -98,7 +98,7 @@ class SaleOrderLine(models.Model):
     def _update_price_unit_from_spp(self):
         for record in self:
             record["price_unit"] = (
-                record.pairs_count * record.special_pair_price / record.product_uom_qty
+                    record.pairs_count * record.special_pair_price / record.product_uom_qty
             )
 
     # Para informes:
@@ -191,10 +191,10 @@ class SaleOrderLine(models.Model):
         self.product_id = self.product_saleko_id.id
 
 
-#    @api.onchange('name')
+    #    @api.onchange('name')
     def _check_valid_shoes_assortment_custom_attributes(self):
         for record in self:
-#            cleanvalues, sizes, pairs, pair_products, pairs_count = "", "", "", "", 0
+            #            cleanvalues, sizes, pairs, pair_products, pairs_count = "", "", "", "", 0
             size_attribute = self.env.company.size_attribute_id
             sale_line_product = record.product_id
             sale_line_product_color = sale_line_product.color_attribute_id
