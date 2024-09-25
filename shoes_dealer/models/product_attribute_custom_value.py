@@ -12,7 +12,7 @@ class ProductAttributeCustomValue(models.Model):
 
     # Validación de datos introducidos pasada a líne de venta para evitar que el chequeo sea al guardar el pedido,
     # aquí queda exclusivamente la grabación final del campo (que como es para imprimir podría quedar en SOL):
-
+    """
     @api.depends('custom_value')
     def _get_assortment_pair(self):
         for record in self:
