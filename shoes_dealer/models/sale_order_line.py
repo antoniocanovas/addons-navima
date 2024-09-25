@@ -137,7 +137,11 @@ class SaleOrderLine(models.Model):
 
             # Si pongo en el if record.product_custom_attribute_value_ids, no pasa !!
             if sale_line_product.is_assortment and record.name:
-                customvalue = record.product_custom_attribute_value_ids[0].custom_value
+                try:
+                    customvalue = record.product_custom_attribute_value_ids[0].custom_value
+                except:
+                    continue
+
                 if customvalue != "":
                     # Quitar espacios del campo custom del surtido:
                     customvalue = customvalue.replace(" ", "").lower()
