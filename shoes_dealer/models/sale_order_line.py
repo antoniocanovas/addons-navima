@@ -126,5 +126,7 @@ class SaleOrderLine(models.Model):
 
     @api.onchange('name')
     def _text(self):
-        if self.name:
-            raise UserError('cambias el nombre')
+        self.ensure_one()
+        if (self.name) and (self.product_custom_attribute_value_ids.ids):
+            value = self.product_custom_attribute_value_ids[0]
+            value._get_assortment_pair()

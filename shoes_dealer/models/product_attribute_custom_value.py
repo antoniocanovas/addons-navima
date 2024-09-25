@@ -21,7 +21,7 @@ class ProductAttributeCustomValue(models.Model):
 
             if sale_line_product.is_assortment:
                 # Quitar espacios del campo custom del surtido:
-                customvalue = record.custom_value.replace(" ", "")
+                customvalue = record.custom_value.replace(" ", "").lower()
                 customvalues = customvalue.split(",")
 
                 # Chequear que las tallas o cantidades introducidas son válidas y el par está creado:
