@@ -133,7 +133,8 @@ class SaleOrderLine(models.Model):
             sale_line_product_color = sale_line_product.color_attribute_id
             shoes_pair_model = sale_line_product.product_tmpl_single_id
 
-            if sale_line_product.is_assortment and record.name and record.product_custom_attribute_value_ids.ids:
+# Si pongo en el if record.product_custom_attribute_value_ids, no pasa !!
+            if sale_line_product.is_assortment and record.name:
                 raise UserError('He llegado y ' + str(record.product_custom_attribute_value_ids.ids))
 
                 # Quitar espacios del campo custom del surtido:
