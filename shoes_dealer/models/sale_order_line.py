@@ -27,8 +27,7 @@ class SaleOrderLine(models.Model):
         "Pairs", store=True, compute="_get_shoes_sale_line_pair_count"
     )
 
-    @api.depends('product_custom_attribute_value_ids')
-
+    @api.depends('name')
     def _get_pairs_custom_assortment(self):
         for record in self:
             pairs_count = 0
@@ -42,14 +41,12 @@ class SaleOrderLine(models.Model):
                     customvalue = customvalue.replace(" ", "").lower()
                     customvalues = customvalue.split(",")
 
-                    # Chequear que las tallas o cantidades introducidas son válidas y el par está creado:
                     for li in customvalues:
                         element = li.split("x")
                         pairs_count += int(element[1])
-
-                    # OK, guardamos valores, tras quitar la última coma:
                     record.pairs_custom_assortment_count = pairs_count
-    pairs_custom_assortment_count = fields.Integer("Custom assortment pairs", compute='_get_pairs_custom_assortment')
+    pairs_custom_assortment_count = fields.Integer("Custom assortment pairs", store=True,
+                                                   compute='_get_pairs_custom_assortment')
 
 
     assortment_pair = fields.Char('Assortment pairs')
