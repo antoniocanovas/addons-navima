@@ -26,7 +26,60 @@ class SaleOrderLine(models.Model):
     pairs_count = fields.Integer(
         "Pairs", store=True, compute="_get_shoes_sale_line_pair_count"
     )
-    pairs_custom_assortment_count = fields.Integer("Custom assortment pairs")
+
+    @api.depends('product_custom_attribute_value_ids')
+
+    def _get_pairs_custom_assortment(self):
+        for record in self:
+            pairs_count = 0
+            if record.product_id.is_assortment and record.name:
+                try:
+                    customvalue = record.product_custom_attribute_value_ids[0].custom_value
+                except:
+                    continue
+
+                if customvalue:
+                    # Quitar espacios del campo custom del surtido:
+                    customvalue = customvalue.replace(" ", "").lower()
+                    customvalues = customvalue.split(",")
+
+                    # Chequear que las tallas o cantidades introducidas son válidas y el par está creado:
+                    for li in customvalues:
+                        element = li.split("x")
+                        # Para tallas (encontrar si existe la talla y color en el par):
+                        color_attribute_value_id = sale_line_product_color
+                        size_attribute_value_id = self.env['product.attribute.value'].search(
+                            [('attribute_id', '=', size_attribute.id), ('name', '=', element[0])])
+                        if not size_attribute_value_id.id:
+                            raise UserError("La talla " + str(element[0]) + " no existe en el sistema.")
+
+                        pppair = self.env['product.product'].search([('color_attribute_id', '=', color_attribute_value_id.id),
+                                                                     ('size_attribute_id', '=', size_attribute_value_id.id),
+                                                                     ('product_tmpl_id', '=', shoes_pair_model.id)])
+                        if not pppair.id:
+                            raise UserError("No encuentro el par suelto de talla " + str(
+                                element[0]) + " y color " + color_attribute_value_id.name + " en este modelo.")
+
+                        # Para cantidades (ok):
+                        try:
+                            qty = int(element[1])
+                        except:
+                            raise UserError(element[1] + ", no parece una cantidad válida. Indica un número entero válido.")
+                        sizes += element[0] + ","
+                        pairs += element[1] + ","
+                        pair_products += str(pppair.id) + ","
+                        pairs_count += int(element[1])
+
+                    # OK, guardamos valores, tras quitar la última coma:
+                    if len(sizes) > 0: sizes = sizes[:-1]
+                    if len(pairs) > 0: pairs = pairs[:-1]
+                    if len(pair_products) > 0: pair_products = pair_products[:-1]
+
+                    cleanvalues = sizes + ";" + pairs + ";" + pair_products
+                    record.pairs_custom_assortment_count = pairs_count
+    pairs_custom_assortment_count = fields.Integer("Custom assortment pairs", compute='_get_pairs_custom_assortment')
+
+
     assortment_pair = fields.Char('Assortment pairs')
 
     # Precio especial del para en la línea de ventas, recalculará precio unitario del producto surtido:
