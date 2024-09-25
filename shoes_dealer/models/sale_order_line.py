@@ -27,7 +27,7 @@ class SaleOrderLine(models.Model):
         "Pairs", store=True, compute="_get_shoes_sale_line_pair_count"
     )
 
-    @api.onchange('name')
+    @api.onchange('product_custom_attribute_value_ids.custom_value')
     def _get_pairs_custom_assortment(self):
         for record in self:
             pairs_count = 0
