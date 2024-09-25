@@ -84,7 +84,10 @@ class SaleOrderLine(models.Model):
                     cleanvalues = sizes + ";" + pairs + ";" + pair_products
                 # Caso de un surtido normal (no custom) con ldm:
                 elif not customvalue and record.product_id.bom_ids.ids:
-                    cleanvalues = record.product_id.bom_ids[0].assortment_pair
+                    try:
+                        cleanvalues = record.product_id.bom_ids[0].assortment_pair
+                    except:
+                        continue
                 record['assortment_pair'] = cleanvalues
     assortment_pair = fields.Char('Assortment pairs', compute='_get_assortment_pair')
 
