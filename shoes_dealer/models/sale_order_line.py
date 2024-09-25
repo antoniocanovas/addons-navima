@@ -53,41 +53,38 @@ class SaleOrderLine(models.Model):
         for record in self:
             cleanvalues, sizes, pairs, pair_products, pairs_count = "", "", "", "", 0
             if record.product_id.is_assortment and record.name:
-                try:
-                    customvalue = record.product_custom_attribute_value_ids[0].custom_value
-                except:
-                    continue
-                if customvalue:
-                    # Quitar espacios del campo custom del surtido:
-                    customvalue = customvalue.replace(" ", "").lower()
-                    customvalues = customvalue.split(",")
-                    for li in customvalues:
-                        element = li.split("x")
-                        # Para tallas (encontrar si existe la talla y color en el par):
-                        color_attribute_value_id = record.product_id.color_attribute_id
-                        size_attribute = self.env.company.size_attribute_id
-                        size_attribute_value_id = self.env['product.attribute.value'].search(
-                            [('attribute_id', '=', size_attribute.id), ('name', '=', element[0])])
+                if record.product_custom_attribute_value_ids.ids:
+                    customvalue =  record.product_custom_attribute_value_ids[0].custom_value
+                    if customvalue:
+                        # Quitar espacios del campo custom del surtido:
+                        customvalue = customvalue.replace(" ", "").lower()
+                        customvalues = customvalue.split(",")
+                        for li in customvalues:
+                            element = li.split("x")
+                            # Para tallas (encontrar si existe la talla y color en el par):
+                            color_attribute_value_id = record.product_id.color_attribute_id
+                            size_attribute = self.env.company.size_attribute_id
+                            size_attribute_value_id = self.env['product.attribute.value'].search(
+                                [('attribute_id', '=', size_attribute.id), ('name', '=', element[0])])
 
-                        pppair = self.env['product.product'].search([('color_attribute_id', '=', color_attribute_value_id.id),
-                                                                     ('size_attribute_id', '=', size_attribute_value_id.id),
-                                                                     ('product_tmpl_id', '=', record.product_id.product_tmpl_single_id.id)])
-                        sizes += element[0] + ","
-                        pairs += element[1] + ","
-                        pair_products += str(pppair.id) + ","
+                            pppair = self.env['product.product'].search([('color_attribute_id', '=', color_attribute_value_id.id),
+                                                                         ('size_attribute_id', '=', size_attribute_value_id.id),
+                                                                         ('product_tmpl_id', '=', record.product_id.product_tmpl_single_id.id)])
+                            sizes += element[0] + ","
+                            pairs += element[1] + ","
+                            pair_products += str(pppair.id) + ","
 
-                    # OK, guardamos valores, tras quitar la última coma:
-                    if len(sizes) > 0: sizes = sizes[:-1]
-                    if len(pairs) > 0: pairs = pairs[:-1]
-                    if len(pair_products) > 0: pair_products = pair_products[:-1]
+                        # OK, guardamos valores, tras quitar la última coma:
+                        if len(sizes) > 0: sizes = sizes[:-1]
+                        if len(pairs) > 0: pairs = pairs[:-1]
+                        if len(pair_products) > 0: pair_products = pair_products[:-1]
 
-                    cleanvalues = sizes + ";" + pairs + ";" + pair_products
+                        cleanvalues = sizes + ";" + pairs + ";" + pair_products
+
                 # Caso de un surtido normal (no custom) con ldm:
-#                elif not customvalue and record.product_id.bom_ids.ids:
-#                    try:
-#                        cleanvalues = record.product_id.bom_ids[0].assortment_pair
-#                    except:
-#                        continue
+                elif not customvalue and record.product_id.bom_ids.ids:
+                    bom = record.product_id.bom_ids[0]
+                    cleanvalues = bom.assortment_pair
             record['assortment_pair'] = cleanvalues
     assortment_pair = fields.Char('Assortment pairs', compute='_get_assortment_pair')
 
