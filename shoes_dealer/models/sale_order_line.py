@@ -27,7 +27,7 @@ class SaleOrderLine(models.Model):
         "Pairs", store=True, compute="_get_shoes_sale_line_pair_count"
     )
 
-    @api.onchange('product_custom_attribute_value_ids.custom_value')
+    @api.depends('write_date')
     def _get_pairs_custom_assortment(self):
         for record in self:
             pairs_count = 0
@@ -45,7 +45,7 @@ class SaleOrderLine(models.Model):
                         element = li.split("x")
                         pairs_count += int(element[1])
                     record.pairs_custom_assortment_count = pairs_count
-    pairs_custom_assortment_count = fields.Integer("Custom assortment pairs",
+    pairs_custom_assortment_count = fields.Integer("Custom assortment pairs", store=True,
                                                    compute='_get_pairs_custom_assortment')
 
 
