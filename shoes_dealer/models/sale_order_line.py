@@ -13,7 +13,7 @@ class SaleOrderLine(models.Model):
     purchase_line_id = fields.Many2one("purchase.order.line", string="Purchase line")
 
     # Comercialmente en cada pedido quieren saber cuántos pares se han vendido:
-    @api.depends("product_id", "product_uom_qty")
+    @api.depends("product_id", "product_uom_qty", "pairs_custom_assortment_count")
     def _get_shoes_sale_line_pair_count(self):
         for record in self:
             total = 0
@@ -129,7 +129,7 @@ class SaleOrderLine(models.Model):
         self.product_id = self.product_saleko_id.id
 
 
-    @api.onchange('name')
+#    @api.onchange('name')
     def _check_valid_shoes_assortment_custom_attributes(self):
         for record in self:
             cleanvalues, sizes, pairs, pair_products, pairs_count = "", "", "", "", 0
