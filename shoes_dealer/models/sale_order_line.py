@@ -127,6 +127,7 @@ class SaleOrderLine(models.Model):
     @api.onchange('name')
     def _text(self):
         self.ensure_one()
-        if (self.name) and (self.product_custom_attribute_value_ids.ids):
+        if (self.name):
             value = self.product_custom_attribute_value_ids[0]
-            value._get_assortment_pair()
+            if value.id:
+                value._get_assortment_pair()
