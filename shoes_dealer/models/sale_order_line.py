@@ -133,54 +133,46 @@ class SaleOrderLine(models.Model):
             sale_line_product_color = sale_line_product.color_attribute_id
             shoes_pair_model = sale_line_product.product_tmpl_single_id
 
-# Si pongo en el if record.product_custom_attribute_value_ids, no pasa !!
+            # Si pongo en el if record.product_custom_attribute_value_ids, no pasa !!
             if sale_line_product.is_assortment and record.name:
                 customvalue = record.product_custom_attribute_value_ids[0].custom_value
                 if customvalue:
-                    raise UserError('He llegado y ' + str(customvalue))
-                else:
-                    raise UserError('No custom value')
+                    # Quitar espacios del campo custom del surtido:
+                    customvalue = customvalue.replace(" ", "").lower()
+                    customvalues = customvalue.split(",")
 
-                # Quitar espacios del campo custom del surtido:
-                customvalue = record.custom_value.replace(" ", "").lower()
-                customvalues = customvalue.split(",")
+                    # Chequear que las tallas o cantidades introducidas son válidas y el par está creado:
+                    for li in customvalues:
+                        element = li.split("x")
+                        # Para tallas (encontrar si existe la talla y color en el par):
+                        color_attribute_value_id = sale_line_product_color
+                        size_attribute_value_id = self.env['product.attribute.value'].search(
+                            [('attribute_id', '=', size_attribute.id), ('name', '=', element[0])])
+                        if not size_attribute_value_id.id:
+                            raise UserError("La talla " + str(element[0]) + " no existe en el sistema.")
 
-                # Chequear que las tallas o cantidades introducidas son válidas y el par está creado:
-                for li in customvalues:
-                    element = li.split("x")
-                    # Para tallas (encontrar si existe la talla y color en el par):
-                    color_attribute_value_id = sale_line_product_color
-                    size_attribute_value_id = self.env['product.attribute.value'].search(
-                        [('attribute_id', '=', size_attribute.id), ('name', '=', element[0])])
-                    if not size_attribute_value_id.id:
-                        raise UserError("La talla " + str(element[0]) + " no existe en el sistema.")
+                        pppair = self.env['product.product'].search([('color_attribute_id', '=', color_attribute_value_id.id),
+                                                                     ('size_attribute_id', '=', size_attribute_value_id.id),
+                                                                     ('product_tmpl_id', '=', shoes_pair_model.id)])
+                        if not pppair.id:
+                            raise UserError("No encuentro el par suelto de talla " + str(
+                                element[0]) + " y color " + color_attribute_value_id.name + " en este modelo.")
 
-                    pppair = self.env['product.product'].search([('color_attribute_id', '=', color_attribute_value_id.id),
-                                                                 ('size_attribute_id', '=', size_attribute_value_id.id),
-                                                                 ('product_tmpl_id', '=', shoes_pair_model.id)])
-                    if not pppair.id:
-                        raise UserError("No encuentro el par suelto de talla " + str(
-                            element[0]) + " y color " + color_attribute_value_id.name + " en este modelo.")
+                        # Para cantidades (ok):
+                        try:
+                            qty = int(element[1])
+                        except:
+                            raise UserError(element[1] + ", no parece una cantidad válida. Indica un número entero válido.")
+                        sizes += element[0] + ","
+                        pairs += element[1] + ","
+                        pair_products += str(pppair.id) + ","
+                        pairs_count += int(element[1])
 
-                    # Para cantidades (ok):
-                    try:
-                        qty = int(element[1])
-                    except:
-                        raise UserError(element[1] + ", no parece una cantidad válida. Indica un número entero válido.")
-                    sizes += element[0] + ","
-                    pairs += element[1] + ","
-                    pair_products += str(pppair.id) + ","
-                    pairs_count += int(element[1])
+                    # OK, guardamos valores, tras quitar la última coma:
+                    if len(sizes) > 0: sizes = sizes[:-1]
+                    if len(pairs) > 0: pairs = pairs[:-1]
+                    if len(pair_products) > 0: pair_products = pair_products[:-1]
 
-                # OK, guardamos valores, tras quitar la última coma:
-                if len(sizes) > 0: sizes = sizes[:-1]
-                if len(pairs) > 0: pairs = pairs[:-1]
-                if len(pair_products) > 0: pair_products = pair_products[:-1]
-
-                cleanvalues = sizes + ";" + pairs + ";" + pair_products
-                record.write({'assortment_pair': cleanvalues, 'pairs_count': pairs_count})
-        self.ensure_one()
-        if (self.name):
-            value = self.product_custom_attribute_value_ids[0]
-            if value.id:
-                value._get_assortment_pair()
+                    cleanvalues = sizes + ";" + pairs + ";" + pair_products
+                    record.product_custom_attribute_value_ids[0].write(
+                        {'assortment_pair': cleanvalues, 'pairs_count': pairs_count})
