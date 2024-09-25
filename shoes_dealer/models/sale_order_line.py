@@ -31,20 +31,15 @@ class SaleOrderLine(models.Model):
     def _get_custom_assortment_pairs(self):
         for record in self:
             pairs_count = 0
-            if record.product_id.is_assortment and record.name:
-                try:
-                    customvalue = record.product_custom_attribute_value_ids[0].custom_value
-                except:
-                    continue
-                if customvalue:
-                    # Quitar espacios del campo custom del surtido:
-                    customvalue = customvalue.replace(" ", "").lower()
-                    customvalues = customvalue.split(",")
-
-                    for li in customvalues:
-                        element = li.split("x")
-                        pairs_count += int(element[1])
-                    record.custom_assortment_pairs = pairs_count
+            if record.product_id.is_assortment and record.name and record.product_custom_attribute_value_ids.ids:
+                customvalue = record.product_custom_attribute_value_ids[0].custom_value
+                # Quitar espacios del campo custom del surtido:
+                customvalue = customvalue.replace(" ", "").lower()
+                customvalues = customvalue.split(",")
+                for li in customvalues:
+                    element = li.split("x")
+                    pairs_count += int(element[1])
+            record.custom_assortment_pairs = pairs_count
     custom_assortment_pairs = fields.Integer("Custom assortment pairs", store=True,
                                              compute='_get_custom_assortment_pairs')
 
