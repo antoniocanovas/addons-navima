@@ -20,7 +20,6 @@ class StockMoveLine(models.Model):
                 if record.move_id.sale_line_id.id: origin = record.move_id.sale_line_id
                 if record.move_id.purchase_line_id.id: origin = record.move_id.purchase_line_id.sale_line_id
                 if (origin.id) and (origin.product_custom_attribute_value_ids.ids):
-#                    customvalue = origin.product_custom_attribute_value_ids[0].assortment_pair
                     customvalue = origin.assortment_pair
 
             # Surtido estándar (no custom):
