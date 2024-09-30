@@ -8,8 +8,9 @@
         <field name="inherit_id" ref="stock.view_production_lot_form"/>
         <field name="arch" type="xml">
             <xpath expr="//group/group[2]" position="inside">
-                <field name="assortment_pair" readonly="1"/>
-                <field name="pairs_count"/>
+                <field name="assortment_pair" readonly="1" invisible="not is_assortment"/>
+                <field name="pairs_count" invisible="not is_assortment"/>
+                <field name="is_assortment" invisible="1"/>
             </xpath>
         </field>
     </record>

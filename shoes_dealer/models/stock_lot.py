@@ -7,6 +7,8 @@ class StockLot(models.Model):
 
     # Se cumplimenta desde AA al crear SML:
     assortment_pair = fields.Char('Assortment pair')
+    is_assortment = fields.Boolean(related='product_id.is_assortment')
+    is_pair = fields.Boolean(related='product_id.is_pair')
 
     def get_assortment_pair(self):
         for lot in self:
@@ -18,4 +20,4 @@ class StockLot(models.Model):
                     total += li.qty
             lot.pairs_count = total
 
-    pairs_count = fields.Integer('Assortment pairs count', compute='get_assortment_pair')
+    pairs_count = fields.Integer('Stock pairs', compute='get_assortment_pair')

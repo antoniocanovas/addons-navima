@@ -35,7 +35,7 @@ class StockMoveLine(models.Model):
                     new_assortment_pair = self.env['assortment.pair'].create(
                         {'product_id': p, 'bom_qty': quantity[i], 'sml_id': record.id})
                     i += 1
-                    if product.tracking != 'none':
+                    if product.product_tmpl_set_id.tracking in ['lot','serial']:
                         lot = record.lot_id
                         lot['assortment_pair'] = customvalue
 
