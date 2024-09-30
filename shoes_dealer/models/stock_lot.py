@@ -19,7 +19,7 @@ class StockLot(models.Model):
     def get_assortment_pair(self):
         for lot in self:
             total = 0
-            if (lot.product_id.is_assortment) and (lot.product_id.product_tmpl_single_id.id
+            if (lot.product_id.is_assortment) and (lot.product_id.product_tmpl_single_id.id):
                 pair_model = lot.product_id.product_tmpl_single_id
                 aps = env['assortment.pair'].search([('product_tmpl_id', '=', pair_model.id), ('lot_id', '=', lot.id)])
                 for li in aps:
