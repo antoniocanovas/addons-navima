@@ -36,7 +36,7 @@ class StockMoveLine(models.Model):
                         {'product_id': p, 'bom_qty': quantity[i], 'sml_id': record.id})
                     i += 1
                     if product.tracking != 'none':
-                        lot = new_assortment_pair.lot_id
+                        lot = record.lot_id
                         lot['assortment_pair'] = customvalue
 
 
