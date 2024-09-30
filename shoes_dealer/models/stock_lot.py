@@ -2,8 +2,8 @@
 
 from odoo import fields, models, api
 
-class MrpLot(models.Model):
-    _inherit = "mrp.lot"
+class StockLot(models.Model):
+    _inherit = "stock.lot"
 
     # Cuando se crea un STOCK.QUANT EN SML:
 #    def _get_assortment_pair(self):
