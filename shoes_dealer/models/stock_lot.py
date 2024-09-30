@@ -25,4 +25,5 @@ class StockLot(models.Model):
                 for li in aps:
                     total += li.qty
             lot.pairs_count = total
-    pairs_count = fields.Integer('Pairs', compute='get_assortment_pair')
+
+    pairs_count = fields.Integer('Assortment pairs count', compute='get_assortment_pair')

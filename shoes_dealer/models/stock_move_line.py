@@ -31,6 +31,13 @@ class StockMoveLine(models.Model):
                 elements = [list(map(int, item.split(","))) for item in customvalue.split(";")]
                 sizes, quantity, products, i = elements[0], elements[1], elements[2], 0
                 for p in products:
-                    self.env['assortment.pair'].create(
+                    product = self.env['product.product'].search([('id','=',p)])
+                    new_assortment_pair = self.env['assortment.pair'].create(
                         {'product_id': p, 'bom_qty': quantity[i], 'sml_id': record.id})
                     i += 1
+                    if product.tracking != 'none':
+                        lot = new_assortment_pair.lot_id
+                        lot['assortment_pair'] = customvalue
+
+
+                # Buscar los s/n de los productos anteriores, que es lo mismo que los SML y asignarles assortment_pair (customvalue) EN EL LOTE:
