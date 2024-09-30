@@ -26,8 +26,8 @@ class MrpBom(models.Model):
     @api.depends('bom_line_ids.product_qty')
     def _get_assortment_pair(self):
         for record in self:
+            cleanvalues, sizes, pairs, pair_products = "", "", "", ""
             if record.product_id.is_assortment:
-                cleanvalues, sizes, pairs, pair_products  = "","","", ""
                 for li in record.bom_line_ids:
                     if li.product_id.is_pair:
                         sizes += li.product_id.size_attribute_id.name + ","
