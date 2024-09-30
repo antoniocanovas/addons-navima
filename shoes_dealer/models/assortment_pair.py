@@ -17,6 +17,7 @@ class AssortmentPair(models.Model):
     sml_id = fields.Many2one('stock.move.line', string='Stock move line')
     sml_qty = fields.Float(related='sml_id.quantity_product_uom')
     sm_id = fields.Many2one('stock.move', string='Stock move', related='sml_id.move_id')
+    lot_id = fields.Many2one('stock.lot', string='Lot', related='sml_id.lot_id')
 
     @api.depends('sml_id.quantity_product_uom', 'product_id')
     def _get_sml_qty(self):

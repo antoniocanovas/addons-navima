@@ -45,6 +45,7 @@
                             <field name="product_id"/>
                             <field name="bom_qty"/>
                             <field name="qty"/>
+                            <field name="lot_id"/>
                         </group>
                         <group>
                             <field name="product_tmpl_id"/>
@@ -74,6 +75,7 @@
                 <field name="product_id"/>
                 <field name="product_tmpl_id" optional="hide"/>
                 <field name="bom_qty"/>
+                <field name="lot_id" optional="show"/>
                 <field name="qty"/>
                 <field name="partner_id"/>
                 <field name="sm_id" optional="hide"/>

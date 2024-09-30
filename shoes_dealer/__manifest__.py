@@ -53,6 +53,7 @@
         "views/mrp_bom_views.xml",
         "views/sale_report_views.xml",
         "views/shoes_report_views.xml",
+        "views/stock_lot_views.xml",
         "data/automatic_actions.xml",
         "reports/pnt_product_report.xml",
         "reports/pnt_product_report_template.xml",
