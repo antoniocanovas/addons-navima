@@ -18,7 +18,7 @@ class StockLot(models.Model):
 
     def get_assortment_pair(self):
         for lot in self:
-            ap = self.env["assortment.pair"].search([("product_id", "=", record.product_id.id),('lot_id','=', record.id)])
+            ap = self.env["assortment.pair"].search([("product_id", "=", lot.product_id.id),('lot_id','=', lot.id)])
             total = 0
             for li in ap:
                 total += li.qty
