@@ -10,3 +10,5 @@ class ProjectProject(models.Model):
 
     # Datos comunes para creación de productos desde tareas:
     product_brand_id = fields.Many2one('product.brand', string="Brand")
+    task_code_prefix = fields.Char('Task prefix')
+    task_code_sequence = fields.Integer('Task sequence', default=1)

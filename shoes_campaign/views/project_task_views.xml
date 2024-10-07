@@ -17,6 +17,7 @@
                 <group name="shoes_dealer_campaign" invisible="not is_shoes_campaign">
                     <group>
                         <field name="product_brand_id"/>
+                        <field name="code"/>
                         <field name="manufacturer_id"/>
                         <field name="material_id"/>
                     </group>

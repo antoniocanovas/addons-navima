@@ -12,6 +12,7 @@ class ProjectTask(models.Model):
 
     product_brand_id = fields.Many2one('product.brand', related='project_id.product_brand_id')
     manufacturer_id = fields.Many2one('res.partner', string='Manufacturer')
+    code = fields.Integer('Code')
     gender = fields.Selection(
         [("man", "Man"), ("woman", "Woman"), ("unisex", "Unisex")],
         string="Gender",
@@ -47,3 +48,11 @@ class ProjectTask(models.Model):
                 'material_id': self.material_id.id,
             })
             self.shoes_product_tmpl_id = newproduct.id
+
+    @api.depends('create_date')
+    def task_code_sequence(self):
+        ensure_one()
+        prefix = self.project_id.task_code_prefix
+        seq = self.project_id.task_code_sequence
+        self.code = prefix + str(seq*1000)[:3]
+        self.project_id.task_code_sequence = seq +1
