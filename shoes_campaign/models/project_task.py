@@ -51,7 +51,6 @@ class ProjectTask(models.Model):
 
     @api.depends('create_date')
     def task_code_sequence(self):
-        ensure_one()
         prefix = self.project_id.task_code_prefix
         seq = self.project_id.task_code_sequence
         self.code = prefix + str(seq + 1000)[-3:]
