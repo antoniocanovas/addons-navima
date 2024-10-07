@@ -49,7 +49,7 @@ class ProjectTask(models.Model):
             })
             self.shoes_product_tmpl_id = newproduct.id
 
-    @api.depends('create_date')
+    @api.constrains('create_date')
     def task_code_sequence(self):
         prefix = self.project_id.task_code_prefix
         seq = self.project_id.task_code_sequence
