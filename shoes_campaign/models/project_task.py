@@ -53,5 +53,6 @@ class ProjectTask(models.Model):
     def task_code_sequence(self):
         prefix = self.project_id.task_code_prefix
         seq = self.project_id.task_code_sequence
-        self.code = prefix + str(seq + 1000)[-3:]
+        code = prefix + str(seq + 1000)[-3:]
+        self.code = code
         self.project_id.task_code_sequence = seq +1
