@@ -54,5 +54,5 @@ class ProjectTask(models.Model):
         ensure_one()
         prefix = self.project_id.task_code_prefix
         seq = self.project_id.task_code_sequence
-        self.code = prefix + str(seq + 1000)[:3]
+        self.code = prefix + str(seq + 1000)[-3:]
         self.project_id.task_code_sequence = seq +1
