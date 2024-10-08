@@ -11,7 +11,8 @@
         <field name="arch" type="xml">
             <!-- En Pestaña inicial para datos generales: -->
             <xpath expr="//field[@name='product_tmpl_set_id']" position="after">
-                <field name="shoes_task_id" readonly="shoes_task_id"/>
+                <field name="shoes_task_id" readonly="shoes_task_id"
+                       domain="[('is_shoes_campaign','=',True),('project_id','=',shoes_campaign_id)]"/>
             </xpath>
         </field>
     </record>
