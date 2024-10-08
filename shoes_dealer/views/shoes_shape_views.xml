@@ -36,10 +36,27 @@
             <form>
                 <sheet>
                     <h1>
-                        <field name="name" placeholder="Women sizes ..."/>
+                        <field name="name" placeholder="Shape name ..."/>
                     </h1>
                     <group>
+                        <field name="heel_type"/>
+                        <field name="heel_height"/>
+                        <field name="platform_height"/>
+                        <field name="platform_material_id"/>
                     </group>
+                    <group>
+                        <group>
+                            <field name="sole_material_main_id"/>
+                            <field name="sole_material_secondary_id"/>
+                            <field name="insole_material_id"/>
+                        </group>
+                        <group>
+                            <field name="sole_material_main_percent"/>
+                            <field name="sole_material_secondary_percent"/>
+                            <field name="insole_material_percent"/>
+                        </group>
+                    </group>
+                    <field name="description"/>
                 </sheet>
             </form>
         </field>
@@ -58,6 +75,17 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
+                <field name="heel_type" optional="show"/>
+                <field name="heel_height" optional="show"/>
+                <field name="platform_height" optional="show"/>
+                <field name="platform_material_id" optional="hide"/>
+                <field name="sole_material_main_id" optional="hide"/>
+                <field name="sole_material_secondary_id" optional="hide"/>
+                <field name="insole_material_id" optional="hide"/>
+                <field name="sole_material_main_percent" optional="hide"/>
+                <field name="sole_material_secondary_percent" optional="hide"/>
+                <field name="insole_material_percent" optional="hide"/>
+                <field name="description" optional="hide"/>
             </tree>
         </field>
         <field name="groups_id" eval="[(6, 0, [])]"/>
