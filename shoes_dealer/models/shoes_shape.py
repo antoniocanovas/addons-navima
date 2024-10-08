@@ -15,7 +15,7 @@ class ShoesShape(models.Model):
     sole_material_main_id = fields.Many2one('product.material', string="Sole material")
     sole_material_secondary_id = fields.Many2one('product.material', string="Sole material 2")
     sole_material_main_percent = fields.Float('Sole main mat. (%)')
-    sole_material_secondary_percent = fields.Float('Sole second mat. (%)')
+    sole_material_secondary_percent = fields.Float('Sole 2nd mat. (%)')
     insole_material_id = fields.Char('Insole type')
     insole_material_percent = fields.Float('Insole material (%)')
     description = fields.Text('Description', translate=True)

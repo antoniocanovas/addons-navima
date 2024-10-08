@@ -44,7 +44,7 @@
                         <field name="platform_height"/>
                         <field name="platform_material_id"/>
                     </group>
-                    <group>
+                    <group name="shoes_material" string="Materials">
                         <group>
                             <field name="sole_material_main_id"/>
                             <field name="sole_material_secondary_id"/>
@@ -56,7 +56,8 @@
                             <field name="insole_material_percent"/>
                         </group>
                     </group>
-                    <field name="description"/>
+                    <group name="description" string="Description"></group>
+                    <field name="description" placeholder="Description"/>
                 </sheet>
             </form>
         </field>
