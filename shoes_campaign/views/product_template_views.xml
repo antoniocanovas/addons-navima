@@ -6,11 +6,11 @@
         <field name="name">product.shoes.campaign.inh.form</field>
         <field name="model">product.template</field>
         <field name="type">form</field>
-        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="inherit_id" ref="shoes_dealer.shoes_dealer_product_inh_form"/>
         <field name="priority">90</field>
         <field name="arch" type="xml">
             <!-- En Pestaña inicial para datos generales: -->
-            <xpath expr="//field[@name='shoes_pair_weight_id']" position="before">
+            <xpath expr="//field[@name='product_tmpl_set_id']" position="after">
                 <field name="shoes_task_id" readonly="1"/>
             </xpath>
         </field>
