@@ -35,6 +35,10 @@ class ProductTemplate(models.Model):
         "product.material", string="Material", store=True, copy=True
     )
 
+    shoes_shape_id = fields.Many2one(
+        "shoes.shape", string="Shape"
+    )
+
     # Campos para calcular los pares vendidos y usarlo de base para sacar el TOP en la pantalla de ventas:
     sale_line_ids = fields.One2many(
         "sale.order.line",

@@ -38,6 +38,7 @@
                             <field name="is_pair" invisible="1"/>
                             <field name="is_assortment" invisible="1"/>
                             <field name="pairs_sold"/>
+                            <field name="shoes_shape_id"/>
                         </group>
                     </group>
                 </page>
