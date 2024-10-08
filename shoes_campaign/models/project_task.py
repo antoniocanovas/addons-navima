@@ -12,6 +12,7 @@ class ProjectTask(models.Model):
 
     product_brand_id = fields.Many2one('product.brand', related='project_id.product_brand_id')
     manufacturer_id = fields.Many2one('res.partner', string='Manufacturer')
+    shoes_shape_id = fields.Many2one('shoes.shape', string='Shape')
     code = fields.Char('Code')
     gender = fields.Selection(
         [("man", "Man"), ("woman", "Woman"), ("unisex", "Unisex")],
