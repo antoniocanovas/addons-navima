@@ -46,6 +46,7 @@ class ProjectTask(models.Model):
                 'shoes_pair_weight_id': self.shoes_pair_weight_id.id,
                 'shoes_hscode_id': self.shoes_hscode_id.id,
                 'material_id': self.material_id.id,
+                'shoes_task_id': self.id,
             })
             self.shoes_product_tmpl_id = newproduct.id
 
