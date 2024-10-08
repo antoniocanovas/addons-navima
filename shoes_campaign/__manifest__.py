@@ -37,6 +37,7 @@
     "data": [
         'views/project_project_views.xml',
         'views/project_task_views.xml',
+        'views/product_template_views.xml',
     ],
     "demo": [],
     "installable": True,
