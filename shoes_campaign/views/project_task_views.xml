@@ -13,6 +13,15 @@
                 <button string="Create product" name="create_shoe_model" type="object"
                         invisible="not is_shoes_campaign or shoes_product_tmpl_id"/>
             </xpath>
+
+            <xpath expr="//field[@name='active']" position="after">
+                <field name="shoes_product_tmpl_id"
+                       domain="[('detailed_type','=','product'),('is_pair','=',False)]"
+                       invisible="not is_shoes_campaign"
+                       readonly="shoes_product_tmpl_id"
+                />
+            </xpath>
+
             <xpath expr="//field[@name='description']" position="before">
                 <group name="shoes_dealer_campaign" invisible="not is_shoes_campaign">
                     <group>
@@ -28,12 +37,6 @@
                     </group>
                 </group>
                 <field name="is_shoes_campaign" invisible="1"/>
-            </xpath>
-
-            <xpath expr="//field[@name='active']" position="after">
-                <field name="shoes_product_tmpl_id"
-                       domain="[('detailed_type','=','product'),('is_pair','=',False)]"
-                       invisible="not is_shoes_campaign"/>
             </xpath>
 
         </field>
