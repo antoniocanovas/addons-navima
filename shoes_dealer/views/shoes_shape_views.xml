@@ -42,18 +42,19 @@
                         <field name="heel_type"/>
                         <field name="heel_height"/>
                         <field name="platform_height"/>
-                        <field name="platform_material_id"/>
                     </group>
                     <group name="shoes_material" string="Materials">
                         <group>
                             <field name="sole_material_main_id"/>
                             <field name="sole_material_secondary_id"/>
                             <field name="insole_material_id"/>
+                            <field name="platform_material_id"/>
                         </group>
                         <group>
                             <field name="sole_material_main_percent"/>
                             <field name="sole_material_secondary_percent"/>
                             <field name="insole_material_percent"/>
+                            <field name="platform_material_percent"/>
                         </group>
                     </group>
                     <group name="description" string="Description"></group>
@@ -79,13 +80,14 @@
                 <field name="heel_type" optional="show"/>
                 <field name="heel_height" optional="show"/>
                 <field name="platform_height" optional="show"/>
-                <field name="platform_material_id" optional="hide"/>
                 <field name="sole_material_main_id" optional="hide"/>
                 <field name="sole_material_secondary_id" optional="hide"/>
                 <field name="insole_material_id" optional="hide"/>
+                <field name="platform_material_id" optional="hide"/>
                 <field name="sole_material_main_percent" optional="hide"/>
                 <field name="sole_material_secondary_percent" optional="hide"/>
                 <field name="insole_material_percent" optional="hide"/>
+                <field name="platform_material_percent" optional="hide"/>
                 <field name="description" optional="hide"/>
             </tree>
         </field>
