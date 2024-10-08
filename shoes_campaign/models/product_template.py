@@ -7,4 +7,4 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     shoes_task_id = fields.Many2one('project.task', string='Shoes model')
-    shoes_shape_id = fields.Many2one(related=shoes_task_id.shoes_shape_id)
+    shoes_shape_id = fields.Many2one('shoes.shape', related=shoes_task_id.shoes_shape_id)
