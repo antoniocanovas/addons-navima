@@ -64,6 +64,7 @@
         "views/account_move_line_views.xml",
         "views/shoes_pair_weight_views.xml",
         "views/assortment_pair_views.xml",
+        "views/shoes_shape_views.xml",
     ],
     "installable": True,
 }
