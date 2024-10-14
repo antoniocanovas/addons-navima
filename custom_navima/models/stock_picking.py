@@ -20,9 +20,9 @@ class StockPicking(models.Model):
                     sequence = str(li.product_id.shoes_campaign_id.tracking_sequence + 100000)[-5:]
                     serial = sufix + manufacturer_code + sequence
                     # Buscar el serial:
-                    lot = env['stock.lot'].search([('product_id', '=', li.product_id.id), ('name', '=', serial)])
+                    lot = self.env['stock.lot'].search([('product_id', '=', li.product_id.id), ('name', '=', serial)])
                     if not lot.id:
-                        lot = env['stock.lot'].create({'product_id': li.product_id.id, 'name': serial})
+                        lot = self.env['stock.lot'].create({'product_id': li.product_id.id, 'name': serial})
                     lots.append(lot.id)
 
                     li.product_id.shoes_campaign_id.write(
