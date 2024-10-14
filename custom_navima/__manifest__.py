@@ -25,7 +25,7 @@
     "depends": [
         'product',
         'stock',
-        'shoes.dealer',
+        'shoes_dealer',
     ],
     "author": "Punt Sistemes",
     "category": 'Stock',
