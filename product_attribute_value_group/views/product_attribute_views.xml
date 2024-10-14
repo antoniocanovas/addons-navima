@@ -2,7 +2,7 @@
 <odoo>
 
     <record id="product_attribute_value_group_inh_form" model="ir.ui.view">
-        <field name="name">product.attribute.value.grup.inh.form</field>
+        <field name="name">product.attribute.value.group.inh.form</field>
         <field name="model">product.attribute</field>
         <field name="type">form</field>
         <field name="inherit_id" ref="product.product_attribute_view_form"/>
