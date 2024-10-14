@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <record id="custom_navima_stock_picking_form" model="ir.ui.view">
+        <field name="name">custom.navima.view.picking.form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button string="Create S/N" name="create_assortment_serial_numbers" type="object"
+                        invisible="picking_type_code == 'outgoing'"/>
+            </xpath>
+        </field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="model">stock.picking</field>
+        <field name="active" eval="True"/>
+        <field name="priority">99</field>
+    </record>
+</odoo>

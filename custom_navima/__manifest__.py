@@ -36,6 +36,7 @@
     """,
     "data": [
         'views/project_project_views.xml',
+        'views/stock_picking_views.xml',
     ],
     "demo": [],
     "installable": True,

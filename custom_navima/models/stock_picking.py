@@ -1,8 +1,8 @@
 # Copyright
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-
 from odoo import fields, models, api
+from odoo.exceptions import UserError
 
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
@@ -14,8 +14,9 @@ class StockPicking(models.Model):
                 sufix = li.product_id.shoes_campaign_id.name
                 manufacturer_code = li.product_id.manufacturer_id.ref
                 if not sufix or not manufacturer_code:
+                    raise UserError('Indica fabricante (referencia) y sufijo en la campaña en todos los surtidos.')
+                if li.product_id.tracking != 'serial':
                     continue
-
                 for i in range(int(li.product_uom_qty)):
                     sequence = str(li.product_id.shoes_campaign_id.tracking_sequence + 100000)[-5:]
                     serial = sufix + manufacturer_code + sequence
