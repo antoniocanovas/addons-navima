@@ -10,7 +10,7 @@
         <field name="arch" type="xml">
 
             <xpath expr="//field[@name='tag_ids']" position="after">
-                <field name="tracking_sequence" required="is_shoes_campaign"/>
+                <field name="tracking_sequence" required="is_shoes_campaign" invisible="not is_shoes_campaign"/>
             </xpath>
 
         </field>
