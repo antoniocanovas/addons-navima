@@ -6,7 +6,7 @@
         <field name="name">custom.navima.project.inh.form</field>
         <field name="model">project.project</field>
         <field name="type">form</field>
-        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="inherit_id" ref="shoes_campaign.shoes_campaign_project_inh_form"/>
         <field name="arch" type="xml">
 
             <xpath expr="//field[@name='tag_ids']" position="after">

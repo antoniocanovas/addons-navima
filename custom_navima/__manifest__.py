@@ -26,6 +26,7 @@
         'product',
         'stock',
         'shoes_dealer',
+        'shoes_campaign',
     ],
     "author": "Punt Sistemes",
     "category": 'Stock',
