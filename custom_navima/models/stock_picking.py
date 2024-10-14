@@ -11,7 +11,7 @@ class StockPicking(models.Model):
         for record in self:
             for li in record.move_ids_without_package:
                 lots = []
-                sufix = li.product_id.campaign_id.name
+                sufix = li.product_id.shoes_campaign_id.name
                 manufacturer_code = li.product_id.manufacturer_id.ref
                 if not sufix or not manufacturer_code:
                     continue
