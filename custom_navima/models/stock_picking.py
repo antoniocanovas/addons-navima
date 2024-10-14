@@ -10,6 +10,10 @@ class StockPicking(models.Model):
     def create_assortment_serial_numbers(self):
         for record in self:
             for li in record.move_ids_without_package:
-                sufix = ""
-                manufacturer_code = li.product_id.manufacturer_id
+                sufix = li.product_id.campaign_id.name
+                manufacturer_code = li.product_id.manufacturer_id.ref
+                sequence = li.product_id.campaign_id.tracking_sequence
+                serial = sufix + manufacturer_code + sequence
+                # Buscar el serial, si existe sumamos uno:
+
         return True

@@ -8,4 +8,4 @@ class ProjectProject(models.Model):
 
 
     # Secuencia para asignar los números de serie:
-    tracking_sequence = fields.Integer('Last N/S', default=1)
+    tracking_sequence = fields.Integer('Next N/S', default=1)
