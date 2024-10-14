@@ -24,6 +24,8 @@
     "version": '1.0',
     "depends": [
         'product',
+        'stock',
+        'shoes.dealer',
     ],
     "author": "Punt Sistemes",
     "category": 'Stock',
@@ -32,8 +34,7 @@
         Custom devs Navima.
     """,
     "data": [
-#        'views/product_attribute_value_views.xml',
-#        'security/ir.model.access.csv',
+        'views/project_project_views.xml',
     ],
     "demo": [],
     "installable": True,
