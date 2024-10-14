@@ -16,15 +16,17 @@ class StockPicking(models.Model):
                 if not sufix or not manufacturer_code:
                     continue
 
-                for i in li.product_uom_qty:
-                    sequence = str(li.product_id.campaign_id.tracking_sequence + 100000)[-5:]
-
+                for i in range(int(li.product_uom_qty)):
+                    sequence = str(li.product_id.shoes_campaign_id.tracking_sequence + 100000)[-5:]
                     serial = sufix + manufacturer_code + sequence
-                    # Buscar el serial, si existe sumamos uno:
-                    lot = self.env['stock.lot'].search([('product_id','=',li.product_id.id),('name','=',serial)])
+                    # Buscar el serial:
+                    lot = env['stock.lot'].search([('product_id', '=', li.product_id.id), ('name', '=', serial)])
                     if not lot.id:
-                        lot = self.env['stock.lot'].create({'product_id':li.product_id.id, 'name':serial})
+                        lot = env['stock.lot'].create({'product_id': li.product_id.id, 'name': serial})
                     lots.append(lot.id)
-                li['lot_ids'] = [(4,lots.ids)]
+
+                    li.product_id.shoes_campaign_id.write(
+                        {'tracking_sequence': li.product_id.shoes_campaign_id.tracking_sequence + 1})
+                li['lot_ids'] = [(6, 0, lots)]
 
         return True
