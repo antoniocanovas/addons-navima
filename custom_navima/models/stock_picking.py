@@ -9,8 +9,7 @@ class StockPicking(models.Model):
 
     def create_assortment_serial_numbers(self):
         for record in self:
-            manufacturer =
-            sufix =
             for li in record.move_ids_without_package:
+                sufix = ""
                 manufacturer_code = li.product_id.manufacturer_id
         return True
