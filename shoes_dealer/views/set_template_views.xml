@@ -33,7 +33,7 @@
         <field name="action" ref="action_product_set_template"/>
         <field name="active" eval="True"/>
         <field name="name">Assortments</field>
-        <field name="parent_id" ref="stock.menu_product_in_config_stock"/>
+        <field name="parent_id" ref="shoes_dealer.inventory_shoes_dealer_menu"/>
         <field name="sequence">90</field>
         <field name="web_icon" eval="False"/>
     </record>
