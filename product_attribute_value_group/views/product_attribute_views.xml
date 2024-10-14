@@ -8,7 +8,7 @@
         <field name="inherit_id" ref="product.product_attribute_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='value_ids']/tree" position="inside">
-                <field name="group_id" optional="show"/>
+                <field name="group_id" optional="show" context="{'default_attribute_id':attribute_id}"/>
             </xpath>
         </field>
     </record>
