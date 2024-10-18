@@ -21,7 +21,7 @@
 
 {
     "name": 'Custom Navima',
-    "version": '1.0',
+    "version": '18.0',
     "depends": [
         'product',
         'stock',

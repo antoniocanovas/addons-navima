@@ -21,7 +21,7 @@
 
 {
     "name": 'Partner product attribute',
-    "version": '1.0',
+    "version": '18.0',
     "depends": [
         'product',
     ],
