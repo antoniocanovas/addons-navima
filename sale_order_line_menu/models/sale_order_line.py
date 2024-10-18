@@ -12,9 +12,11 @@ class SaleOrderLine(models.Model):
         store=True,
         index=True,
     )
-    analytic_account_id = fields.Many2one(
-        related="order_id.analytic_account_id",
-        readonly=True,
-        store=True,
-        index=True,
-    )
+
+    # Quitado en mig v18, aparentemente ya vienen en estándar project_id:
+#    analytic_account_id = fields.Many2one(
+#        related="order_id.project_id",
+#        readonly=True,
+#        store=True,
+#        index=True,
+#    )
