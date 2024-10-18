@@ -15,7 +15,7 @@
         <field name="search_view_id" eval="False"/>
         <field name="target">current</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="view_mode">tree</field>
+        <field name="view_mode">list</field>
     </record>
 
     <record id="action_shoes_hs_code" model="ir.actions.act_window">
@@ -31,7 +31,7 @@
         <field name="search_view_id" eval="False"/>
         <field name="target">current</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="view_mode">tree</field>
+        <field name="view_mode">list</field>
     </record>
 
 
@@ -63,40 +63,40 @@
     </record>
 
 
-    <!-- TREE VIEW: -->
+    <!-- list VIEW: -->
     <record id="shoes_standard_weight_default_tree" model="ir.ui.view">
         <field name="name">shoes.standard.weight.default.tree</field>
         <field name="model">shoes.pair.weight</field>
         <field name="arch" type="xml">
-            <tree editable="bottom">
+            <list editable="bottom">
                 <field name="name"/>
                 <field name="pair_weight"/>
                 <field name="pair_net_weight"/>
-            </tree>
+            </list>
         </field>
         <field name="groups_id" eval="[(6, 0, [])]"/>
         <field name="inherit_id" eval="False"/>
         <field name="key" eval="False"/>
         <field name="mode">primary</field>
         <field name="priority">16</field>
-        <field name="type">tree</field>
+        <field name="type">list</field>
     </record>
 
      <record id="shoes_standard_hscode_default_tree" model="ir.ui.view">
         <field name="name">shoes.standard.hscode.default.tree</field>
         <field name="model">shoes.hs.code</field>
         <field name="arch" type="xml">
-            <tree editable="bottom">
+            <list editable="bottom">
                 <field name="name"/>
                 <field name="number"/>
-            </tree>
+            </list>
         </field>
         <field name="groups_id" eval="[(6, 0, [])]"/>
         <field name="inherit_id" eval="False"/>
         <field name="key" eval="False"/>
         <field name="mode">primary</field>
         <field name="priority">16</field>
-        <field name="type">tree</field>
+        <field name="type">list</field>
     </record>
 
 </odoo>

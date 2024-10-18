@@ -29,7 +29,7 @@
         "product_brand",
         "product_net_weight",
         "sale_order_line_date",
-        "sale_order_line_menu",
+        #"sale_order_line_menu",
         "sale_product_template_tags",
         "product_variant_sale_price",
         "sale_product_image",

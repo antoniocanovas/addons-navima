@@ -1,24 +1,24 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <odoo>
 
-    <!-- TREE VIEW - O2M LINES: -->
+    <!-- list VIEW - O2M LINES: -->
     <record id="shoes_report_lines_o2m_tree" model="ir.ui.view">
         <field name="name">shoes.report.lines.o2m.tree</field>
         <field name="model">shoes.sale.report.line</field>
         <field name="arch" type="xml">
-            <tree create="0" default_order="pairs_count desc">
+            <list create="0" default_order="pairs_count desc">
                 <field name="product_tmpl_id"/>
                 <field name="image" widget="image" options="{'size':[100,100], 'zoom':True}"/>
                 <field name="color_id"/>
                 <field name="pairs_count"/>
-            </tree>
+            </list>
         </field>
         <field name="groups_id" eval="[(6, 0, [])]"/>
         <field name="inherit_id" eval="False"/>
         <field name="key" eval="False"/>
         <field name="mode">primary</field>
         <field name="priority">16</field>
-        <field name="type">tree</field>
+        <field name="type">list</field>
     </record>
 
     <!-- WINDOW ACTION O2M LINES: TOP Sales -->
@@ -35,10 +35,10 @@
         <field name="search_view_id" eval="False"/>
         <field name="target">current</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="view_mode">tree</field>
+        <field name="view_mode">list</field>
         <field name="view_ids"
                eval="[(5, 0, 0),
-               (0, 0, {'view_mode': 'tree', 'view_id': ref('shoes_report_lines_o2m_tree')}),
+               (0, 0, {'view_mode': 'list', 'view_id': ref('shoes_report_lines_o2m_tree')}),
                ]"/>
     </record>
       <!-- WINDOW ACTION O2M LINES: TOP Sales -->
@@ -55,10 +55,10 @@
         <field name="search_view_id" eval="False"/>
         <field name="target">current</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="view_mode">tree</field>
+        <field name="view_mode">list</field>
         <field name="view_ids"
                eval="[(5, 0, 0),
-               (0, 0, {'view_mode': 'tree', 'view_id': ref('shoes_report_lines_o2m_tree')}),
+               (0, 0, {'view_mode': 'list', 'view_id': ref('shoes_report_lines_o2m_tree')}),
                ]"/>
     </record>
 
@@ -105,7 +105,7 @@
                     <notebook invisible="not shoes_campaign_id">
                         <page name="general" string="General">
                             <field name="line_ids" readonly="1">
-                                <tree readonly="1">
+                                <list readonly="1">
                                     <field name="product_tmpl_id"/>
                                     <field name="color_id"/>
                                     <field name="model_description"/>
@@ -123,7 +123,7 @@
                                     -->
                                     <field name="pairs_count" sum="Pairs"/>
                                     <field name="shoes_report_id" invisible="1"/>
-                                </tree>
+                                </list>
                             </field>
                         </page>
                         <page name="filters" string="Filters">
@@ -172,7 +172,7 @@
                     <notebook invisible="not shoes_campaign_id">
                         <page name="general" string="General">
                             <field name="sale_ids">
-                                <tree>
+                                <list>
                                     <field name="shoes_campaign_id" invisible="1"/>
                                     <field name="name"/>
                                     <field name="date_order" widget="date" optional="show"/>
@@ -189,7 +189,7 @@
                                     <field name="shoes_margin" sum="Diff"/>
                                     <field name="shoes_margin_percent" string="Margin %" avg="%Mar"/>
                                     <field name="pairs_count" string="Pairs" sum="Pairs" optional="show"/>
-                                </tree>
+                                </list>
                             </field>
                         </page>
                         <page name="filters" string="Filters">
@@ -240,7 +240,7 @@
                     <notebook invisible="not shoes_campaign_id">
                         <page name="general" string="General">
                             <field name="line_ids">
-                                <tree create="0" delete="0">
+                                <list create="0" delete="0">
                                     <field name="name"/>
                                     <!--
                                     <field name="model_id"/>
@@ -262,12 +262,12 @@
                                     <field name="pairs_count" sum="Pairs"/>
                                     <field name="shoes_report_id" invisible="1"/>
                                     <field name="group_type" invisible="1"/>
-                                </tree>
+                                </list>
                             </field>
                         </page>
                         <page string="Sale lines" groups="base.group_no_one">
                             <field name="sale_line_ids">
-                                <tree>
+                                <list>
                                     <field name="shoes_campaign_id" invisible="1"/>
                                     <field name="name"/>
                                     <field name="date_order" widget="date" optional="show"/>
@@ -298,7 +298,7 @@
                                     <field name="shoes_margin_percent" string="Margin %" avg="%Mar"/>
                                     <field name="pairs_count" string="Pairs" sum="Pairs" optional="show"/>
                                     -->
-                                </tree>
+                                </list>
                             </field>
                         </page>
                         <page name="filters" string="Filters">
@@ -341,24 +341,24 @@
 
 
 
-    <!-- TREE VIEW - REPORT BY MODEL: -->
+    <!-- list VIEW - REPORT BY MODEL: -->
     <record id="shoes_margin_by_model_tree" model="ir.ui.view">
         <field name="name">shoes.margin.by.model.default.tree</field>
         <field name="model">shoes.sale.report</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="shoes_campaign_id"/>
                 <field name="name"/>
                 <field name="write_date" optional="show"/>
                 <field name="write_uid" optional="hide"/>
-            </tree>
+            </list>
         </field>
         <field name="groups_id" eval="[(6, 0, [])]"/>
         <field name="inherit_id" eval="False"/>
         <field name="key" eval="False"/>
         <field name="mode">primary</field>
         <field name="priority">16</field>
-        <field name="type">tree</field>
+        <field name="type">list</field>
     </record>
 
     <!-- TREE VIEW - REPORT BY SALE ORDER: Comentado Marzo 24 Borrar Mayo 24
@@ -366,19 +366,19 @@
         <field name="name">shoes.margin.by.sale.order.default.tree</field>
         <field name="model">shoes.sale.report</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="shoes_campaign_id"/>
                 <field name="name"/>
                 <field name="create_date" optional="show"/>
                 <field name="create_uid" optional="hide"/>
-            </tree>
+            </list>
         </field>
         <field name="groups_id" eval="[(6, 0, [])]"/>
         <field name="inherit_id" eval="False"/>
         <field name="key" eval="False"/>
         <field name="mode">primary</field>
         <field name="priority">16</field>
-        <field name="type">tree</field>
+        <field name="type">list</field>
     </record>-->
 
     <!-- TREE VIEW - REPORT BY SALE LINE: -->
@@ -386,19 +386,19 @@
         <field name="name">shoes.margin.by.sale.line.default.tree</field>
         <field name="model">shoes.sale.report</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="shoes_campaign_id"/>
                 <field name="name"/>
                 <field name="create_date" optional="show"/>
                 <field name="create_uid" optional="hide"/>
-            </tree>
+            </list>
         </field>
         <field name="groups_id" eval="[(6, 0, [])]"/>
         <field name="inherit_id" eval="False"/>
         <field name="key" eval="False"/>
         <field name="mode">primary</field>
         <field name="priority">16</field>
-        <field name="type">tree</field>
+        <field name="type">list</field>
     </record>
 
 
@@ -416,10 +416,10 @@
         <field name="search_view_id" eval="False"/>
         <field name="target">current</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="view_ids"
                eval="[(5, 0, 0),
-               (0, 0, {'view_mode': 'tree', 'view_id': ref('shoes_margin_by_model_tree')}),
+               (0, 0, {'view_mode': 'list', 'view_id': ref('shoes_margin_by_model_tree')}),
                (0, 0, {'view_mode': 'form', 'view_id': ref('shoes_margin_by_model_form')}),
                ]"/>
     </record>
@@ -437,10 +437,10 @@
         <field name="search_view_id" eval="False"/>
         <field name="target">current</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="view_ids"
                eval="[(5, 0, 0),
-               (0, 0, {'view_mode': 'tree', 'view_id': ref('shoes_margin_by_sale_line_tree')}),
+               (0, 0, {'view_mode': 'list', 'view_id': ref('shoes_margin_by_sale_line_tree')}),
                (0, 0, {'view_mode': 'form', 'view_id': ref('shoes_margin_by_sale_line_form')}),
                ]"/>
     </record>

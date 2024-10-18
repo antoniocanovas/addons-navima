@@ -13,7 +13,7 @@
     </record>
 
     <record id="sale_order_line_menu.action_orders_lines" model="ir.actions.act_window">
-        <field name="view_mode">tree,form,pivot,graph</field>
+        <field name="view_mode">list,form,pivot,graph</field>
     </record>
 
     <record id="shoes_dealer_sale_order_line_inh_tree" model="ir.ui.view">
@@ -42,7 +42,7 @@
         <field name="model">sale.order.line</field>
         <field name="active" eval="True"/>
         <field name="priority">99</field>
-        <field name="type">tree</field>
+        <field name="type">list</field>
     </record>
 
     <record id="shoes_dealer_sale_order_line_inh_search" model="ir.ui.view">

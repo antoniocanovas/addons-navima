@@ -7,7 +7,7 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="product.product_attribute_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='value_ids']/tree" position="inside">
+            <xpath expr="//field[@name='value_ids']/list" position="inside">
                 <field name="partner_id" optional="hide"/>
             </xpath>
         </field>

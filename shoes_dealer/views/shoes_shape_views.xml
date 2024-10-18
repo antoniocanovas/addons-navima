@@ -15,7 +15,7 @@
         <field name="search_view_id" eval="False"/>
         <field name="target">current</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <!-- SHAPE INVENTORY CONFIG MENU: -->
@@ -75,7 +75,7 @@
         <field name="name">shoes.shape.default.tree</field>
         <field name="model">shoes.shape</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name"/>
                 <field name="heel_type" optional="show"/>
                 <field name="heel_height" optional="show"/>
@@ -89,14 +89,14 @@
                 <field name="insole_material_percent" optional="hide"/>
                 <field name="platform_material_percent" optional="hide"/>
                 <field name="description" optional="hide"/>
-            </tree>
+            </list>
         </field>
         <field name="groups_id" eval="[(6, 0, [])]"/>
         <field name="inherit_id" eval="False"/>
         <field name="key" eval="False"/>
         <field name="mode">primary</field>
         <field name="priority">16</field>
-        <field name="type">tree</field>
+        <field name="type">list</field>
     </record>
 
 </odoo>

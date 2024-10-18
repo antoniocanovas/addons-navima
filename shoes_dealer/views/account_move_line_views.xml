@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <odoo>
 
-    # VISTA TREE DEL MENÚ DE ACCOUNT.MOVE.LINE PARA INFORME DE MÁRGENES POR FACTURACIÓN DE SHOES.DEALER:
+    # VISTA list DEL MENÚ DE ACCOUNT.MOVE.LINE PARA INFORME DE MÁRGENES POR FACTURACIÓN DE SHOES.DEALER:
     <record id="invoice_shoes_dealer_report_line_tree" model="ir.ui.view">
         <field name="name">invoice.shoes.dealer.report.line.tree</field>
         <field name="arch" type="xml">
 
-            <tree string="Journal Items" create="false">
+            <list string="Journal Items" create="false">
                 <field name="move_type" optional="show"/>
                 <field name="shoes_campaign_id" optional="show"/>
                 <field name="date" readonly="1" optional="hide"/>
@@ -39,7 +39,7 @@
                 <field name="is_account_reconcile" invisible="1"/>
                 <field name="sequence" invisible="1"/>
                 <field name="currency_id" readonly="1" groups="base.group_multi_currency" optional="hide" string="Currency" invisible="is_same_currency"/>
-            </tree>
+            </list>
 
         </field>
         <field name="inherit_id" eval="False"/>
@@ -47,7 +47,7 @@
         <field name="mode">primary</field>
         <field name="active" eval="True"/>
         <field name="priority">99</field>
-        <field name="type">tree</field>
+        <field name="type">list</field>
     </record>
 
 
@@ -103,11 +103,11 @@
         <field name="type">ir.actions.act_window</field>
         <field name="usage" eval="False"/>
         <field name="view_id" eval="False"/>
-        <field name="view_mode">tree</field>
+        <field name="view_mode">list</field>
         <field name="search_view_id" ref="invoice_shoes_dealer_report_line_search"/>
         <field name="view_ids"
                eval="[(5, 0, 0),
-               (0, 0, {'view_mode': 'tree', 'view_id': ref('invoice_shoes_dealer_report_line_tree')}),
+               (0, 0, {'view_mode': 'list', 'view_id': ref('invoice_shoes_dealer_report_line_tree')}),
                ]"/>
     </record>
 

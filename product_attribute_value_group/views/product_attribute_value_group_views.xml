@@ -11,7 +11,7 @@
         <field name="filter" eval="False"/>
         <field name="limit">80</field>
         <field name="res_model">product.attribute.value.group</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="search_view_id" eval="False"/>
         <field name="target">current</field>
     </record>
@@ -26,22 +26,22 @@
         <field name="web_icon" eval="False"/>
     </record>
 
-    <!-- DEFAULT TREE VIEW: -->
+    <!-- DEFAULT list VIEW: -->
     <record id="product_attribute_value_group_default_tree" model="ir.ui.view">
         <field name="name">product.attribute.value.group.default.tree</field>
         <field name="model">product.attribute.value.group</field>
         <field name="arch" type="xml">
-            <tree editable="bottom">
+            <list editable="bottom">
                 <field name="name"/>
                 <field name="attribute_id"/>
-            </tree>
+            </list>
         </field>
         <field name="groups_id" eval="[(6, 0, [])]"/>
         <field name="inherit_id" eval="False"/>
         <field name="key" eval="False"/>
         <field name="mode">primary</field>
         <field name="priority">16</field>
-        <field name="type">tree</field>
+        <field name="type">list</field>
     </record>
 
 </odoo>

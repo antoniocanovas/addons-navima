@@ -4,7 +4,7 @@
     <record id="product_product_shoes_dealer_inh_tree" model="ir.ui.view">
         <field name="name">product.product.shoes.dealer.inh.tree</field>
         <field name="model">product.product</field>
-        <field name="type">tree</field>
+        <field name="type">list</field>
         <field name="inherit_id" ref="product.product_product_tree_view"/>
         <field name="priority">90</field>
         <field name="arch" type="xml">
