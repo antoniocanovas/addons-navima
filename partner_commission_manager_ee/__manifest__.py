@@ -10,8 +10,8 @@
     'summary': 'Add Manager and commission to referrer',
     'author': 'Punt Sistemes',
     'depends': [
-        'partner_commission',
         'sale_management',
+        'sale_commission',
         'account',
     ],
     'data': [
