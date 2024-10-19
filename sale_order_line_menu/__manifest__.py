@@ -8,7 +8,8 @@
     "summary": "Adds a Sale Order Lines Menu",
     "website": "https://github.com/OCA/sale-workflow",
     "license": "AGPL-3",
-    "depends": ["sale","analytic"],
+    #Añado "sale_project" para evitar error en vista y quitar el campo que crea en models (mig v18):
+    "depends": ["sale","analytic","sale_project"],
     "category": "Sales/Sales",
     "data": [
         "views/sale_order_line_views.xml",
