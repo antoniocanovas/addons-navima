@@ -6,9 +6,6 @@ from odoo.exceptions import UserError, ValidationError
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
-    referrer_id = fields.Many2one(
-        "res.partner", related="order_id.referrer_id", store=True
-    )
 
     purchase_line_id = fields.Many2one("purchase.order.line", string="Purchase line")
 
