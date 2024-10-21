@@ -27,6 +27,7 @@
         'project',
         'product_brand',
         'shoes_dealer',
+        'intrastat_estimation',
     ],
     "author": "Punt Sistemes",
     "category": 'Project',

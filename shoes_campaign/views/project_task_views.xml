@@ -34,7 +34,9 @@
                         <field name="shoes_shape_id"/>
                         <field name="gender"/>
                         <field name="shoes_pair_weight_id"/>
-                        <field name="shoes_hscode_id"/>
+                        <field name="intrastat_duty_id"/>
+                        <!-- El siguiente campo creo que no hace falta si usamos intrastat_duty:
+                        <field name="shoes_hscode_id" invisible="1"/> -->
                     </group>
                 </group>
                 <field name="is_shoes_campaign" invisible="1"/>
