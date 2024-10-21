@@ -36,7 +36,7 @@
         Project attributes to shoes dealer campaign and product creation from tasks. 
     """,
     "data": [
-        'views/product_template_views.xml',
+        'views/project_project_views.xml',
         'views/project_task_views.xml',
         'views/product_template_views.xml',
     ],
