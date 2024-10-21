@@ -36,7 +36,7 @@
     """,
     "data": [
         'views/product_template_views.xml',
-        'views/sale_order_views.xml',
+        'views/purchase_order_views.xml',
     ],
     "demo": [],
     "installable": True,

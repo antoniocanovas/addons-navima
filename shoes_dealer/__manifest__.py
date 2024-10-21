@@ -47,7 +47,7 @@
         "views/product_attribute_views.xml",
         "views/product_attribute_value_views.xml",
         "views/product_template_views.xml",
-        "views/sale_order_views.xml",
+        "views/purchase_order_views.xml",
         "views/sale_order_line_views.xml",
         "views/purchase_order_views.xml",
         "views/account_move_views.xml",
@@ -60,7 +60,7 @@
 #        "reports/pnt_product_report.xml",
 #        "reports/pnt_product_report_template.xml",
         "views/res_users_views.xml",
-        "views/sale_order_views.xml",
+        "views/purchase_order_views.xml",
         # Quito esta vista hasta que arreglemos product.product; migración v17:
 #        "views/stock_orderpoint_views.xml",
         "views/account_move_line_views.xml",
