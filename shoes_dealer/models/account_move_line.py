@@ -6,7 +6,7 @@ from collections import defaultdict
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
-    # Comercialmente en cada pedido quieren saber cuántos pares se han facturado:
+    # Comercialmente en cada línea de pedido quieren saber cuántos pares se han facturado:
     @api.depends('product_id', 'quantity')
     def _get_shoes_invoice_line_pair_count(self):
         for record in self:
