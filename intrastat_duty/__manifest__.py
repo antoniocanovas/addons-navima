@@ -24,7 +24,7 @@
     "version": '18.0',
     "depends": [
         'product',
-        'account_instrastat',
+        'account_intrastat',
         'sale_management',
     ],
     "author": "Punt Sistemes",
