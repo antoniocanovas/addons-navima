@@ -17,9 +17,7 @@ class AccountMoveLine(models.Model):
     @api.depends('product_id','price_unit')
     def _get_shoes_invoice_pair_price(self):
         for record in self:
-            total = 0
-            if record.pairs_count != 0: total = record.price_subtotal / record.pairs_count
-            record['pair_price'] = total
+            record.pair_price = record.price_subtotal / record.pairs_count if record.pairs_count else 0
     pair_price = fields.Float('Pair price', store=True, compute='_get_shoes_invoice_pair_price')
 
     color_attribute_id = fields.Many2one('product.attribute.value', string='Color',
@@ -40,12 +38,12 @@ class AccountMoveLine(models.Model):
     def _get_shoes_margin(self):
         for record in self:
             # Chequeo de si es factura de cliente o abono:
-            if record.move_type == 'out_invoice': type = 1
-            else: type = -1
+            type = 1 if record.move_type == 'out_invoice' else -1
             record['shoes_margin'] = type * (record.price_subtotal - record.cost_price)
 
     shoes_margin = fields.Monetary('Margin', store=True, compute='_get_shoes_margin')
 
+    #margen por par de zapatos, en caso de venta de surtido dividimos el margen total entre el número de pares
     @api.depends('shoes_margin', 'pairs_count')
     def _get_shoes_pair_margin(self):
         for record in self:
@@ -56,7 +54,7 @@ class AccountMoveLine(models.Model):
 
     shoes_pair_margin = fields.Monetary('Pair margin', store=True, compute='_get_shoes_pair_margin')
 
-
+#el precio de venta del par dividimos el total de la línea entre el número de pares, para considerar los descuentos.
     @api.depends("price_unit")
     def _get_pair_price_sale(self):
         for record in self:

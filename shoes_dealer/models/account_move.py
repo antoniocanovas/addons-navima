@@ -8,8 +8,6 @@ class AccountMove(models.Model):
     # Comercialmente en cada pedido quieren saber cuántos pares se han facturado:
     def _get_shoes_pair_count(self):
         for record in self:
-            count = 0
-            for li in record.invoice_line_ids:
-                count += li.pairs_count
-            record['pairs_count'] = count
+            record.pairs_count = sum(li.pairs_count for li in record.invoice_line_ids)
+
     pairs_count = fields.Integer('Pairs', store=False, compute='_get_shoes_pair_count')
