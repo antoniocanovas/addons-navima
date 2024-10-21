@@ -34,6 +34,7 @@
         Intrastat duty estimation for product, material and country combinations.
     """,
     "data": [
+        'security/ir.model.access.csv',
         'views/intrastat_duty_views.xml',
         'views/product_template_views.xml',
         'views/sale_order_views.xml',
