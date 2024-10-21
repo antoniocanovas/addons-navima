@@ -16,10 +16,7 @@ class ProductProduct(models.Model):
     def get_assortment_pair(self):
         for product in self:
             ap = self.env["assortment.pair"].search([("product_id", "=", product.id)])
-            total = 0
-            for li in ap:
-                total += li.qty
-            product.assortment_pair_qty = total
+            product.assortment_pair_qty = sum(li.qty for li in ap)
 
     def create(self, vals_list):
         products = super().create(vals_list)
@@ -59,40 +56,8 @@ class ProductProduct(models.Model):
         store=True,
     )
 
-    """ Revisar si se queda en custom o en SD después de migrar a v17
-    def _get_pnt_total_reserved_plus_sold(self):
-        for record in self:
-            r = record.pnt_reservation_count
-            s = record.sales_count
-            record.pnt_total_reserved_plus_sold = r + s
 
-    pnt_total_reserved_plus_sold = fields.Float(
-        compute="_get_pnt_total_reserved_plus_sold",
-        string="Sold",
-    )
-
-    def _get_pnt_stock_avaiable(self):
-        for record in self:
-            ts = record.pnt_total_reserved_plus_sold
-            available = record.qty_available
-            record.pnt_stock_avaliable = available - ts
-
-    pnt_stock_avaliable = fields.Float(
-        compute="_get_pnt_stock_avaiable",
-        string="Available",
-    )
-    def _get_pnt_virtual_stock_avaiable(self):
-        for record in self:
-            ts = record.pnt_total_reserved_plus_sold
-            p = record.purchased_product_qty
-            record.pnt_virtual_stock_avaliable = p - ts
-
-    pnt_virtual_stock_avaliable = fields.Float(
-        compute="_get_pnt_virtual_stock_avaiable",
-        string="Virtual Available",
-    )
-    """
-
+    # Obtiene el valor del atributo de surtido
     def _get_assortment_attribute_value(self):
         for record in self:
             value = False
@@ -179,11 +144,8 @@ class ProductProduct(models.Model):
             set_template = record.assortment_attribute_id.set_template_id
 
             # Limpieza de BOMS huérfanas:
-            bomsdelete = (
-                self.env["mrp.bom"]
-                .search([("is_assortment", "=", True), ("product_id", "=", False)])
-                .unlink()
-            )
+            self.env["mrp.bom"].search([("is_assortment", "=", True), ("product_id", "=", False)]).unlink()
+
 
             if pt_single.id and record.is_assortment and not record.variant_bom_ids:
                 # Creación de LDM:
@@ -260,21 +222,14 @@ class ProductProduct(models.Model):
                 # si fuera un par sólo, la cantidad a indicar es 0 para que no se muestre, por esta razón seguimos
                 # manteniendo el campo del desarrollo pairs_count en los distintos modelos:
                 # 2º actualizamos el precio de venta del surtido al crear:
-                base_unit_count = 0
-                for bom_line in bom.bom_line_ids:
-                    base_unit_count += bom_line.product_qty
-                if base_unit_count == 1:
-                    base_unit_count = 0
-                record.write({"base_unit_count": base_unit_count})
+                base_unit_count = sum(bom_line.product_qty for bom_line in bom.bom_line_ids)
+                record.write({"base_unit_count": 0 if base_unit_count == 1 else base_unit_count})
 
     # Pares por variante de producto, se usará en el cálculo de tarifas y líneas de venta:
     def _get_shoes_product_product_pair_count(self):
         for record in self:
-            count = 1
             bom = self.env["mrp.bom"].search([("product_id", "=", record.id)])
-            if bom.ids:
-                count = bom[0].pairs_count
-            record["pairs_count"] = count
+            record["pairs_count"] = bom[0].pairs_count if bom.ids else 1
 
     pairs_count = fields.Integer(
         "Pairs", store=False, compute="_get_shoes_product_product_pair_count"
@@ -298,7 +253,7 @@ class ProductProduct(models.Model):
     # 2024/02 REVISAR ESTO, POSIBLEMENTE SE PUEDE CAMBIAR POR UN RELATED DE assortment_attribute_id.set_template_id.code
     def _get_product_assortment_code(self):
         for record in self:
-            assortment_code = ""
+
             assortment_attribute = self.env.user.company_id.bom_attribute_id
 
             # El campo en el product.product es product_template_variant_value_ids
@@ -327,7 +282,7 @@ class ProductProduct(models.Model):
             # Los valores que nos interesan son las líneas de este último, pero utilizamos el campo code para impresión)
             if ptvv.id:
                 assortment_code = ptvv.product_attribute_value_id.set_template_id.code
-            record["assortment_code"] = assortment_code
+            record["assortment_code"] = ptvv.product_attribute_value_id.set_template_id.code if ptvv.id else ""
 
     assortment_code = fields.Char(
         "Assortment", store=False, compute="_get_product_assortment_code"

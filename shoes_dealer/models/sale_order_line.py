@@ -13,12 +13,10 @@ class SaleOrderLine(models.Model):
     @api.depends("product_id", "product_uom_qty", "custom_assortment_pairs")
     def _get_shoes_sale_line_pair_count(self):
         for record in self:
-            total = 0
-            if record.product_custom_attribute_value_ids.ids:
-                total = record.custom_assortment_pairs * record.product_uom_qty
+            if record.product_custom_attribute_value_ids:
+                record.pairs_count = record.custom_assortment_pairs * record.product_uom_qty
             else:
-                total = record.product_id.pairs_count * record.product_uom_qty
-            record["pairs_count"] = total
+                record.pairs_count = record.product_id.pairs_count * record.product_uom_qty
 
     pairs_count = fields.Integer(
         "Pairs", store=True, compute="_get_shoes_sale_line_pair_count"
@@ -33,9 +31,7 @@ class SaleOrderLine(models.Model):
                 # Quitar espacios del campo custom del surtido:
                 customvalue = customvalue.replace(" ", "").lower()
                 customvalues = customvalue.split(",")
-                for li in customvalues:
-                    element = li.split("x")
-                    pairs_count += int(element[1])
+                pairs_count = sum(int(element.split("x")[1]) for element in customvalues)
             record.custom_assortment_pairs = pairs_count
     custom_assortment_pairs = fields.Integer("Custom assortment pairs", store=True,
                                              compute='_get_custom_assortment_pairs')
@@ -149,16 +145,13 @@ class SaleOrderLine(models.Model):
     @api.depends("state")
     def _get_quoted_quantity(self):
         for record in self:
-            total = 0
-            if record.state not in ["sale", "done", "cancel"]:
-                total = record.product_uom_qty
-            record["qty_quoted"] = total
+            record.qty_quoted = record.product_uom_qty if record.state not in ["sale", "done", "cancel"] else 0
 
     qty_quoted = fields.Float(
         "Quoted qty", store=True, copy=False, compute="_get_quoted_quantity"
     )
 
-    # ========= FIN INFORMES
+
 
     # Precio por par según tarifa:
     @api.depends("product_id", "price_unit")
@@ -223,18 +216,3 @@ class SaleOrderLine(models.Model):
                             qty = int(element[1])
                         except:
                             raise UserError(element[1] + ", no parece una cantidad válida. Indica un número entero válido.")
-"""
-                        sizes += element[0] + ","
-                        pairs += element[1] + ","
-                        pair_products += str(pppair.id) + ","
-                        pairs_count += int(element[1])
-
-                    # OK, guardamos valores, tras quitar la última coma:
-                    if len(sizes) > 0: sizes = sizes[:-1]
-                    if len(pairs) > 0: pairs = pairs[:-1]
-                    if len(pair_products) > 0: pair_products = pair_products[:-1]
-
-                    cleanvalues = sizes + ";" + pairs + ";" + pair_products
-                    record.write(
-                        {'assortment_pair': cleanvalues, 'custom_assortment_pairs': pairs_count})
-"""

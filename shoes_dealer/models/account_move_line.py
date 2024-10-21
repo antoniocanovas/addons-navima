@@ -54,7 +54,7 @@ class AccountMoveLine(models.Model):
 
     shoes_pair_margin = fields.Monetary('Pair margin', store=True, compute='_get_shoes_pair_margin')
 
-#el precio de venta del par dividimos el total de la línea entre el número de pares, para considerar los descuentos.
+    #el precio de venta del par dividimos el total de la línea entre el número de pares, para considerar los descuentos.
     @api.depends("price_unit")
     def _get_pair_price_sale(self):
         for record in self:
@@ -64,20 +64,18 @@ class AccountMoveLine(models.Model):
             record['pair_price_sale'] = price_pair_sale
     pair_price_sale = fields.Monetary("Pair price sale", store=True, compute="_get_pair_price_sale")
 
+    # Calcula el precio de costo en función del número de pares y el precio unitario
     @api.depends('exwork_single_euro', 'pairs_count')
     def _get_cost_price(self):
         for record in self:
-            cost = 0
-            if record.shoes_model_id.id:
-                cost = record.pairs_count * record.exwork_single_euro
-            record.cost_price = cost
+            record.cost_price = record.pairs_count * record.exwork_single_euro if record.shoes_model_id.id else 0
     cost_price = fields.Float("Cost price", store=True, compute="_get_cost_price")
 
+    # Calcula el descuento total aplicado en la línea de pedido
     @api.depends('discount','price_unit','quantity')
     def _get_total_shoes_discount(self):
         for record in self:
             # Chequeo de si es factura de cliente o abono:
-            if record.move_type == 'out_invoice': type = 1
-            else: type = -1
-            record['discount_amount'] = type * (record.price_unit * record.quantity - record.price_subtotal)
+            type = 1 if record.move_type == 'out_invoice' else -1
+            record.discount_amount = type * (record.price_unit * record.quantity - record.price_subtotal)
     discount_amount = fields.Monetary("Total discount", store=True, compute="_get_total_shoes_discount")

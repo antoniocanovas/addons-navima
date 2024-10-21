@@ -10,10 +10,7 @@ class SaleOrder(models.Model):
     # Comercialmente en cada pedido quieren saber cuántos pares se han vendido:
     def _get_shoes_pair_count(self):
         for record in self:
-            count = 0
-            for li in record.order_line:
-                count += li.pairs_count
-            record["pairs_count"] = count
+            record["pairs_count"] = sum(li.pairs_count for li in record.order_line)
 
     pairs_count = fields.Integer(
         string="Pairs", store=False, compute="_get_shoes_pair_count"
@@ -43,10 +40,8 @@ class SaleOrder(models.Model):
         self.top_sales = self.env.user.top_sales
     top_sales = fields.Boolean('Top sales', store=False, compute='_get_enabled_top_sales')
     def show_hide_top_sales(self):
-        top_sales, user = False, self.env.user
-        if user.top_sales == False:
-            top_sales = True
-        user.top_sales = top_sales
+        user = self.env.user
+        user.top_sales = not user.top_sales
 
 
     # Restricción de validar pedidos de venta si tienen productos CUSTOM, primero crear compra para llevar línea:

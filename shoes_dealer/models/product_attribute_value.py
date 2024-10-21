@@ -8,7 +8,8 @@ class ProductAttributeValue(models.Model):
     _inherit = 'product.attribute.value'
 
     set_template_id = fields.Many2one('set.template', string='Set template', store=True, copy=False)
-    
+
+    # Calcula si el atributo de conjunto debe estar oculto basado en la configuración de la compañía
     def _get_set_hidden(self):
         company_bom_attribute = self.env.user.company_id.bom_attribute_id
         set_hidden = True
@@ -18,6 +19,7 @@ class ProductAttributeValue(models.Model):
 
     material_id = fields.Many2one('product.material', string='Material')
 
+    # Restringe la creación de valores personalizados para atributos de color y tamaño
     @api.constrains('is_custom')
     def _constrains_no_custom_in_sizes_colors(self):
         for record in self:
