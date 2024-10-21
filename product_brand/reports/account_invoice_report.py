@@ -9,13 +9,8 @@ class AccountInvoiceReport(models.Model):
 
     product_brand_id = fields.Many2one(comodel_name="product.brand", string="Brand")
 
-    @api.model
-    def _select(self):
-        select_str = super()._select()
-        select_str += """
-            , template.product_brand_id as product_brand_id
-            """
-        return select_str
+
+    """ Aquí falta un trozo, tras migrar a v18, buscar en OCA"""
 
     @api.model
     def _group_by(self):
