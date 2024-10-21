@@ -37,7 +37,6 @@
     ],
     "data": [
         "views/menu_views.xml",
-        #"wizard/pnt_product_report_wizard_view.xml",
         "data/server_actions.xml",
         "security/ir.model.access.csv",
         "views/set_template_views.xml",
