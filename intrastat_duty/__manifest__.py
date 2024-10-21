@@ -20,24 +20,23 @@
 ##############################################################################
 
 {
-    "name": 'Shoes Dealer Campaign',
+    "name": 'Intrastat duty estimation',
     "version": '18.0',
     "depends": [
         'product',
-        'project',
-        'product_brand',
-        'shoes_dealer',
+        'account_instrastat',
+        'sale_management',
     ],
     "author": "Punt Sistemes",
-    "category": 'Project',
+    "category": 'Stock',
     "website": "https://www.puntsistemes.es",
     "description": """
-        Project attributes to shoes dealer campaign and product creation from tasks. 
+        Intrastat duty estimation for product, material and country combinations.
     """,
     "data": [
+        'views/intrastat_duty_views.xml',
         'views/product_template_views.xml',
-        'views/project_task_views.xml',
-        'views/product_template_views.xml',
+        'views/sale_order_views.xml',
     ],
     "demo": [],
     "installable": True,
