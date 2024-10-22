@@ -159,7 +159,7 @@ class ProductTemplate(models.Model):
                     total += li.pairs_count
             record["pairs_sold"] = total
 
-    pairs_sold = fields.Integer("Pairs sold", store=True, compute="_get_pairs_sold")update_set_price_by_pairs
+    pairs_sold = fields.Integer("Pairs sold", store=True, compute="_get_pairs_sold")
 
     # Determina si el producto es un surtido basado en sus atributos
     @api.depends("attribute_line_ids")
