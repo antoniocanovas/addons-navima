@@ -147,16 +147,19 @@ class ProductTemplate(models.Model):
     @api.depends("sale_line_ids")
     def _get_pairs_sold(self):
         for record in self:
+            total = 0
             if record.is_assortment or record.is_pair:
-                sol = self.env["sale.order.line"].search_count(
+                sol = self.env["sale.order.line"].search(
                     [
                         ("product_tmpl_id", "=", record.id),
                         ("state", "not in", ["draft", "cancel"]),
                     ]
                 )
-                record["pairs_sold"] = sum(li.pairs_count for li in sol)
-            else:
-                record["pairs_sold"] = 0
+                for li in sol:
+                    total += li.pairs_count
+            record["pairs_sold"] = total
+
+    pairs_sold = fields.Integer("Pairs sold", store=True, compute="_get_pairs_sold")
 
     # Determina si el producto es un surtido basado en sus atributos
     @api.depends("attribute_line_ids")
