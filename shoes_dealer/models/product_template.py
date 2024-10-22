@@ -159,7 +159,7 @@ class ProductTemplate(models.Model):
                     total += li.pairs_count
             record["pairs_sold"] = total
 
-    pairs_sold = fields.Integer("Pairs sold", store=True, compute="_get_pairs_sold")
+    pairs_sold = fields.Integer("Pairs sold", store=True, compute="_get_pairs_sold")update_set_price_by_pairs
 
     # Determina si el producto es un surtido basado en sus atributos
     @api.depends("attribute_line_ids")
@@ -275,12 +275,13 @@ class ProductTemplate(models.Model):
     @api.onchange("list_price")
     def update_set_price_by_pairs(self):
         for record in self:
-            if record.product_tmpl_set_id:
-                product_variants = record.product_tmpl_set_id.product_variant_ids
-                product_variants.write({"lst_price": record.list_price * product_variants.mapped("pairs_count")})
-            if record.product_tmpl_single_id:
-                product_variants = record.product_variant_ids
-                product_variants.write({"lst_price": record.list_price * product_variants.mapped("pairs_count")})
+            if record.product_tmpl_set_id.id:
+                for pp in record.product_tmpl_set_id.product_variant_ids:
+                    pp.write({"lst_price": record.list_price * pp.pairs_count})
+            # Esta parte funcionará al ser llamada desde la creación de pares:
+            if record.product_tmpl_single_id.id:
+                for pp in record.product_variant_ids:
+                    pp.write({"lst_price": record.list_price * pp.pairs_count})
 
 
     def update_assortment_weights(self):
