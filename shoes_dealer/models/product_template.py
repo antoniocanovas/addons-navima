@@ -334,6 +334,7 @@ class ProductTemplate(models.Model):
             record.create_single_products()
             # REVISAR, TIENE AA:
             record.update_standard_price_on_variants()
+            record.update_set_price_by_pairs()
             # CÓDIGO DE SURTIDO O PAR:
             record.update_product_template_campaign_code()
             # REVISAR, TIENE UN DEPENDS:
@@ -432,66 +433,67 @@ class ProductTemplate(models.Model):
     # Actualizar precios de coste, en base al exwork y cambio de moneda (NO FUNCIONA ONCHANGE => AA):
     # @api.onchange('exwork', 'exwork_single', 'product_variant_ids', 'campaing_id')
     def update_standard_price_on_variants(self):
+        # Caso de actualizar el precio desde el PAR:
         for record in self:
-            # Caso de actualizar el precio desde el PAR:
             if record.is_pair and record.product_tmpl_set_id.id:
                 ptassortment = record.product_tmpl_set_id
-                supplierinfo_vals = []
+                record.seller_ids.unlink()
+                ptassortment.seller_ids.unlink()
 
-                # Actualizar el precio estándar de las variantes del par
                 for pp in record.product_variant_ids:
                     pp.write({"standard_price": record.exwork_euro})
-                    supplierinfo_vals.append({
-                        "product_tmpl_id": record.id,
-                        "product_id": pp.id,
-                        "price": record.exwork,
-                        "currency_id": ptassortment.exwork_currency_id.id,
-                        "partner_id": ptassortment.manufacturer_id.id,
-                    })
+                    self.env["product.supplierinfo"].create(
+                        {
+                            "product_tmpl_id": record.id,
+                            "product_id": pp.id,
+                            "price": record.exwork,
+                            "currency_id": ptassortment.exwork_currency_id.id,
+                            "partner_id": ptassortment.manufacturer_id.id,
+                        }
+                    )
 
-                # Actualizar el precio estándar de las variantes del surtido
                 for pp in ptassortment.product_variant_ids:
                     pp.write({"standard_price": record.exwork_euro * pp.pairs_count})
-                    supplierinfo_vals.append({
-                        "product_tmpl_id": ptassortment.id,
-                        "product_id": pp.id,
-                        "price": record.exwork * pp.pairs_count,
-                        "currency_id": ptassortment.exwork_currency_id.id,
-                        "partner_id": ptassortment.manufacturer_id.id,
-                    })
-
-                # Crear registros de información del proveedor en lote
-                self.env["product.supplierinfo"].create(supplierinfo_vals)
+                    self.env["product.supplierinfo"].create(
+                        {
+                            "product_tmpl_id": ptassortment.id,
+                            "product_id": pp.id,
+                            "price": record.exwork * pp.pairs_count,
+                            "currency_id": ptassortment.exwork_currency_id.id,
+                            "partner_id": ptassortment.manufacturer_id.id,
+                        }
+                    )
 
             # Caso de actualizarse el precio desde el SURTIDO:
             if record.is_assortment and record.product_tmpl_single_id.id:
                 ptsingle = record.product_tmpl_single_id
-                supplierinfo_vals = []
+                record.seller_ids.unlink()
+                ptsingle.seller_ids.unlink()
 
-                # Actualizar el precio estándar de las variantes del surtido
                 for pp in record.product_variant_ids:
-                    pp.write({"standard_price": record.exwork_single_euro * pp.pairs_count})
-                    supplierinfo_vals.append({
-                        "product_tmpl_id": record.id,
-                        "product_id": pp.id,
-                        "price": record.exwork_single * pp.pairs_count,
-                        "currency_id": record.exwork_currency_id.id,
-                        "partner_id": record.manufacturer_id.id,
-                    })
-
-                # Actualizar el precio estándar de las variantes del par
+                    pp.write(
+                        {"standard_price": record.exwork_single_euro * pp.pairs_count}
+                    )
+                    self.env["product.supplierinfo"].create(
+                        {
+                            "product_tmpl_id": record.id,
+                            "product_id": pp.id,
+                            "price": record.exwork_single * pp.pairs_count,
+                            "currency_id": record.exwork_currency_id.id,
+                            "partner_id": record.manufacturer_id.id,
+                        }
+                    )
                 for pp in ptsingle.product_variant_ids:
                     pp.write({"standard_price": pp.exwork_euro})
-                    supplierinfo_vals.append({
-                        "product_tmpl_id": ptsingle.id,
-                        "product_id": pp.id,
-                        "price": ptsingle.exwork,
-                        "currency_id": pp.exwork_currency_id.id,
-                        "partner_id": record.manufacturer_id.id,
-                    })
-
-                # Crear registros de información del proveedor en lote
-                self.env["product.supplierinfo"].create(supplierinfo_vals)
+                    self.env["product.supplierinfo"].create(
+                        {
+                            "product_tmpl_id": ptsingle.id,
+                            "product_id": pp.id,
+                            "price": ptsingle.exwork,
+                            "currency_id": pp.exwork_currency_id.id,
+                            "partner_id": record.manufacturer_id.id,
+                        }
+                    )
 
     def update_product_template_campaign_code(self):
         for record in self:
