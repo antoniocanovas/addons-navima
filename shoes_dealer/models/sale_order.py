@@ -68,6 +68,7 @@ class SaleOrder(models.Model):
                         po = self.env['purchase.order'].create({'partner_id': manufacturer.id})
                     new_purchase_line = self.env['purchase.order.line'].create(
                         {'order_id': po.id, 'product_id': li.product_id.id, 'sale_line_id': li.id,
-                         'product_qty': li.product_uom_qty, 'assortment_pair_id':assortment_pair.id})
+                         'name': li.name, 'price_unit': li.product_id.exwork_single * li.pairs_count,
+                         'product_qty': li.product_uom_qty, 'assortment_pair_id': assortment_pair.id})
                     # Indicar en SOL para que no vuelva a crear el pedido:
                     li['purchase_line_id'] = new_purchase_line.id

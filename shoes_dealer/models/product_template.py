@@ -104,6 +104,9 @@ class ProductTemplate(models.Model):
         compute="_get_product_colors",
     )
 
+    # Campo que sobreescribirá website_sale, pero lo creamos aquí para evitar la dependencia:
+    base_unit_count = fields.Float(string="Base Unit Count", required=True, default=0)
+
     # Actualiza el nombre del par basado en el nombre del template
     @api.constrains("name")
     def _update_pair_name(self):
