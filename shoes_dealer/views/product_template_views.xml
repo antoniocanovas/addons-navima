@@ -20,7 +20,6 @@
                             <field name="material_id" readonly="is_pair or product_tmpl_set_id"/>
                             <!-- Campos comunes en pares y surtidos que han de ser replicados: -->
                             <field name="shoes_pair_weight_id" readonly="is_pair or product_tmpl_set_id"/>
-                            <field name="shoes_hscode_id" readonly="is_pair or product_tmpl_set_id"/>
                             <field name="campaign_code" readonly="1"/>
                         </group>
                         <group>

@@ -18,21 +18,7 @@
         <field name="view_mode">list</field>
     </record>
 
-    <record id="action_shoes_hs_code" model="ir.actions.act_window">
-        <field name="binding_model_id" eval="False"/>
-        <field name="binding_type">action</field>
-        <field name="context">{}</field>
-        <field name="domain">[]</field>
-        <field name="filter" eval="False"/>
-        <field name="groups_id" eval="[(6, 0, [])]"/>
-        <field name="limit">80</field>
-        <field name="name">Shoes standard HScode</field>
-        <field name="res_model">shoes.hs.code</field>
-        <field name="search_view_id" eval="False"/>
-        <field name="target">current</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="view_mode">list</field>
-    </record>
+
 
 
     <!-- INVENTORY CONFIG MENU: -->
@@ -74,21 +60,6 @@
         <field name="type">list</field>
     </record>
 
-     <record id="shoes_standard_hscode_default_tree" model="ir.ui.view">
-        <field name="name">shoes.standard.hscode.default.tree</field>
-        <field name="model">shoes.hs.code</field>
-        <field name="arch" type="xml">
-            <list editable="bottom">
-                <field name="name"/>
-                <field name="number"/>
-            </list>
-        </field>
-        <field name="groups_id" eval="[(6, 0, [])]"/>
-        <field name="inherit_id" eval="False"/>
-        <field name="key" eval="False"/>
-        <field name="mode">primary</field>
-        <field name="priority">16</field>
-        <field name="type">list</field>
-    </record>
+
 
 </odoo>
