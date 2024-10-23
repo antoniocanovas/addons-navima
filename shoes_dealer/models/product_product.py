@@ -13,6 +13,15 @@ class ProductProduct(models.Model):
         "Assortment pairs", compute="get_assortment_pair"
     )
 
+    def _compute_image_1920(self):
+        """Get the image from the template if no image is set on the variant."""
+        for record in self:
+            if record.color_attribute_id.id:
+                for pr in record.product_variant_ids:
+                    if (record.color_attribute_id.id in pr.product_template_variant_value_ids.ids) and (pr.id != record.id):
+                        pr['image_variant_1920'] = record.image_variant_1920
+            record.image_1920 = record.image_variant_1920 or record.product_tmpl_id.image_1920
+
     def get_assortment_pair(self):
         for product in self:
             ap = self.env["assortment.pair"].search([("product_id", "=", product.id)])
