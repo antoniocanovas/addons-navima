@@ -7,7 +7,7 @@ from odoo.exceptions import UserError
 class ProductAttributeValue(models.Model):
     _inherit = 'product.attribute.value'
 
-    assortment_id = fields.Many2one('shoes.assortment', string='Shoes Assortment', store=True, copy=False)
+    assortment_id = fields.Many2one('shoes.assortment', string='Template', store=True, copy=False)
 
     # Calcula si el atributo de conjunto debe estar oculto basado en la configuración de la compañía
     def _get_set_hidden(self):

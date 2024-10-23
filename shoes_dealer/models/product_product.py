@@ -18,7 +18,7 @@ class ProductProduct(models.Model):
         for record in self:
             if record.color_value_id.id:
                 for pr in record.product_variant_ids:
-                    if (record.color_value_id.id in pr.product_template_variant_value_ids.ids) and (pr.id != record.id):
+                    if (record.color_value_id == pr.color_value_id) and (pr.id != record.id):
                         pr['image_variant_1920'] = record.image_variant_1920
             record.image_1920 = record.image_variant_1920 or record.product_tmpl_id.image_1920
 
@@ -65,7 +65,6 @@ class ProductProduct(models.Model):
         store=True,
     )
 
-
     # Obtiene el valor del atributo de surtido
     def _get_assortment_attribute_value(self):
         for record in self:
@@ -110,10 +109,10 @@ class ProductProduct(models.Model):
         color_attribute = self.env.user.company_id.color_attribute_id
         prefix = self.env.user.company_id.single_prefix
         if (
-            not assortment_attribute.id
-            or not size_attribute.id
-            or not color_attribute.id
-            or prefix == ""
+                not assortment_attribute.id
+                or not size_attribute.id
+                or not color_attribute.id
+                or prefix == ""
         ):
             raise UserError(
                 "Please set shoes dealer attributes in this company form (Settings => User & companies => Company"
@@ -155,15 +154,14 @@ class ProductProduct(models.Model):
             # Limpieza de BOMS huérfanas:
             self.env["mrp.bom"].search([("is_assortment", "=", True), ("product_id", "=", False)]).unlink()
 
-
             if pt_single.id and record.is_assortment and not record.variant_bom_ids:
                 # Creación de LDM:
                 code = (
-                    record.name
-                    + " // "
-                    + str(assortment.code)
-                    + " "
-                    + str(record.color_value_id.name)
+                        record.name
+                        + " // "
+                        + str(assortment.code)
+                        + " "
+                        + str(record.color_value_id.name)
                 )
 
                 bom = self.env["mrp.bom"].create(
@@ -250,12 +248,12 @@ class ProductProduct(models.Model):
         for record in self:
             if record.is_assortment:
                 record.weight = (
-                    record.pairs_count
-                    * record.product_tmpl_id.shoes_pair_weight_id.pair_weight
+                        record.pairs_count
+                        * record.product_tmpl_id.shoes_pair_weight_id.pair_weight
                 )
                 record.net_weight = (
-                    record.pairs_count
-                    * record.product_tmpl_id.shoes_pair_weight_id.pair_net_weight
+                        record.pairs_count
+                        * record.product_tmpl_id.shoes_pair_weight_id.pair_net_weight
                 )
 
     # Product assortment (to be printed on sale.order and account.move reports):

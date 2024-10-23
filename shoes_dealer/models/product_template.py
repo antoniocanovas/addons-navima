@@ -83,10 +83,10 @@ class ProductTemplate(models.Model):
         readonly=False,
     )
     shipping_price = fields.Monetary(
-        "Shipping price", store=True, copy=True, tracking=10
+        "Shipping", store=True, copy=True, tracking=10
     )
     shipping_single_price = fields.Monetary(
-        "Shipping single price",
+        "Single Shipping",
         store=True,
         copy=True,
         tracking=10,
@@ -330,7 +330,6 @@ class ProductTemplate(models.Model):
             record.create_single_products()
             # REVISAR, TIENE AA:
             record.update_standard_price_on_variants()
-            record.update_set_price_by_pairs()
             # CÓDIGO DE SURTIDO O PAR:
             record.update_product_template_campaign_code()
             # REVISAR, TIENE UN DEPENDS:
@@ -401,6 +400,7 @@ class ProductTemplate(models.Model):
                         "categ_id": record.categ_id.id,
                         "product_brand_id": record.product_brand_id.id,
                         "campaign_code": campaign_code,
+                        "shoes_task_id": record.shoes_task_id.id,
                         "attribute_line_ids": [
                             (
                                 0,
