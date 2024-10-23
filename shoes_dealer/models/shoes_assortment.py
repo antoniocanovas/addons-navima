@@ -5,10 +5,10 @@ from odoo import fields, models, api
 from odoo.exceptions import UserError
 
 
-class SetTemplate(models.Model):
-    _name = "set.template"
+class ShoesAssortment(models.Model):
+    _name = "shoes.assortment"
     _inherit = ["mail.thread", "mail.activity.mixin"]
-    _description = "Set Template"
+    _description = "Shoes Assortment"
 
     name = fields.Char(string="Nombre", required=True, store=True, copy=True)
     code = fields.Char(string="Code", required=True, store=True, copy=False)
@@ -22,11 +22,11 @@ class SetTemplate(models.Model):
         default=lambda self: self.env.user.company_id.size_attribute_id,
     )
     line_ids = fields.One2many(
-        "set.template.line", "set_id", string="Lines", store=True, copy=True
+        "shoes.assortment.line", "assortment_id", string="Lines", store=True, copy=True
     )
     value_ids = fields.One2many(
         "product.attribute.value",
-        "set_template_id",
+        "assortment_id",
         string="Attribute values",
         readonly=True,
     )

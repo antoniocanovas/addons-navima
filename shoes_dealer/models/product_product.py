@@ -16,9 +16,9 @@ class ProductProduct(models.Model):
     def _compute_image_1920(self):
         """Get the image from the template if no image is set on the variant."""
         for record in self:
-            if record.color_attribute_id.id:
+            if record.color_value_id.id:
                 for pr in record.product_variant_ids:
-                    if (record.color_attribute_id.id in pr.product_template_variant_value_ids.ids) and (pr.id != record.id):
+                    if (record.color_value_id.id in pr.product_template_variant_value_ids.ids) and (pr.id != record.id):
                         pr['image_variant_1920'] = record.image_variant_1920
             record.image_1920 = record.image_variant_1920 or record.product_tmpl_id.image_1920
 
@@ -35,9 +35,9 @@ class ProductProduct(models.Model):
             size = product._get_size_attribute_value()
             product.write(
                 {
-                    "color_attribute_id": color,
+                    "color_value_id": color,
                     "assortment_attribute_id": assortment,
-                    "size_attribute_id": size,
+                    "size_value_id": size,
                 }
             )
             if (product.product_tmpl_single_id.id) and (product.is_assortment):
@@ -59,7 +59,7 @@ class ProductProduct(models.Model):
                         value = li.value_ids[0]
             return value
 
-    color_attribute_id = fields.Many2one(
+    color_value_id = fields.Many2one(
         "product.attribute.value",
         string="Color",
         store=True,
@@ -71,11 +71,11 @@ class ProductProduct(models.Model):
         for record in self:
             value = False
             for li in record.product_template_attribute_value_ids:
-                if li.attribute_id == self.env.company.bom_attribute_id:
+                if li.attribute_id == self.env.company.assortment_attribute_id:
                     value = li.product_attribute_value_id.id
             if len(record.product_tmpl_id.product_variant_ids.ids) == 1:
                 for li in record.product_tmpl_id.attribute_line_ids:
-                    if li.attribute_id == self.env.company.bom_attribute_id:
+                    if li.attribute_id == self.env.company.assortment_attribute_id:
                         value = li.value_ids[0]
             return value
 
@@ -97,7 +97,7 @@ class ProductProduct(models.Model):
                         value = li.value_ids[0]
             return value
 
-    size_attribute_id = fields.Many2one(
+    size_value_id = fields.Many2one(
         "product.attribute.value",
         string="Size",
         store=True,
@@ -105,12 +105,12 @@ class ProductProduct(models.Model):
 
     def shoes_dealer_check_environment(self):
         # Chequear si existen las variables de empresa para shoes_dealer, con sus mensajes de alerta:
-        bom_attribute = self.env.user.company_id.bom_attribute_id
+        assortment_attribute = self.env.user.company_id.assortment_attribute_id
         size_attribute = self.env.user.company_id.size_attribute_id
         color_attribute = self.env.user.company_id.color_attribute_id
         prefix = self.env.user.company_id.single_prefix
         if (
-            not bom_attribute.id
+            not assortment_attribute.id
             or not size_attribute.id
             or not color_attribute.id
             or prefix == ""
@@ -124,16 +124,16 @@ class ProductProduct(models.Model):
         ptal = self.env["product.template.attribute.line"].search(
             [
                 ("product_tmpl_id", "=", self.product_tmpl_single_id.id),
-                ("attribute_id", "=", self.color_attribute_id.attribute_id.id),
+                ("attribute_id", "=", self.color_value_id.attribute_id.id),
             ]
         )
         # Si no existe, se añade:
-        if self.color_attribute_id.id not in ptal.value_ids.ids:
-            ptal["value_ids"] = [(4, self.color_attribute_id.id)]
+        if self.color_value_id.id not in ptal.value_ids.ids:
+            ptal["value_ids"] = [(4, self.color_value_id.id)]
             ptal._update_product_template_attribute_values()
 
         # Lo mismo para todas las tallas del surtido:
-        for li in self.assortment_attribute_id.set_template_id.line_ids:
+        for li in self.assortment_attribute_id.assortment_id.line_ids:
             size = li.value_id.id
             ptal = self.env["product.template.attribute.line"].search(
                 [
@@ -150,7 +150,7 @@ class ProductProduct(models.Model):
         # Crear lista de materiales, si es surtido y ya tiene par asignado:
         for record in self:
             pt_single = record.product_tmpl_single_id
-            set_template = record.assortment_attribute_id.set_template_id
+            assortment = record.assortment_attribute_id.assortment_id
 
             # Limpieza de BOMS huérfanas:
             self.env["mrp.bom"].search([("is_assortment", "=", True), ("product_id", "=", False)]).unlink()
@@ -161,9 +161,9 @@ class ProductProduct(models.Model):
                 code = (
                     record.name
                     + " // "
-                    + str(set_template.code)
+                    + str(assortment.code)
                     + " "
-                    + str(record.color_attribute_id.name)
+                    + str(record.color_value_id.name)
                 )
 
                 bom = self.env["mrp.bom"].create(
@@ -177,9 +177,9 @@ class ProductProduct(models.Model):
                 )
 
                 # Creación de líneas en LDM para cada talla del surtido:
-                for li in set_template.line_ids:
+                for li in assortment.line_ids:
                     # El producto "single (o par)" con estos atributos, que se usará en la LDM:
-                    if not record.color_attribute_id.id:
+                    if not record.color_value_id.id:
                         raise UserError(
                             "Hay productos del surtido sin ATRIBUTO COLOR calculado."
                         )
@@ -191,7 +191,7 @@ class ProductProduct(models.Model):
                             (
                                 "product_attribute_value_id",
                                 "=",
-                                record.color_attribute_id.id,
+                                record.color_value_id.id,
                             ),
                         ]
                     )
@@ -263,7 +263,7 @@ class ProductProduct(models.Model):
     def _get_product_assortment_code(self):
         for record in self:
 
-            assortment_attribute = self.env.user.company_id.bom_attribute_id
+            assortment_attribute = self.env.user.company_id.assortment_attribute_id
 
             # El campo en el product.product es product_template_variant_value_ids
             # Este campo es un m2m a product.template.attribute.value
@@ -290,8 +290,8 @@ class ProductProduct(models.Model):
             # este modelo tiene un campo que es "set_template_id" que apunta al modelo "set.template"
             # Los valores que nos interesan son las líneas de este último, pero utilizamos el campo code para impresión)
             if ptvv.id:
-                assortment_code = ptvv.product_attribute_value_id.set_template_id.code
-            record["assortment_code"] = ptvv.product_attribute_value_id.set_template_id.code if ptvv.id else ""
+                assortment_code = ptvv.product_attribute_value_id.assortment_id.code
+            record["assortment_code"] = ptvv.product_attribute_value_id.assortment_id.code if ptvv.id else ""
 
     assortment_code = fields.Char(
         "Assortment", store=False, compute="_get_product_assortment_code"

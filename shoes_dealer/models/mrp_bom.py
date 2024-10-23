@@ -9,7 +9,7 @@ class MrpBom(models.Model):
     pairs_count = fields.Integer('Pairs', store=True, compute='_get_shoes_bom_pair_count')
 
     set_pairs_count = fields.Integer('Set pairs',
-                                     related='product_id.assortment_attribute_id.set_template_id.pairs_count')
+                                     related='product_id.assortment_attribute_id.assortment_id.pairs_count')
 
     is_assortment = fields.Boolean(related='product_tmpl_id.is_assortment')
 
@@ -29,7 +29,7 @@ class MrpBom(models.Model):
             if record.product_id.is_assortment:
                 for li in record.bom_line_ids:
                     if li.product_id.is_pair:
-                        sizes += li.product_id.size_attribute_id.name + ","
+                        sizes += li.product_id.size_value_id.name + ","
                         pairs += str(int(li.product_qty)) + ","
                         pair_products += str(li.product_id.id) + ","
                 if len(sizes) > 0: sizes = sizes[:-1]

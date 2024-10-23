@@ -20,13 +20,13 @@ class AccountMoveLine(models.Model):
             record.pair_price = record.price_subtotal / record.pairs_count if record.pairs_count else 0
     pair_price = fields.Float('Pair price', store=True, compute='_get_shoes_invoice_pair_price')
 
-    color_attribute_id = fields.Many2one('product.attribute.value', string='Color',
+    color_value_id = fields.Many2one('product.attribute.value', string='Color',
                                          store=True,
-                                         related='product_id.color_attribute_id')
+                                         related='product_id.color_value_id')
 
-    size_attribute_id = fields.Many2one('product.attribute.value', string='Size',
+    size_value_id = fields.Many2one('product.attribute.value', string='Size',
                                          store=True,
-                                         related='product_id.size_attribute_id')
+                                         related='product_id.size_value_id')
 
     shoes_campaign_id = fields.Many2one('project.project', string='Shoes Campaign',
                                         store=True,

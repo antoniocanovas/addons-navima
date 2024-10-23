@@ -2,7 +2,7 @@
 <odoo>
 
     <!-- ACCIONES DE VENTANA: -->
-    <record id="action_product_set_template" model="ir.actions.act_window">
+    <record id="action_product_shoes_assortment" model="ir.actions.act_window">
         <field name="binding_model_id" eval="False"/>
         <field name="binding_type">action</field>
         <field name="context">{}</field>
@@ -11,7 +11,7 @@
         <field name="groups_id" eval="[(6, 0, [])]"/>
         <field name="limit">80</field>
         <field name="name">Assortments</field>
-        <field name="res_model">set.template</field>
+        <field name="res_model">shoes.assortment</field>
         <field name="search_view_id" eval="False"/>
         <field name="target">current</field>
         <field name="type">ir.actions.act_window</field>
@@ -19,8 +19,8 @@
     </record>
 
     <!-- SALE CONFIG MENU: -->
-    <record id="product_set_template_menu" model="ir.ui.menu">
-        <field name="action" ref="action_product_set_template"/>
+    <record id="product_shoes_assortment_menu" model="ir.ui.menu">
+        <field name="action" ref="action_product_shoes_assortment"/>
         <field name="active" eval="True"/>
         <field name="name">Assortments</field>
         <field name="parent_id" ref="sale.menu_sale_config"/>
@@ -29,8 +29,8 @@
     </record>
 
     <!-- INVENTORY CONFIG MENU: -->
-    <record id="inventory_set_template_menu" model="ir.ui.menu">
-        <field name="action" ref="action_product_set_template"/>
+    <record id="inventory_shoes_assortment_menu" model="ir.ui.menu">
+        <field name="action" ref="action_product_shoes_assortment"/>
         <field name="active" eval="True"/>
         <field name="name">Assortments</field>
         <field name="parent_id" ref="shoes_dealer.inventory_shoes_dealer_menu"/>
@@ -40,9 +40,9 @@
 
 
     <!-- FORM VIEW: -->
-    <record id="product_set_template_default_form" model="ir.ui.view">
-        <field name="name">product.set.template.default.form</field>
-        <field name="model">set.template</field>
+    <record id="product_shoes_assortment_default_form" model="ir.ui.view">
+        <field name="name">product.shoes.assortment.default.form</field>
+        <field name="model">shoes.assortment</field>
         <field name="arch" type="xml">
             <form>
                 <sheet>
@@ -57,7 +57,7 @@
                                 <field name="value_id" domain="[('attribute_id','=',attribute_id)]"
                                        options="{'no_quick_create': True, 'no_create_edit':True}"/>
                                 <field name="quantity"/>
-                                <field name="set_id" invisible="1"/>
+                                <field name="assortment_id" invisible="1"/>
                                 <field name="attribute_id" invisible="1"/>
                             </list>
                         </field>
@@ -76,9 +76,9 @@
     </record>
 
     <!-- list VIEW: -->
-    <record id="product_set_template_default_tree" model="ir.ui.view">
-        <field name="name">product.set.template.default.list</field>
-        <field name="model">set.template</field>
+    <record id="product_shoes_assortment_default_tree" model="ir.ui.view">
+        <field name="name">product.shoes.assortment.default.list</field>
+        <field name="model">shoes.assortment</field>
         <field name="arch" type="xml">
             <list>
                 <field name="name"/>

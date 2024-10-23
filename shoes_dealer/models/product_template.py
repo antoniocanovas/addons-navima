@@ -163,7 +163,7 @@ class ProductTemplate(models.Model):
     @api.depends("attribute_line_ids")
     def _get_is_assortment(self):
         color_attribute = self.env.company.color_attribute_id
-        assortment_attribute = self.env.company.bom_attribute_id
+        assortment_attribute = self.env.company.assortment_attribute_id
         color = any(li.attribute_id == color_attribute for li in self.attribute_line_ids)
         assortment = any(li.attribute_id == assortment_attribute for li in self.attribute_line_ids)
         self.is_assortment = color and assortment
@@ -345,7 +345,7 @@ class ProductTemplate(models.Model):
         # Nueva versión desde variantes desde atributo:
         for record in self:
             # 1. Chequeo variante parametrizada de empresa y producto, con sus mensajes de alerta:
-            bom_attribute = self.env.user.company_id.bom_attribute_id
+            bom_attribute = self.env.user.company_id.assortment_attribute_id
             size_attribute = self.env.user.company_id.size_attribute_id
             color_attribute = self.env.user.company_id.color_attribute_id
             prefix = self.env.user.company_id.single_prefix
@@ -378,7 +378,7 @@ class ProductTemplate(models.Model):
                         sizes.extend(
                             set_line.value_id.id
                             for ptav in li.value_ids
-                            for set_line in ptav.set_template_id.line_ids
+                            for set_line in ptav.assortment_id.line_ids
                             if set_line.value_id.id not in sizes
                         )
                     elif li.attribute_id.id == color_attribute.id:

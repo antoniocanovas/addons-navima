@@ -50,13 +50,13 @@ class SaleOrderLine(models.Model):
                         for li in customvalues:
                             element = li.split("x")
                             # Para tallas (encontrar si existe la talla y color en el par):
-                            color_attribute_value_id = record.product_id.color_attribute_id
+                            color_value_id = record.product_id.color_value_id
                             size_attribute = self.env.company.size_attribute_id
-                            size_attribute_value_id = self.env['product.attribute.value'].search(
+                            size_value_id = self.env['product.attribute.value'].search(
                                 [('attribute_id', '=', size_attribute.id), ('name', '=', element[0])])
 
-                            pppair = self.env['product.product'].search([('color_attribute_id', '=', color_attribute_value_id.id),
-                                                                         ('size_attribute_id', '=', size_attribute_value_id.id),
+                            pppair = self.env['product.product'].search([('color_value_id', '=', color_value_id.id),
+                                                                         ('size_value_id', '=', size_value_id.id),
                                                                          ('product_tmpl_id', '=', record.product_id.product_tmpl_single_id.id)])
                             sizes += element[0] + ","
                             pairs += element[1] + ","
@@ -109,11 +109,11 @@ class SaleOrderLine(models.Model):
         store=True,
         related="product_id.product_tmpl_model_id",
     )
-    color_attribute_id = fields.Many2one(
+    color_value_id = fields.Many2one(
         "product.attribute.value",
         string="Shoes Color",
         store=True,
-        related="product_id.color_attribute_id",
+        related="product_id.color_value_id",
     )
     shoes_campaign_id = fields.Many2one(
         "project.project",
@@ -179,7 +179,7 @@ class SaleOrderLine(models.Model):
             #            cleanvalues, sizes, pairs, pair_products, pairs_count = "", "", "", "", 0
             size_attribute = self.env.company.size_attribute_id
             sale_line_product = record.product_id
-            sale_line_product_color = sale_line_product.color_attribute_id
+            sale_line_product_color = sale_line_product.color_value_id
             shoes_pair_model = sale_line_product.product_tmpl_single_id
 
             # Si pongo en el if record.product_custom_attribute_value_ids, no pasa (uso name) !!
@@ -198,18 +198,18 @@ class SaleOrderLine(models.Model):
                     for li in customvalues:
                         element = li.split("x")
                         # Para tallas (encontrar si existe la talla y color en el par):
-                        color_attribute_value_id = sale_line_product_color
-                        size_attribute_value_id = self.env['product.attribute.value'].search(
+                        color_value_id = sale_line_product_color
+                        size_value_id = self.env['product.attribute.value'].search(
                             [('attribute_id', '=', size_attribute.id), ('name', '=', element[0])])
-                        if not size_attribute_value_id.id:
+                        if not size_value_id.id:
                             raise UserError("La talla " + str(element[0]) + " no existe en el sistema.")
 
-                        pppair = self.env['product.product'].search([('color_attribute_id', '=', color_attribute_value_id.id),
-                                                                     ('size_attribute_id', '=', size_attribute_value_id.id),
+                        pppair = self.env['product.product'].search([('color_value_id', '=', color_value_id.id),
+                                                                     ('size_value_id', '=', size_value_id.id),
                                                                      ('product_tmpl_id', '=', shoes_pair_model.id)])
                         if not pppair.id:
                             raise UserError("No encuentro el par suelto de talla " + str(
-                                element[0]) + " y color " + color_attribute_value_id.name + " en este modelo.")
+                                element[0]) + " y color " + color_value_id.name + " en este modelo.")
 
                         # Para cantidades (ok):
                         try:

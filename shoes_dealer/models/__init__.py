@@ -1,5 +1,5 @@
-from . import set_template
-from . import set_template_line
+from . import shoes_assortment
+from . import shoes_assortment_line
 from . import product_template
 from . import product_product
 from . import res_company

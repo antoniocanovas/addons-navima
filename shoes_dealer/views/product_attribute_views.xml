@@ -8,7 +8,7 @@
         <field name="inherit_id" ref="product.product_attribute_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='value_ids']/list/field[@name='is_custom']" position="after">
-                <field name="set_template_id" invisible="set_hidden"/>
+                <field name="assortment_id" invisible="set_hidden"/>
                 <field name="set_hidden" invisible="1"/>
             </xpath>
             <xpath expr="//field[@name='value_ids']/list" position="inside">
