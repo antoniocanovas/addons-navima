@@ -188,9 +188,7 @@ class ProductTemplate(models.Model):
         "shoes_pair_weight_id",
     )
     def _get_pair_and_variants_sync(self):
-        if self.shoes_hscode_id.id:
-            self.product_tmpl_single_id.shoes_hscode_id = self.shoes_hscode_id.id
-            self.hs_code = self.shoes_hscode_id.number
+
         if self.gender:
             self.product_tmpl_single_id.gender = self.gender
         if self.manufacturer_id:
