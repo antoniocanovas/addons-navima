@@ -8,6 +8,7 @@ class ShoesColorChartItem(models.Model):
     _name = 'shoes.color.chart.item'
     _description = 'Shoes color chart item'
 
+    # Elementos de la tabla de relación de project => valores de atributo tipo color:
     name = fields.Char('Name')
     shoes_campaign_id = fields.Many2one('Campaign')
     color_value_id = fields.Many2one('product.attribute.value')
