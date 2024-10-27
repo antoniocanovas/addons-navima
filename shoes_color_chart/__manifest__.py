@@ -25,6 +25,7 @@
     "depends": [
         'product',
         'project',
+        'partner_product_attribute_value',
         'shoes_dealer',
         'shoes_campaign',
     ],
