@@ -7,4 +7,11 @@ class ProjectProject(models.Model):
     _inherit = "project.project"
 
 
-    shoes_color_chart_ids = fields.Many2many('shoes_color_chart','project_id')
+    shoes_color_chart_item_ids = fields.Many2many(
+        "product.attribute.value",
+        string="Chart colors",
+        relation="shoes.color.chart.item",
+        column1="shoes_campaign_id",
+        column2="color_value_id",
+        copy=True,
+    )
