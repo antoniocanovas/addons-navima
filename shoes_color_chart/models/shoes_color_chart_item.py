@@ -14,5 +14,5 @@ class ShoesColorChartItem(models.Model):
     color_value_id = fields.Many2one('product.attribute.value')
 
     # Estos dos los usaré para agrupar en la vista de "Items de paleta de colores":
-    manufacturer_id = fields.Many2one('res.partner', related='color_value_id.manufacturer_id')
+    manufacturer_id = fields.Many2one('res.partner', related='color_value_id.partner_id')
     material_id = fields.Many2one('product.material', related='color_value_id.material_id')
