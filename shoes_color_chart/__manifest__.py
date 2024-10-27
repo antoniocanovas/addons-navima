@@ -36,9 +36,11 @@
     """,
     "data": [
         "security/ir.model.access.csv",
-#        'views/project_project_views.xml',
-#        'views/project_task_views.xml',
+        'views/project_project_views.xml',
+        'views/project_task_views.xml',
         'views/product_template_views.xml',
+        'views/product_attribute_views.xml',
+        'views/product_material_views.xml',
     ],
     "demo": [],
     "installable": True,
