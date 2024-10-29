@@ -25,7 +25,7 @@
         "uom",
         # PUNT:
 #        "sale_commission_manager_ee",
-        "partner_product_attribute_value",
+#        "partner_product_attribute_value",
         # OCA:
         "product_brand",
         "product_net_weight",
