@@ -7,3 +7,5 @@ from . import project_project
 from . import project_task
 from . import product_template
 from . import shoes_color_chart_wizard
+from . import product_template_attribute_line
+from . import shoes_color_chart_copy_wizard
