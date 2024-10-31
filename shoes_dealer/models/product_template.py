@@ -325,21 +325,21 @@ class ProductTemplate(models.Model):
             )
 
     def create_shoe_pairs(self):
-        for record in self:
-            if not record.shoes_campaign_id.id or not record.manufacturer_id.id:
-                raise UserError(
-                    "Assign a campaign and manufacturer before pairs creation !!"
-                )
-            record.create_single_products()
-            # REVISAR, TIENE AA:
-            record.update_standard_price_on_variants()
-            # CÓDIGO DE SURTIDO O PAR:
-            record.update_product_template_campaign_code()
-            # REVISAR, TIENE UN DEPENDS:
-            record.update_set_price_by_pairs()
-            # Asignar Pesos en función del número de pares
-            record.update_assortment_weights()
-            record._get_pair_and_variants_sync()
+        self.ensure_one()
+        if not self.shoes_campaign_id.id or not self.manufacturer_id.id:
+            raise UserError(
+                "Assign a campaign and manufacturer before pairs creation !!"
+            )
+        self.create_single_products()
+        # REVISAR, TIENE AA:
+        self.update_standard_price_on_variants()
+        # CÓDIGO DE SURTIDO O PAR:
+        self.update_product_template_campaign_code()
+        # REVISAR, TIENE UN DEPENDS:
+        self.update_set_price_by_pairs()
+        # Asignar Pesos en función del número de pares
+        self.update_assortment_weights()
+        self._get_pair_and_variants_sync()
 
     def create_single_products(self):
         # Nueva versión desde variantes desde atributo:
