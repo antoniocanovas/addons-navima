@@ -20,7 +20,7 @@
                         </group>
 
                         <group name="relations" string="Relations">
-                            <field name="product_tmpl_single_id" invisible="not is_assortment" domain="[('is_pair', '=', True)]" readonly="product_tmpl_set_id"/>
+                            <field name="product_tmpl_single_id" invisible="not is_assortment" domain="[('is_pair', '=', True)]" readonly="product_tmpl_single_id"/>
                             <field name="product_tmpl_set_id" invisible="not is_pair" domain="[('is_assortment', '=', True)]" readonly="product_tmpl_set_id"/>
                             <!-- Campos requeridos, invisibles: -->
                             <field name="exwork_currency_id" invisible="1"/>
