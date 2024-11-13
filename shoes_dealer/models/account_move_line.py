@@ -14,7 +14,7 @@ class AccountMoveLine(models.Model):
     pairs_count = fields.Integer('Pairs', store=True, compute='_get_shoes_invoice_line_pair_count')
 
     # Precio por par según tarifa:
-    @api.depends('product_id','price_unit')
+    @api.depends('product_id','price_unit', "quantity")
     def _get_shoes_invoice_pair_price(self):
         for record in self:
             record.pair_price = record.price_subtotal / record.pairs_count if record.pairs_count else 0

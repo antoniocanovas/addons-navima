@@ -1,11 +1,11 @@
-# Copyright 2023 Serincloud SL - Ingenieriacloud.com
+    # Copyright 2023 Serincloud SL - Ingenieriacloud.com
 
 from odoo import fields, models, api
 from odoo.exceptions import UserError, ValidationError
 
+
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
-
 
     purchase_line_id = fields.Many2one("purchase.order.line", string="Purchase line")
 
@@ -22,19 +22,42 @@ class SaleOrderLine(models.Model):
         "Pairs", store=True, compute="_get_shoes_sale_line_pair_count"
     )
 
-    @api.depends('write_date')
+    def _get_pricelist_price(self):
+        self.ensure_one()
+        self.product_id.ensure_one()
+
+        price = super(SaleOrderLine, self)._get_pricelist_price()
+        if self.product_custom_attribute_value_ids and self.product_id.product_tmpl_single_id:
+            customvalue = self.product_custom_attribute_value_ids[0].custom_value
+            # Quitar espacios del campo custom del surtido:
+            customvalue = customvalue.replace(" ", "").lower()
+            customvalues = customvalue.split(",")
+            pairs_count = sum(int(element.split("x")[1]) for element in customvalues)
+            order = self.order_id
+            product = self.env['product.product'].search([('product_tmpl_id','=',self.product_id.product_tmpl_single_id.id)], limit=1)
+            price = order.pricelist_id._get_product_price(product, 1.0)
+            return price * pairs_count
+        else:
+            return price
+
+    #Añadido product_id para actualización dinámica
+    @api.depends('write_date', 'product_id')
     def _get_custom_assortment_pairs(self):
         for record in self:
             pairs_count = 0
-            if record.product_id.is_assortment and record.name and record.product_custom_attribute_value_ids.ids:
+            # eliminado el .ids de prodcut_custom_attribute_value_ids para que entre antes de escribir
+            if record.product_id.is_assortment and record.name and record.product_custom_attribute_value_ids:
                 customvalue = record.product_custom_attribute_value_ids[0].custom_value
                 # Quitar espacios del campo custom del surtido:
                 customvalue = customvalue.replace(" ", "").lower()
                 customvalues = customvalue.split(",")
                 pairs_count = sum(int(element.split("x")[1]) for element in customvalues)
             record.custom_assortment_pairs = pairs_count
+
+
     custom_assortment_pairs = fields.Integer("Custom assortment pairs", store=True,
                                              compute='_get_custom_assortment_pairs')
+
 
     @api.depends('write_date')
     def _get_assortment_pair(self):
@@ -42,7 +65,7 @@ class SaleOrderLine(models.Model):
             customvalue, cleanvalues, sizes, pairs, pair_products, pairs_count = "", "", "", "", "", 0
             if record.product_id.is_assortment and record.name:
                 if record.product_custom_attribute_value_ids.ids:
-                    customvalue =  record.product_custom_attribute_value_ids[0].custom_value
+                    customvalue = record.product_custom_attribute_value_ids[0].custom_value
                     if customvalue:
                         # Quitar espacios del campo custom del surtido:
                         customvalue = customvalue.replace(" ", "").lower()
@@ -57,7 +80,8 @@ class SaleOrderLine(models.Model):
 
                             pppair = self.env['product.product'].search([('color_value_id', '=', color_value_id.id),
                                                                          ('size_value_id', '=', size_value_id.id),
-                                                                         ('product_tmpl_id', '=', record.product_id.product_tmpl_single_id.id)])
+                                                                         ('product_tmpl_id', '=',
+                                                                          record.product_id.product_tmpl_single_id.id)])
                             sizes += element[0] + ","
                             pairs += element[1] + ","
                             pair_products += str(pppair.id) + ","
@@ -74,10 +98,13 @@ class SaleOrderLine(models.Model):
                     bom = record.product_id.bom_ids[0]
                     cleanvalues = bom.assortment_pair
             record['assortment_pair'] = cleanvalues
+
+
     assortment_pair = fields.Char('Assortment pairs', compute='_get_assortment_pair')
 
     # Precio especial del para en la línea de ventas, recalculará precio unitario del producto surtido:
     special_pair_price = fields.Monetary("SPP", help="Special pair price")
+
 
     @api.onchange("special_pair_price")
     def _update_price_unit_from_spp(self):
@@ -85,6 +112,7 @@ class SaleOrderLine(models.Model):
             record["price_unit"] = (
                     record.pairs_count * record.special_pair_price / record.product_uom_qty
             )
+
 
     # Para informes:
     state_id = fields.Many2one(
@@ -142,19 +170,20 @@ class SaleOrderLine(models.Model):
         help="Used for group by manufacturer in sale order line views",
     )
 
+
     @api.depends("state")
     def _get_quoted_quantity(self):
         for record in self:
             record.qty_quoted = record.product_uom_qty if record.state not in ["sale", "done", "cancel"] else 0
+
 
     qty_quoted = fields.Float(
         "Quoted qty", store=True, copy=False, compute="_get_quoted_quantity"
     )
 
 
-
     # Precio por par según tarifa:
-    @api.depends("product_id", "price_unit")
+    @api.depends("product_id", "price_unit","product_uom_qty")
     def _get_shoes_pair_price(self):
         for record in self:
             total = 0
@@ -162,11 +191,13 @@ class SaleOrderLine(models.Model):
                 total = record.price_subtotal / record.pairs_count
             record["pair_price"] = total
 
+
     pair_price = fields.Float("Pair price", store=True, compute="_get_shoes_pair_price")
 
     product_saleko_id = fields.Many2one(
         "product.product", string="Product KO", store=True, copy=True
     )
+
 
     @api.onchange("product_saleko_id")
     def change_saleproductok_2_saleproductko(self):
