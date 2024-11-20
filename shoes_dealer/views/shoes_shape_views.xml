@@ -39,7 +39,7 @@
                         <field name="name" placeholder="Last name ..."/>
                     </h1>
                     <group>
-                        <field name="heel_type"/>
+                        <field name="heel_id"/>
                         <field name="heel_height"/>
                         <field name="platform_height"/>
                     </group>
@@ -77,7 +77,7 @@
         <field name="arch" type="xml">
             <list>
                 <field name="name"/>
-                <field name="heel_type" optional="show"/>
+                <field name="heel_id" optional="show"/>
                 <field name="heel_height" optional="show"/>
                 <field name="platform_height" optional="show"/>
                 <field name="sole_material_main_id" optional="hide"/>

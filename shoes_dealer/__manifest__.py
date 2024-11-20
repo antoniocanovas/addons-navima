@@ -56,6 +56,7 @@
         "views/shoes_pair_weight_views.xml",
         "views/assortment_pair_views.xml",
         "views/shoes_last_views.xml",
+        "views/shoes_heel_views.xml",
     ],
     "installable": True,
 }

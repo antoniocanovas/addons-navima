@@ -24,3 +24,4 @@ from . import product_template_attribute_line
 from . import assortment_pair
 from . import stock_lot
 from . import shoes_last
+from . import shoes_heel
