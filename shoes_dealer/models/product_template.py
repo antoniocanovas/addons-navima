@@ -36,8 +36,8 @@ class ProductTemplate(models.Model):
         "product.material", string="Material", copy=True
     )
 
-    shoes_shape_id = fields.Many2one(
-        "shoes.shape", string="Shape"
+    shoes_last_id = fields.Many2one(
+        "shoes.last", string="Last"
     )
 
     product_tmpl_set_id = fields.Many2one(

@@ -4,9 +4,9 @@ from fnmatch import translate
 
 from odoo import fields, models, api
 
-class ShoesShape(models.Model):
-    _name = 'shoes.shape'
-    _description = 'Shoes MRP shape'
+class ShoesLast(models.Model):
+    _name = 'shoes.last'
+    _description = 'Shoes MRP last'
 
     name = fields.Char('Name', translate=True)
     heel_type = fields.Char('Heel type', translate=True)

@@ -31,7 +31,7 @@
                         <field name="material_id"/>
                     </group>
                     <group>
-                        <field name="shoes_shape_id"/>
+                        <field name="shoes_last_id"/>
                         <field name="gender"/>
                         <field name="shoes_pair_weight_id"/>
                         <field name="intrastat_duty_id"/>

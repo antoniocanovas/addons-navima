@@ -7,5 +7,5 @@ access_product_material, Product Material admin,model_product_material,base.grou
 access_shoes_pair_weight_admin, Shoes pair weight admin,model_shoes_pair_weight,stock.group_stock_manager,1,1,1,1
 access_shoes_pair_weight_user, Shoes pair weight user,model_shoes_pair_weight,base.group_user,1,0,0,0
 access_shoes_assortment_pair, Assortment pair admin,model_assortment_pair,base.group_user,1,1,1,1
-access_shoes_shape_user, Shoes shape user,model_shoes_shape,base.group_user,1,0,0,0
-access_shoes_shape_admin, Shoes shape admin,model_shoes_shape,stock.group_stock_manager,1,1,1,1
+access_shoes_last_user, Shoes last user,model_shoes_last,base.group_user,1,0,0,0
+access_shoes_last_admin, Shoes last admin,model_shoes_last,stock.group_stock_manager,1,1,1,1

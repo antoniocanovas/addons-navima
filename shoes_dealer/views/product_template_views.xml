@@ -33,7 +33,7 @@
                         <group name="manufacturing" string="Manufacturing">
                             <field name="manufacturer_id" readonly="is_pair or product_tmpl_set_id"/>
                             <field name="material_id" readonly="is_pair or product_tmpl_set_id"/>
-                            <field name="shoes_shape_id"/>
+                            <field name="shoes_last_id"/>
                             <field name="shoes_pair_weight_id" readonly="is_pair or product_tmpl_set_id"/>
                         </group>
                         <group name="pricing" string="Pricing">

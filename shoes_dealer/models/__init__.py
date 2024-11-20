@@ -23,4 +23,4 @@ from . import shoes_pair_weight
 from . import product_template_attribute_line
 from . import assortment_pair
 from . import stock_lot
-from . import shoes_shape
+from . import shoes_last

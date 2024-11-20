@@ -19,12 +19,12 @@ class ShoesColorChartWizard(models.TransientModel):
     def action_apply(self):
         # Chequeo de referencias y códigos requeridos para componer el campo name:
         message = ""
-        if not self.manufacturer_id.ref:
+        if self.manufacturer_id.ref == "":
             message = "Manufacturer referencer required (Manufacturer => Sale/Purchases => Reference)"
-        if not self.material_id.code:
+        if self.material_id.code == "":
             message = "Material code required => (Naterial => Code)"
         for li in self.color_value_ids:
-            if not li.code:
+            if li.code == "":
                 message = "Color code required (Color => Code): " + li.name
 
         # Creación de ítems en carta de color:
