@@ -41,6 +41,7 @@
                     <group>
                         <field name="heel_id"/>
                         <field name="heel_height"/>
+                        <field name="toe"/>
                         <field name="platform_height"/>
                     </group>
                     <group name="shoes_material" string="Materials">
@@ -79,6 +80,7 @@
                 <field name="name"/>
                 <field name="heel_id" optional="show"/>
                 <field name="heel_height" optional="show"/>
+                <field name="toe" optional="show"/>
                 <field name="platform_height" optional="show"/>
                 <field name="sole_material_main_id" optional="hide"/>
                 <field name="sole_material_secondary_id" optional="hide"/>
