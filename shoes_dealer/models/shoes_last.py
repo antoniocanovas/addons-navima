@@ -11,7 +11,7 @@ class ShoesLast(models.Model):
     name = fields.Char('Name', translate=True)
     heel_id = fields.Many2one('shoes.heel', string='Heel')
     heel_height = fields.Float('Heel height')
-    toe = fields.Selection([('pointed','Pointed'),('square','Square'),('round','Round')], string='Toe', translate=True)
+    toe = fields.Selection([('pointed','Pointed'),('square','Square'),('round','Round')], string='Toe')
     platform_height = fields.Float('Platform height')
     sole_material_main_id = fields.Many2one('product.material', string="Sole")
     sole_material_secondary_id = fields.Many2one('product.material', string="Sole 2nd")
