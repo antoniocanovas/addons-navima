@@ -59,16 +59,20 @@ class RiskContract(models.Model):
     margin = fields.Float("Supplier margin (%)", store=True, copy=True)
     claim = fields.Integer("Claim period (days)", store=True, copy=True)
 
+    # Plus contract:
+    plus = fields.Boolean('Plus option',
+                          help='Enables you to extend coverage under conditions other than the original for the extended amount.')
+    plus_amount = fields.Monetary("Plus amount", store=True, copy=True, tracking=100)
+    plus_margin = fields.Float("Plus margin (%)", store=True, copy=True)
+
     def update_risk_partner(self):
         for record in self:
             partner = record.partner_id
             if record.date_end and record.date_end < date.today():
                 raise UserError("Expiration date must be after today")
             else:
-                partner.write(
-                    {"credit_limit": record.amount + record.internal_risk, "risk_contract_id": record.id}
-                )
-
-        _sql_constraints = [("unique_name", "unique(name)", "This code already exists")]
+                amount = record.amount + record.internal_risk
+                if record.plus: amount += record.plus_amount
+                partner.write({"credit_limit": amount, "risk_contract_id": record.id})
 
     _sql_constraints = [("unique_name", "unique(name)", "This code already exists")]
