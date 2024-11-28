@@ -50,6 +50,7 @@
                             <field name="currency_id"/>
                             <field name="create_uid"/>
                             <field name="claim"/>
+                            <field name="plus"/>
                         </group>
                         <group string="Granted">
                             <field name="amount"/>
