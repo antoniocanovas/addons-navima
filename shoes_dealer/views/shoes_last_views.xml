@@ -48,7 +48,7 @@
                         <group>
                             <field name="sole_material_main_id"/>
                             <field name="sole_material_secondary_id"/>
-                            <field name="insole_material_id"/>
+                            <field name="insole_material"/>
                             <field name="platform_material_id"/>
                         </group>
                         <group>
@@ -84,7 +84,7 @@
                 <field name="platform_height" optional="show"/>
                 <field name="sole_material_main_id" optional="hide"/>
                 <field name="sole_material_secondary_id" optional="hide"/>
-                <field name="insole_material_id" optional="hide"/>
+                <field name="insole_material" optional="hide"/>
                 <field name="platform_material_id" optional="hide"/>
                 <field name="sole_material_main_percent" optional="hide"/>
                 <field name="sole_material_secondary_percent" optional="hide"/>
