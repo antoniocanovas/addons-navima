@@ -65,6 +65,7 @@
         <field name="model">product.material</field>
         <field name="arch" type="xml">
             <list>
+                <field name="code"/>
                 <field name="name"/>
             </list>
         </field>
