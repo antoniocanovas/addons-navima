@@ -16,11 +16,11 @@
         <field name="type">form</field>
     </record>
 
-    <record id="product_material_shoes_color_chart_inh_tree" model="ir.ui.view">
+    <record id="shoes_color_chart_inh_tree" model="ir.ui.view">
         <field name="name">product.material.shoes.color.chart.inh.tree</field>
         <field name="model">product.material</field>
         <field name="arch" type="xml">
-            <xpath expr="field[@name='name']" position="before">
+            <xpath expr="//field[@name='name']" position="before">
                 <field name="code"/>
             </xpath>
         </field>
@@ -28,4 +28,5 @@
         <field name="priority">32</field>
         <field name="type">list</field>
     </record>
+
 </odoo>
