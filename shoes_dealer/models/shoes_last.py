@@ -17,7 +17,7 @@ class ShoesLast(models.Model):
     sole_material_secondary_id = fields.Many2one('product.material', string="Sole 2nd")
     sole_material_main_percent = fields.Float('Sole main (%)')
     sole_material_secondary_percent = fields.Float('Sole 2nd (%)')
-    insole_material = fields.Char(string='Insole')
+    insole_material_id = fields.Many2one('product.material', string='Insole')
     insole_material_percent = fields.Float('Insole material (%)')
     platform_material_id = fields.Many2one('product.material', string="Platform")
     platform_material_percent = fields.Float('Platform (%)')
