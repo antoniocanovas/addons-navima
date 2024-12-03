@@ -60,8 +60,8 @@
     </record>
 
     <!-- list VIEW: -->
-    <record id="product_material_default_tree" model="ir.ui.view">
-        <field name="name">product.material.default.tree</field>
+    <record id="product_material_default_list" model="ir.ui.view">
+        <field name="name">product.material.default.list</field>
         <field name="model">product.material</field>
         <field name="arch" type="xml">
             <list>

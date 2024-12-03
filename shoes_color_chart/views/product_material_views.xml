@@ -16,19 +16,18 @@
         <field name="type">form</field>
     </record>
 
-    <!--
-    <record id="shoes_color_chart_inh_tree" model="ir.ui.view">
-        <field name="name">shoes.color.chart.inh.tree</field>
+    <record id="shoes_color_chart_inh_list" model="ir.ui.view">
+        <field name="name">shoes.color.chart.inh.list</field>
         <field name="model">product.material</field>
         <field name="arch" type="xml">
             <xpath expr="//list[1]/field[@name='name']" position="before">
                 <field name="code" optional="show"/>
             </xpath>
         </field>
-        <field name="inherit_id" ref="shoes_dealer.product_material_default_tree"/>
+        <field name="inherit_id" ref="shoes_dealer.product_material_default_list"/>
         <field name="priority">32</field>
         <field name="mode">extension</field>
         <field name="type">list</field>
     </record>
-    -->
+
 </odoo>
