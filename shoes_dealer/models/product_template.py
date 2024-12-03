@@ -17,6 +17,11 @@ class ProductTemplate(models.Model):
     shoes_campaign_id = fields.Many2one(
         "project.project", string="Campaign", store=True, copy=True, tracking=10
     )
+
+    shoes_campaign_ids = fields.Many2many(
+        "project.project", string="Campaigns", store=True, copy=True, tracking=10
+    )
+    
     gender = fields.Selection(
         [("man", "Man"), ("woman", "Woman"), ("unisex", "Unisex")],
         string="Gender",
