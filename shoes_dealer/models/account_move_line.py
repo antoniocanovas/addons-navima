@@ -1,7 +1,6 @@
 # Copyright 2023 Serincloud SL - Ingenieriacloud.com
 
 from odoo import fields, models, api
-from collections import defaultdict
 
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
