@@ -15,7 +15,7 @@ class ResPartner(models.Model):
     mig_aseguradora = fields.Char('mig_aseguradora')
     mig_concedido = fields.Char('mig_concedido')
     mig_posicionfiscal = fields.Char('mig_posicionfiscal')
-    mig_responsableinterno = fields.Char('mig_posicionfiscal')
+    mig_responsableinterno = fields.Char('mig_responsableinterno')
     mig_provincia = fields.Char('mig_provincia')
     mig_vat = fields.Char('mig_vat')
     mig_nombrecomercial= fields.Char('mig_nombrecomercial')
