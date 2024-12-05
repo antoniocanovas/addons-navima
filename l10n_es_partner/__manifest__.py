@@ -19,8 +19,8 @@
         "data/l10n_es_partner_data.xml",
         "views/res_bank_view.xml",
         "views/res_partner_view.xml",
-        "wizard/l10n_es_partner_wizard.xml",
-        "security/ir.model.access.csv",
+        #"wizard/l10n_es_partner_wizard.xml",
+        #"security/ir.model.access.csv",
     ],
     "installable": True,
 }

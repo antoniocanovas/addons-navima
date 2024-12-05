@@ -23,6 +23,7 @@
                         <field name="mig_responsableinterno"/>
                         <field name="mig_provincia"/>
                         <field name="mig_vat"/>
+                        <field name="mig_nombrecomercial"/>
                     </group>
                 </page>
             </xpath>
