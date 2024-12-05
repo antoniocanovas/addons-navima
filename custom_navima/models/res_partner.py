@@ -17,3 +17,4 @@ class ResPartner(models.Model):
     mig_posicionfiscal = fields.Char('mig_posicionfiscal')
     mig_responsableinterno = fields.Char('mig_posicionfiscal')
     mig_provincia = fields.Char('mig_provincia')
+    mig_vat = fields.Char('mig_vat')
