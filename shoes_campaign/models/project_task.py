@@ -26,11 +26,14 @@ class ProjectTask(models.Model):
     )
 
 
-    material_id = fields.Many2one(
-        "product.material", string="Material", store=True, copy=True
-    )
+    # Cambia a IDS:
+    #material_id = fields.Many2one(
+    #    "product.material", string="Material", store=True, copy=True
+    #)
+    # Se incluye en shoes_model_material_ids:
+    #shoes_product_tmpl_id = fields.Many2one('product.template', string="Product", copy=False)
 
-    shoes_product_tmpl_id = fields.Many2one('product.template', string="Product", copy=False)
+    shoes_model_material_ids = fields.Many2many('shoes.model.material', string='Materials')
 
     intrastat_duty_id = fields.Many2one('intrastat.duty', string='Duty estimation', copy=False)
 
