@@ -19,11 +19,19 @@
     </record>
 
     <!-- ACCOUNT DUTY CONFIG MENU: -->
-    <record id="intrastat_duty_menu" model="ir.ui.menu">
-        <field name="action" ref="intrastat_duty_act_window"/>
+    <record id="intrastat_duty_account_menu" model="ir.ui.menu">
+        <field name="action" ref="intrastat_duty_account_act_window"/>
         <field name="active" eval="True"/>
         <field name="name">Duty estimations</field>
         <field name="parent_id" ref="account.account_invoicing_menu"/>
+        <field name="sequence">100</field>
+        <field name="web_icon" eval="False"/>
+    </record>
+    <record id="intrastat_duty_projecct_menu" model="ir.ui.menu">
+        <field name="action" ref="intrastat_duty_project_act_window"/>
+        <field name="active" eval="True"/>
+        <field name="name">Duty estimations</field>
+        <field name="parent_id" ref="project.menu_project_config"/>
         <field name="sequence">100</field>
         <field name="web_icon" eval="False"/>
     </record>
