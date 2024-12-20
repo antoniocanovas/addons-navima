@@ -49,7 +49,7 @@ class ProjectTask(models.Model):
                 'manufacturer_id':self.manufacturer_id.id,
                 'gender': self.gender,
                 'shoes_pair_weight_id': self.shoes_pair_weight_id.id,
-                'material_id': self.material_id.id,
+                #'material_id': self.material_id.id,
                 'shoes_task_id': self.id,
                 'service_tracking': 'no',
                 'intrastat_duty_id': self.intrastat_duty_id.id,
