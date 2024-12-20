@@ -30,7 +30,6 @@
                         <field name="product_brand_id"/>
                         <field name="code" readonly="code"/>
                         <field name="manufacturer_id"/>
-                        <field name="shoes_product_material_ids"/>
                     </group>
                     <group>
                         <field name="shoes_last_id"/>
