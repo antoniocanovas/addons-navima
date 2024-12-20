@@ -41,7 +41,7 @@
                         <field name="shoes_hscode_id" invisible="1"/> -->
                     </group>
                     <group>
-                        <field name="shoes_product_material_ids">
+                        <field name="shoes_model_material_ids">
                             <tree editable="bottom">
                                 <field name="material_id"/>
                                 <field name="shoes_last_id"/>
