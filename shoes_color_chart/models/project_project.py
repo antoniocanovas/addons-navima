@@ -40,7 +40,7 @@ class ProjectProject(models.Model):
         self.manufacturer_value_ids = [(6,0,manufacturers)]
     manufacturer_value_ids = fields.Many2many('res.partner', string="Campaign manufacturers", compute='_get_campaign_manufacturers')
 
-    # FABRICANTES no repetidos:
+    # MATERIALES no repetidos:
     def _get_campaign_materials(self):
         materials = set()
         for li in self.shoes_color_chart_item_ids:

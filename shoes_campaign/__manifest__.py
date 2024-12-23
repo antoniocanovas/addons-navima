@@ -37,8 +37,12 @@
     """,
     "data": [
         'views/project_project_views.xml',
-        'views/project_task_views.xml',
         'views/product_template_views.xml',
+        'views/shoes_product_creation_wizard_views.xml',
+        'views/project_task_views.xml',
+        'views/shoes_model_material_views.xml',
+        'views/shoes_type_views.xml',
+        'views/shoes_closure_views.xml',
         'security/ir.model.access.csv',
     ],
     "demo": [],
