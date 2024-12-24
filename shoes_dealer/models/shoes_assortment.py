@@ -13,6 +13,13 @@ class ShoesAssortment(models.Model):
     name = fields.Char(string="Nombre", required=True, store=True, copy=True)
     code = fields.Char(string="Code", required=True, store=True, copy=False)
 
+    gender = fields.Selection(
+        [("man", "Man"), ("woman", "Woman"), ("children", "Children")],
+        string="Gender",
+        copy=True,
+        store=True,
+    )
+
     #    def _get_size_attribute(self):
     #        self.attribute_id = self.env.user.company_id.size_attribute_id.id
     attribute_id = fields.Many2one(

@@ -15,6 +15,7 @@ class ProductTemplate(models.Model):
                 colors = set()
                 chart_items = self.env['shoes.color.chart.item'].search(
                     [('shoes_campaign_id', '=', record.shoes_campaign_id.id),
+                     # Esto del material hay que revisarlo y cambiarlo por el atributo tipo color (como abajo):
                      ('material_id', '=', record.material_id.id)])
                 for li in chart_items:
                     colors.add(li.color_value_id.id)
@@ -24,9 +25,27 @@ class ProductTemplate(models.Model):
                 if not ptal.id:
                     ptal = self.env['product.template.attribute.line'].create({
                         'product_tmpl_id': record.id, 'attribute_id': color_attribute.id,
-                         'value_ids': [(6, 0, colors)]
+                        'value_ids': [(6, 0, colors)]
                     })
                 else:
                     ptal['value_ids'] = [(6, 0, colors)]
             else:
                 raise UserError('Producto sin campaña o paleta de color.')
+
+    def update_all_assortment_values_by_gender(self):
+        for record in self:
+            if record.shoes_campaign_id.id:
+                assortment_attribute = self.env.company.assortment_attribute_id
+                assortments = self.env['product.attribute.value'].search(
+                    [('gender', '=', record.gender),
+                     ('attribute_id', '=', assortment_attribute.id)]).ids
+
+                ptal = self.env['product.template.attribute.line'].search(
+                    [('product_tmpl_id', '=', record.id), ('attribute_id', '=', assortment_attribute.id)])
+                if not ptal.id:
+                    ptal = self.env['product.template.attribute.line'].create({
+                        'product_tmpl_id': record.id, 'attribute_id': assortment_attribute.id,
+                        'value_ids': [(6, 0, assortments)]
+                    })
+                else:
+                    ptal['value_ids'] = [(6, 0, assortments)]

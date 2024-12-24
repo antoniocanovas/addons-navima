@@ -23,7 +23,7 @@ class ProductTemplate(models.Model):
     )
     
     gender = fields.Selection(
-        [("man", "Man"), ("woman", "Woman"), ("unisex", "Unisex")],
+        [("man", "Man"), ("woman", "Woman"), ("children", "Children")],
         string="Gender",
         copy=True,
         store=True,
