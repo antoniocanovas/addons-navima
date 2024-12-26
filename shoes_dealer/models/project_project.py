@@ -11,7 +11,7 @@ class ProjectProject(models.Model):
     # Secuencia del jefe para encontrar rápido los productos, es por campaña y numérica ordenada:
     campaign_code = fields.Integer('Next code', store=True, copy=False, default=1)
 
-    @api.constrains('currency_exchange')
-    def _get_currency_exchange_not_null(self):
-        if self.currency_exchange == 0:
+    @api.constrains('dollar_exchange')
+    def _get_dollar_exchange_not_null(self):
+        if self.dollar_exchange == 0:
             raise UserError('El cambio de moneda no puede ser nulo.')

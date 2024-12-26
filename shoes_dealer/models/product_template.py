@@ -128,9 +128,9 @@ class ProductTemplate(models.Model):
             elif (
                     record.exwork_currency_id.name != "EUR"
                     and record.shoes_campaign_id.id
-                    and record.shoes_campaign_id.currency_exchange != 0
+                    and record.shoes_campaign_id.dollar_exchange != 0
             ):
-                record["exwork_euro"] = record.exwork / record.shoes_campaign_id.currency_exchange
+                record["exwork_euro"] = record.exwork / record.shoes_campaign_id.dollar_exchange
             else:
                 record["exwork_euro"] = 0
 
@@ -143,9 +143,9 @@ class ProductTemplate(models.Model):
             elif (
                     record.exwork_currency_id.name != "EUR"
                     and record.shoes_campaign_id.id
-                    and record.shoes_campaign_id.currency_exchange != 0
+                    and record.shoes_campaign_id.dollar_exchange != 0
             ):
-                record["exwork_single_euro"] = record.exwork_single / record.shoes_campaign_id.currency_exchange
+                record["exwork_single_euro"] = record.exwork_single / record.shoes_campaign_id.dollar_exchange
             else:
                 record["exwork_single_euro"] = 0
 
@@ -371,11 +371,11 @@ class ProductTemplate(models.Model):
                 standard_price = record.standard_price
                 if (
                         (record.shoes_campaign_id.id)
-                        and (record.shoes_campaign_id.currency_exchange)
+                        and (record.shoes_campaign_id.dollar_exchange)
                         and (record.exwork)
                 ):
                     standard_price = (
-                            record.exwork / record.shoes_campaign_id.currency_exchange
+                            record.exwork / record.shoes_campaign_id.dollar_exchange
                     )
 
                 for li in record.attribute_line_ids:
