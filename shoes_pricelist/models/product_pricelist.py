@@ -57,7 +57,7 @@ class ProductPricelist(models.Model):
 
             # Buscar productos PAR de esta CAMPAÑA:
             pairs = self.env['product.template'].search([
-                ('shoes_campaign_id', '=', record.id),
+                ('shoes_campaign_ids', 'in', record.shoes_campaign_id.id),
                 ('is_pair', '=', True),
                 ('product_tmpl_set_id', '!=', False),
             ])
