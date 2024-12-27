@@ -7,11 +7,11 @@ class ProductPricelist(models.Model):
     _inherit = ["product.pricelist"]
 
     RECALCULATION_TYPE = [
-        ("integer_5", "Integer rounded in 0 or 5")
+        ("integer_5", "Integer rounded in 0 or 5"),
         ("integer_rounded", "Integer Rounded"),
         ("integer_up", "Integer UP"),
         ("integer_low", "Integer LOW"),
-        ("5cent", "Integer rounded -5 cents")
+        ("5cent", "Integer rounded -5 cents"),
     ]
 
     MARKETING_DISCOUNT = [
