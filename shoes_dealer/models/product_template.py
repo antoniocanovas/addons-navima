@@ -23,7 +23,7 @@ class ProductTemplate(models.Model):
     )
 
     shoes_pair_campaign_ids = fields.Many2many(
-        "project.project", related='shoes_campaign_ids'
+        "project.project", related='product_tmpl_set_id.shoes_campaign_ids'
     )
 
     gender = fields.Selection(
