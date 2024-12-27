@@ -7,6 +7,7 @@ class ProductPricelist(models.Model):
     _inherit = ["product.pricelist"]
 
     RECALCULATION_TYPE = [
+        ("integer_5", "Integer rounded in 0 or 5")
         ("integer_rounded", "Integer Rounded"),
         ("integer_up", "Integer UP"),
         ("integer_low", "Integer LOW"),
@@ -97,6 +98,9 @@ class ProductPricelist(models.Model):
                     rounded_price = int(price)
                 elif record.recalculation_type == 'integer_up':
                     rounded_price = round(price + 0.5)
+                elif record.recalculation_type == 'integer_5':
+                    rounded_price = round(price /5) * 5
+
 
                 if record.marketing_discount == '1cent':
                     rounded_price -= 0.01
