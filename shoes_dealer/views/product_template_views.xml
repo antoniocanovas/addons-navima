@@ -15,7 +15,13 @@
                     <group>
                         <group name="campaign" string="Campaign">
                             <field name="shoes_campaign_id" readonly="is_pair or product_tmpl_set_id"/>
-                            <field name="shoes_campaign_ids" widget="many2many_tags" readonly="is_pair or product_tmpl_set_id"/>
+                            <field name="shoes_campaign_ids" widget="many2many_tags"
+                                   readonly="is_pair or product_tmpl_set_id"
+                                   invisible="is_pair"
+                            />
+                            <field name="shoes_pair_campaign_ids" widget="many2many_tags"
+                                   invisible="not is_pair"
+                            />
                             <field name="gender" readonly="is_pair or product_tmpl_set_id"/>
                             <field name="campaign_code" readonly="1"/>
                             <field name="default_code" string="Reference" invisible="product_variant_count &gt; 1"/>

@@ -21,7 +21,11 @@ class ProductTemplate(models.Model):
     shoes_campaign_ids = fields.Many2many(
         "project.project", string="Sale Campaigns", store=True, copy=True, tracking=10
     )
-    
+
+    shoes_pair_campaign_ids = fields.Many2many(
+        "project.project", related='shoes_campaign_ids'
+    )
+
     gender = fields.Selection(
         [("man", "Man"), ("woman", "Woman"), ("children", "Children")],
         string="Gender",

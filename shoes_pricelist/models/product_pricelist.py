@@ -51,8 +51,8 @@ class ProductPricelist(models.Model):
         for record in self:
             # Borrar líneas de la tarifa especificada:
             lines = self.env['product.pricelist.item'].search([
-                ('pricelist_id', '=', record.id),
-                ('product_tmpl_id.shoes_campaign_id', '=', record.id)])
+                ('pricelist_id', '=', record.id), '|',
+                ('product_tmpl_id.is_pair', '=', True), ('product_tmpl_id.is_assortment', '=', True)])
             lines.unlink()
 
             # Buscar productos PAR de esta CAMPAÑA:
