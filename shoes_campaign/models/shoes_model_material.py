@@ -15,7 +15,6 @@ class ShoesModelMaterial(models.Model):
     shoes_product_tmpl_id = fields.Many2one('product.template', string='Product')
     task_id = fields.Many2one('project.task', string='Task')
     shoes_campaign_id = fields.Many2one(related='task_id.project_id')
-    shoes_default_last_id = fields.Many2one(related='task_id.shoes_default_last_id')
 
     @api.depends('material_id','manufacturer_ref')
     def _get_name(self):
