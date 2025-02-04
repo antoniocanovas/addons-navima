@@ -28,6 +28,8 @@ class ProjectTask(models.Model):
 
     # Para filtro en domain de la creación de productos (wizard):
     shoes_model_material_ids = fields.One2many('shoes.model.material', 'task_id', string='Materials')
+    # Para pasar valor por defecto a líneas de materiales:
+    shoes_default_last_id = fields.Many2one('shoes.last', string='Default last')
 
     @api.constrains('create_date')
     def task_code_sequence(self):
