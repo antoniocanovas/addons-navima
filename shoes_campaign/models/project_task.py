@@ -13,6 +13,7 @@ class ProjectTask(models.Model):
     product_brand_id = fields.Many2one('product.brand', related='project_id.product_brand_id')
     manufacturer_id = fields.Many2one('res.partner', string='Manufacturer')
     code = fields.Char('Code')
+    displayed_image = fields.Binary(related='displayed_image_id.datas')
     gender = fields.Selection(
         [("man", "Man"), ("woman", "Woman"), ("children", "Children")],
         string="Gender",
