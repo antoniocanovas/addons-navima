@@ -19,6 +19,7 @@ class ProjectTask(models.Model):
         string="Gender",
         copy=True,
         store=True,
+        translate=True,
     )
 
     shoes_pair_weight_id = fields.Many2one(
