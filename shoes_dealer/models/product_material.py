@@ -12,16 +12,3 @@ class ProductMaterial(models.Model):
     image = fields.Binary('Image', copy=False)
     comment = fields.Html('Comments',  copy=False , translate=True)
     is_skin = fields.Boolean('Skin',  copy=False)
-    display_name = fields.Char(string='Display name', compute='_compute_display_name')
-
-    @api.depends('name', 'code')
-    def _compute_display_name(self):
-        for record in self:
-            if record.name and record.code:
-                record.display_name = f"({record.code}) {record.name}"
-            elif record.name:
-                record.display_name = record.name
-            elif record.code:
-                record.display_name = record.code
-            else:
-                record.display_name = False
