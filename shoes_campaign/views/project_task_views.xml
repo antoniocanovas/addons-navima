@@ -44,7 +44,7 @@
                             <field name="exwork" widget="monetary" options="{'currency_field':'exwork_currency_id'}"/>
                         </group>
                         <group>
-                            <field name="displayed_image" widget="tablet_image" nolabel="1"/>
+                            <field name="displayed_image" widget="tablet_image" options='{"size":[200]}' nolabel="1"/>
                         </group>
                     </group>
                     <group name="shoes_model_details" string="Shoes details" invisible="not is_shoes_campaign">
