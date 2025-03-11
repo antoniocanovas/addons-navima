@@ -8,7 +8,7 @@ class ProductMaterial(models.Model):
     _inherit = 'product.material'
 
     code = fields.Char('Code')
-    display_name = fields.Char(string='Display name', compute='_compute_display_name')
+    display_name = fields.Char(string='Display name', compute='_compute_display_name', store=True)
 
     @api.depends('name', 'code')
     def _compute_display_name(self):
