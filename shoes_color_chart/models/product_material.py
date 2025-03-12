@@ -16,7 +16,7 @@ class ProductMaterial(models.Model):
     def _compute_display_name(self):
         for record in self:
             if record.name and record.code and record.manufacturer_code:
-                record.display_name = f"({record.code})({record.manufacturer_code}) {record.name}"
+                record.display_name = f"({record.code}{record.manufacturer_code}) {record.name}"
             elif record.name and record.code:
                 record.display_name = f"({record.code}) {record.name}"
             elif record.name:
