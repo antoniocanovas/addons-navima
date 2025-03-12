@@ -12,7 +12,7 @@ class ProductMaterial(models.Model):
     manufacturer_id = fields.Many2one('res.partner', string='Manufacturer')
     manufacturer_code = fields.Char(related='manufacturer_id.ref')
 
-    @api.depends('name', 'code')
+    @api.depends('name', 'code', 'manufacturer_id')
     def _compute_display_name(self):
         for record in self:
             if record.name and record.code and record.manufacturer_code:
