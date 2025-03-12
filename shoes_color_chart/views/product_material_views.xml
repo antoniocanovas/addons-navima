@@ -8,6 +8,8 @@
         <field name="arch" type="xml">
             <field name="comment" position="before">
                 <field name="code"/>
+                <field name="manufacturer_id"/>
+                <field name="manufacturer_code"/>
             </field>
         </field>
         <field name="groups_id" eval="[(6, 0, [])]"/>
@@ -22,6 +24,8 @@
         <field name="arch" type="xml">
             <xpath expr="//list[1]/field[@name='name']" position="before">
                 <field name="code" optional="show"/>
+                <field name="manufacturer_id" optional="show"/>
+                <field name="manufacturer_code" optional="show"/>
             </xpath>
         </field>
         <field name="inherit_id" ref="shoes_dealer.product_material_default_list"/>
