@@ -11,7 +11,7 @@ class ProductMaterial(models.Model):
     display_name = fields.Char(string='Display name', compute='_compute_display_name', store=True)
     manufacturer_id = fields.Many2one('res.partner', string='Manufacturer')
     manufacturer_code = fields.Char(related='manufacturer_id.ref')
-    shoes_campaign_ids = fields.Many2one('project.project', string='Campaigns', domain="[('is_shoes_campaign','=',True)]")
+    shoes_campaign_ids = fields.Many2many('project.project', string='Campaigns', domain="[('is_shoes_campaign','=',True)]")
 
     @api.depends('name', 'code', 'manufacturer_id')
     def _compute_display_name(self):
