@@ -10,6 +10,7 @@
                 <field name="code"/>
                 <field name="manufacturer_id"/>
                 <field name="manufacturer_code"/>
+                <field name="shoes_campaign_ids" widget="many2many_tags"/>
             </field>
         </field>
         <field name="groups_id" eval="[(6, 0, [])]"/>
@@ -26,6 +27,7 @@
                 <field name="code" optional="show"/>
                 <field name="manufacturer_id" optional="show"/>
                 <field name="manufacturer_code" optional="show"/>
+                <field name="shoes_campaign_ids" widget="many2many_tags" optional="show"/>
             </xpath>
         </field>
         <field name="inherit_id" ref="shoes_dealer.product_material_default_list"/>
