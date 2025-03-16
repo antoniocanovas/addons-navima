@@ -72,9 +72,9 @@
         <field name="model">shoes.color.chart.item</field>
         <field name="arch" type="xml">
             <search string="Chart items">
-                <field name="manufacturer" string="Manufacturer" filter_domain="[('manufacturer_id', 'ilike', self)]"/>
-                <field name="material" string="Material" filter_domain="[('material_id', 'ilike', self)]"/>
-                <field name="color" string="Color" filter_domain="[('color_value_id', 'ilike', self)]"/>
+                <field name="manufacturer_id" string="Manufacturer" filter_domain="[('manufacturer_id', 'ilike', self)]"/>
+                <field name="material_id" string="Material" filter_domain="[('material_id', 'ilike', self)]"/>
+                <field name="color_value_id" string="Color" filter_domain="[('color_value_id', 'ilike', self)]"/>
                 <group expand="0" string="Group By">
                     <filter string="Manufacturer" name="manufacturer_group" context="{'group_by': 'manufacturer_id'}"/>
                     <filter string="Material" name="material_group" context="{'group_by': 'material_id'}"/>
