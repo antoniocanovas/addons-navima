@@ -66,4 +66,28 @@
         <field name="type">list</field>
     </record>
 
+    <!-- search VIEW: -->
+    <record id="shoes_color_chart_item_default_search" model="ir.ui.view">
+        <field name="name">shoes.color.chart.item.default.search</field>
+        <field name="model">shoes.color.chart.item</field>
+        <field name="arch" type="xml">
+            <search string="Chart items">
+                <field name="manufacturer" string="Manufacturer" filter_domain="[('manufacturer_id', 'ilike', self)]"/>
+                <field name="material" string="Material" filter_domain="[('material_id', 'ilike', self)]"/>
+                <field name="color" string="Color" filter_domain="[('color_value_id', 'ilike', self)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Manufacturer" name="manufacturer_group" context="{'group_by': 'manufacturer_id'}"/>
+                    <filter string="Material" name="material_group" context="{'group_by': 'material_id'}"/>
+                    <filter string="Color" name="color_group" context="{'group_by': 'color_value_id'}"/>
+                </group>
+            </search>
+        </field>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="inherit_id" eval="False"/>
+        <field name="key" eval="False"/>
+        <field name="mode">primary</field>
+        <field name="priority">16</field>
+        <field name="type">search</field>
+    </record>
+
 </odoo>
