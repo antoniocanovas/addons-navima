@@ -36,4 +36,33 @@
         <field name="type">list</field>
     </record>
 
+    <!-- search VIEW: -->
+    <record id="shoes_material_default_search" model="ir.ui.view">
+        <field name="name">shoes.material.default.search</field>
+        <field name="model">product.material</field>
+        <field name="arch" type="xml">
+            <search string="Product search">
+                <field name="shoes_campaign_ids" string="Shoes campaign" filter_domain="[('shoes_campaign_ids', 'in', self)]"/>
+                <field name="manufacturer_id" string="Manufacturer" filter_domain="[('manufacturer_id', 'ilike', self)]"/>
+                <field name="code" string="Code" filter_domain="[('code', 'ilike', self)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Manufacturer" name="manufacturer_group" context="{'group_by': 'manufacturer_id'}"/>
+                </group>
+            </search>
+        </field>
+        <field name="groups_id" eval="[(6, 0, [])]"/>
+        <field name="inherit_id" eval="False"/>
+        <field name="key" eval="False"/>
+        <field name="mode">primary</field>
+        <field name="priority">16</field>
+        <field name="type">search</field>
+    </record>
+
+    code = fields.Char('Code')
+    display_name = fields.Char(string='Display name', compute='_compute_display_name', store=True)
+    manufacturer_id = fields.Many2one('res.partner', string='Manufacturer')
+    manufacturer_code = fields.Char(related='manufacturer_id.ref')
+    shoes_campaign_ids = fields.Many2many('project.project', string='Campaigns', domain="[('is_shoes_campaign','=',True)]")
+
+
 </odoo>
