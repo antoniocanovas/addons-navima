@@ -19,7 +19,7 @@ class RiskBatch(models.Model):
 
     name = fields.Char(string="Name", required=True, tracking=100)
     supplier_id = fields.Many2one(
-        "res.partner", string="Supplier", store=True, copy=True, required=True
+        "res.partner", string="Supplier", store=True, ondelete='restrict', copy=True, required=True
     )
     date = fields.Date("Date", store=True, copy=False, tracking=100)
     currency_id = fields.Many2one("res.currency", store=True, default=1, required=True)

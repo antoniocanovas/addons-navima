@@ -15,7 +15,7 @@ class ProductTemplate(models.Model):
     )
 
     shoes_campaign_id = fields.Many2one(
-        "project.project", string="Campaign", store=True, copy=True, tracking=10
+        "project.project", string="Campaign", store=True, copy=True, tracking=10, ondelete='restrict'
     )
 
     shoes_campaign_ids = fields.Many2many(
@@ -34,28 +34,28 @@ class ProductTemplate(models.Model):
     )
 
     shoes_pair_weight_id = fields.Many2one(
-        "shoes.pair.weight", string="Pair Weight", default=False
+        "shoes.pair.weight", string="Pair Weight", default=False, ondelete='restrict'
     )
 
     manufacturer_id = fields.Many2one(
-        "res.partner", string="Manufacturer", copy=True
+        "res.partner", string="Manufacturer", copy=True, ondelete='restrict'
     )
 
     material_id = fields.Many2one(
-        "product.material", string="Material", copy=True
+        "product.material", string="Material", copy=True, ondelete='restrict'
     )
 
     shoes_last_id = fields.Many2one(
-        "shoes.last", string="Last"
+        "shoes.last", string="Last", ondelete='restrict'
     )
 
     product_tmpl_set_id = fields.Many2one(
-        "product.template", string="Parent", store=True, copy=False
+        "product.template", string="Parent", store=True, copy=False, ondelete='restrict'
     )
 
     # Plantilla de producto "pares" generada desde el "surtido":
     product_tmpl_single_id = fields.Many2one(
-        "product.template", string="Child", store=True, copy=False
+        "product.template", string="Child", store=True, copy=False, ondelete='restrict'
     )
     product_tmpl_single_list_price = fields.Float(
         "Precio del par", related="product_tmpl_single_id.list_price"
@@ -77,11 +77,11 @@ class ProductTemplate(models.Model):
 
     # Llevar a aml y shoes_report como related
     shoes_model_id = fields.Many2one(
-        "product.template", string="Model", store=True, compute="_get_shoes_model"
+        "product.template", string="Model", store=True, ondelete='restrict', compute="_get_shoes_model"
     )
 
     product_tmpl_model_id = fields.Many2one(
-        "product.template", string="Model", store=True, compute="_get_pt_shoes_model"
+        "product.template", string="Model", store=True, ondelete='restrict', compute="_get_pt_shoes_model"
     )
     exwork_currency_id = fields.Many2one("res.currency", compute="_get_exwork_currency")
 

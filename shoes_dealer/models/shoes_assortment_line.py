@@ -12,7 +12,7 @@ class ShoesAssortmentLine(models.Model):
             record['name'] = str(record.value_id.name) + ": " + str(record.quantity)
     name = fields.Char('Name', store=False, compute='_get_name')
 
-    assortment_id   = fields.Many2one('shoes.assortment', string='assortment', required=True, store=True, copy=True)
-    value_id = fields.Many2one('product.attribute.value', string='Value', store=True, required=True, copy=True)
+    assortment_id   = fields.Many2one('shoes.assortment', string='assortment', required=True, store=True, ondelete='restrict', copy=True)
+    value_id = fields.Many2one('product.attribute.value', string='Value', store=True, ondelete='restrict', required=True, copy=True)
     quantity = fields.Integer('Quantity', store=True, copy=True)
     attribute_id = fields.Many2one('product.attribute', related='assortment_id.attribute_id')

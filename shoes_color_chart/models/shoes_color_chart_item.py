@@ -12,7 +12,7 @@ class ShoesColorChartItem(models.Model):
     shoes_campaign_id = fields.Many2one('project.project', string='Campaign', domain="[('is_shoes_campaign','=',True)]")
     color_value_id = fields.Many2one('product.attribute.value', string="Color")
     manufacturer_id = fields.Many2one('res.partner', string="Manufacturer")
-    material_id = fields.Many2one('product.material', string="Material")
+    material_id = fields.Many2one('product.material', string="Material", ondelete='restrict')
 
     @api.constrains('write_date')
     def _avoid_duplicated(self):

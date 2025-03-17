@@ -8,6 +8,6 @@ class IntrastatDuty(models.Model):
     _description = 'Intrastat duty'
 
     name = fields.Char('Name')
-    intrastat_id = fields.Many2one('account.intrastat.code', string='Intrastat code')
-    country_id = fields.Many2one('res.country', string='Country')
+    intrastat_id = fields.Many2one('account.intrastat.code', ondelete='restrict', string='Intrastat code')
+    country_id = fields.Many2one('res.country', string='Country', ondelete='restrict')
     duty = fields.Float('Duty (%)')

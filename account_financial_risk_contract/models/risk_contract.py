@@ -27,6 +27,7 @@ class RiskContract(models.Model):
         copy=True,
         required=True,
         tracking=100,
+        ondelete = 'restrict',
     )
     date_begin = fields.Date("Date begin", store=True, copy=False, tracking=100)
     date_end = fields.Date("Date end", store=True, copy=False, tracking=100)
@@ -39,11 +40,12 @@ class RiskContract(models.Model):
         copy=True,
         required=True,
         tracking=100,
+        ondelete='restrict',
     )
     demand = fields.Monetary("Demand", store=True, copy=True, required=True)
     amount = fields.Monetary("Amount", store=True, copy=True, tracking=100)
     internal_risk = fields.Monetary("Internal", store=True, copy=True, tracking=100)
-    currency_id = fields.Many2one("res.currency", store=True, default=1, required=True)
+    currency_id = fields.Many2one("res.currency", store=True, ondelete='restrict', default=1, required=True)
     active = fields.Boolean(
         "Active", store=True, copy=False, default=True, tracking=100
     )

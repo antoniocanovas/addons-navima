@@ -8,7 +8,7 @@ from odoo.exceptions import UserError
 class ProductTemplateAttributeLine(models.Model):
     _inherit = 'product.template.attribute.line'
 
-    material_id = fields.Many2one('product.material', related='product_tmpl_id.material_id')
+    material_id = fields.Many2one('product.material', related='product_tmpl_id.material_id', ondelete='restrict')
 
 @api.constrains('value_ids')
 def _avoid_custom_assortment_values_if_no_tracking(self):

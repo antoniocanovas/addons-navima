@@ -42,6 +42,7 @@
         <field name="model">product.material</field>
         <field name="arch" type="xml">
             <search string="Product search">
+                <field name="name" string="Name" filter_domain="[('name', 'ilike', self)]"/>
                 <field name="shoes_campaign_ids" string="Shoes campaign" filter_domain="[('shoes_campaign_ids', 'ilike', self)]"/>
                 <field name="manufacturer_id" string="Manufacturer" filter_domain="[('manufacturer_id', 'ilike', self)]"/>
                 <field name="code" string="Code" filter_domain="[('code', 'ilike', self)]"/>

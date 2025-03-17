@@ -16,12 +16,14 @@ class ProjectProject(models.Model):
         string="Color Attribute",
         store=False,
         default=lambda self: self.env.user.company_id.color_attribute_id,
+        ondelete = 'restrict',
     )
 
     shoes_color_chart_item_count = fields.Integer(
         'Chart items',
         store=False,
         default=lambda self: len(self.shoes_color_chart_item_ids),
+        ondelete = 'restrict',
     )
 
     # COLORES no repetidos:

@@ -9,7 +9,7 @@ class ProductMaterial(models.Model):
 
     code = fields.Char('Code')
     display_name = fields.Char(string='Display name', compute='_compute_display_name', store=True)
-    manufacturer_id = fields.Many2one('res.partner', string='Manufacturer')
+    manufacturer_id = fields.Many2one('res.partner', string='Manufacturer', ondelete='restrict')
     manufacturer_code = fields.Char(related='manufacturer_id.ref')
     shoes_campaign_ids = fields.Many2many('project.project', string='Campaigns', domain="[('is_shoes_campaign','=',True)]")
 
@@ -17,7 +17,7 @@ class ProductMaterial(models.Model):
     def _compute_display_name(self):
         for record in self:
             if record.name and record.code and record.manufacturer_code:
-                record.display_name = f"({record.code}{record.manufacturer_code}) {record.name}"
+                record.display_name = f"({record.manufacturer_code}{record.code}) {record.name}"
             elif record.name and record.code:
                 record.display_name = f"({record.code}) {record.name}"
             elif record.name:

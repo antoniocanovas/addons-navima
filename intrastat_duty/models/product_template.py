@@ -6,4 +6,4 @@ from odoo.exceptions import UserError
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    intrastat_duty_id = fields.Many2one('intrastat.duty', string='Duty estimation')
+    intrastat_duty_id = fields.Many2one('intrastat.duty', string='Duty estimation', ondelete='restrict')

@@ -11,7 +11,7 @@ class ProjectTask(models.Model):
     # Datos comunes para creación de productos desde tareas:
 
     product_brand_id = fields.Many2one('product.brand', related='project_id.product_brand_id')
-    manufacturer_id = fields.Many2one('res.partner', string='Manufacturer')
+    manufacturer_id = fields.Many2one('res.partner', string='Manufacturer', ondelete='restrict')
     code = fields.Char('Code')
     displayed_image = fields.Binary(related='displayed_image_id.datas')
     gender = fields.Selection(
@@ -22,14 +22,14 @@ class ProjectTask(models.Model):
     )
 
     shoes_pair_weight_id = fields.Many2one(
-        "shoes.pair.weight", string="Pair Weight", default=False
+        "shoes.pair.weight", string="Pair Weight", default=False, ondelete='restrict'
     )
-    intrastat_duty_id = fields.Many2one('intrastat.duty', string='Duty estimation', copy=False)
+    intrastat_duty_id = fields.Many2one('intrastat.duty', string='Duty estimation', copy=False, ondelete='restrict')
 
     # Para filtro en domain de la creación de productos (wizard):
     shoes_model_material_ids = fields.One2many('shoes.model.material', 'task_id', string='Materials')
     # Para pasar valor por defecto a líneas de materiales:
-    shoes_default_last_id = fields.Many2one('shoes.last', string='Default last')
+    shoes_default_last_id = fields.Many2one('shoes.last', string='Default last', ondelete='restrict')
 
     @api.constrains('create_date')
     def task_code_sequence(self):
@@ -40,16 +40,16 @@ class ProjectTask(models.Model):
         self.project_id.task_code_sequence = seq +1
 
     # Datos adicionales ¿modelo o producto?:
-    shoes_material_main_id = fields.Many2one('product.material', string='Main')
-    shoes_material_external1_id = fields.Many2one('product.material', string='External 1')
+    shoes_material_main_id = fields.Many2one('product.material', string='Main', ondelete='restrict')
+    shoes_material_external1_id = fields.Many2one('product.material', string='External 1', ondelete='restrict')
     shoes_material_external1_percent = fields.Float('External 1 (%)')
-    shoes_material_external2_id = fields.Many2one('product.material', string='External 2')
+    shoes_material_external2_id = fields.Many2one('product.material', string='External 2', ondelete='restrict')
     shoes_material_external2_percent = fields.Float('External 2 (%)')
-    shoes_material_lin_internal1_id = fields.Many2one('product.material', string=' Internal Lin 1')
+    shoes_material_lin_internal1_id = fields.Many2one('product.material', string=' Internal Lin 1', ondelete='restrict')
     shoes_material_lin_internal1_percent = fields.Float('Internal lin 1 (%)')
-    shoes_material_lin_internal2_id = fields.Many2one('product.material', string=' Internal Lin 2')
+    shoes_material_lin_internal2_id = fields.Many2one('product.material', string=' Internal Lin 2', ondelete='restrict')
     shoes_material_lin_internal2_percent = fields.Float('Internal lin 2 (%)')
-    shoes_closure_id = fields.Many2one('shoes.closure', string='Closure')
+    shoes_closure_id = fields.Many2one('shoes.closure', string='Closure', ondelete='restrict')
     shoes_height = fields.Float('Shalft height')
     shoes_shalft_categ = fields.Selection([('long','Long'),('half','Half'),('lower','Lower')], string='Shaft type')
     shoes_type = fields.Many2one('shoes.type', string='Type')

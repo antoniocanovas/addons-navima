@@ -26,6 +26,7 @@ class ShoesAssortment(models.Model):
         "product.attribute",
         string="Size Attribute",
         store=False,
+        ondelete = 'restrict',
         default=lambda self: self.env.user.company_id.size_attribute_id,
     )
     line_ids = fields.One2many(

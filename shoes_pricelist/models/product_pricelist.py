@@ -19,7 +19,7 @@ class ProductPricelist(models.Model):
         ("5cent", "Integer -5 cents"),
     ]
 
-    shoes_campaign_id = fields.Many2one("project.project", string="Campaign", store=True, copy=False, tracking=16)
+    shoes_campaign_id = fields.Many2one("project.project", string="Campaign", store=True, copy=False, ondelete='restrict', tracking=16)
     margin = fields.Float("Margin %", store=True, copy=True, tracking=16)
     dollar_exchange = fields.Monetary('Currency exchange')
     recalculation_type = fields.Selection(selection=RECALCULATION_TYPE, string='Recalculation type')
