@@ -55,7 +55,7 @@ class ProductTemplate(models.Model):
 
     # Plantilla de producto "pares" generada desde el "surtido":
     product_tmpl_single_id = fields.Many2one(
-        "product.template", string="Child", store=True, copy=False, ondelete='restrict'
+        "product.template", string="Child", store=True, copy=False, ondelete='restrict',
     )
     product_tmpl_single_list_price = fields.Float(
         "Precio del par", related="product_tmpl_single_id.list_price"
