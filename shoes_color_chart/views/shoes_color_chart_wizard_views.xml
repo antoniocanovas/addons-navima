@@ -11,7 +11,7 @@
                     <field name="manufacturer_id" />
                     <field name="material_id"
                            domain="['|',('shoes_campaign_ids', 'in',shoes_campaign_id),('shoes_campaign_ids','=',False), '|',('manufacturer_id', '=', False),('manufacturer_id', '=', manufacturer_id)]"/>
-                    <field name="color_value_ids" domain="[('attribute_id','=',color_attribute_id)]"/>
+                    <field name="color_value_ids" domain="[('attribute_id','=',color_attribute_id),('id','not in',color_value_ids)]"/>
                 </group>
                 <footer>
                 <button

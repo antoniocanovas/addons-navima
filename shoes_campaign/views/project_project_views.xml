@@ -39,4 +39,21 @@
         <field name="priority">99</field>
     </record>
 
+    <!-- Search project view : -->
+    <record id="shoes_campaign_project_inh_search" model="ir.ui.view">
+        <field name="name">shoes.dealer.campaign.project.inh.search</field>
+        <field name="model">project.project</field>
+        <field name="type">search</field>
+        <field name="inherit_id" ref="project.view_project_project_filter"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="display_name" string="Name" filter_domain="[('display_name', 'ilike', self)]"/>
+            </xpath>
+
+        </field>
+        <field name="priority">99</field>
+    </record>
+
+
 </odoo>

@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import fields, models
+from odoo.exceptions import UserError
 
 
 class ShoesColorChartWizard(models.TransientModel):
@@ -19,13 +20,15 @@ class ShoesColorChartWizard(models.TransientModel):
     def action_apply(self):
         # Chequeo de referencias y códigos requeridos para componer el campo name:
         message = ""
-        if self.manufacturer_id.ref == "":
-            message = "Manufacturer referencer required (Manufacturer => Sale/Purchases => Reference)"
-        if self.material_id.code == "":
-            message = "Material code required => (Naterial => Code)"
+        if not self.manufacturer_id.ref:
+            message = "Manufacturer reference required (Sale/Purchases => Reference)"
+        if not self.material_id.code:
+            message = "Material code required."
         for li in self.color_value_ids:
-            if li.code == "":
+            if not li.code:
                 message = "Color code required (Color => Code): " + li.name
+        if message != "":
+            raise UserError(message)
 
         # Creación de ítems en carta de color:
         for li in self.color_value_ids:
@@ -34,5 +37,4 @@ class ShoesColorChartWizard(models.TransientModel):
                 'manufacturer_id': self.manufacturer_id.id,
                 'material_id': self.material_id.id,
                 'color_value_id': li.id,
-                'name': self.shoes_campaign_id.name + "-" + self.material_id.code + self.manufacturer_id.ref + "-" + li.name
             })
