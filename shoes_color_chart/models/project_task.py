@@ -13,3 +13,9 @@ class ProjectTask(models.Model):
     # Campos heredados de la carta de color del proyecto para filtrar valores disponibles en los modelos:
     color_value_ids = fields.Many2many(related='project_id.color_value_ids')
     manufacturer_value_ids = fields.Many2many(related='project_id.manufacturer_value_ids')
+
+    # Para filtrar en vistas de material auxiliar para composición a efectos de marketing:
+    project_auxiliar_material_id = fields.Many2one('project.project', string='Auxiliar material',
+                                                   compute='_get_project_auxiliar_material')
+    def _get_project_auxiliar_material(self):
+        self.project_auxiliar_material_id = self.env.company.project_auxiliar_material_id
