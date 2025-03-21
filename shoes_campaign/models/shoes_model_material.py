@@ -12,7 +12,7 @@ class ShoesModelMaterial(models.Model):
     manufacturer_ref = fields.Char('Manufacturer Ref')
     material_id = fields.Many2one('product.material', string='Material', ondelete='restrict')
     shoes_last_id = fields.Many2one('shoes.last', string='Last', ondelete='restrict')
-    shoes_product_tmpl_id = fields.Many2one('product.template', string='Product', ondelete='restrict')
+    shoes_product_tmpl_id = fields.Many2one('product.template', string='Product')
     task_id = fields.Many2one('project.task', string='Task', ondelete='restrict')
     shoes_campaign_id = fields.Many2one(related='task_id.project_id')
 
