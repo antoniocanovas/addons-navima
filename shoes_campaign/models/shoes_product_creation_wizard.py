@@ -20,9 +20,19 @@ class ShoesProductCreationWizard(models.TransientModel):
 
     def action_apply(self):
         for record in self:
+            # Asignar nombre con códigos de fabricante y producto al final.
             for li in record.material_ids:
+                name = "$$." + record.task_id.name
+                if record.manufacturer_id.ref and li.material_id.code:
+                    name += "-" + record.manufacturer_id.ref + li.material_id.code
+                elif not record.manufacturer_id.ref and li.material_id.code:
+                    name += "-" + li.material_id.code
+                elif record.manufacturer_id.ref and not li.material_id.code:
+                    name += "-" + li.manufacturer_id.ref
+
+                # Creación de productos:
                 newproduct = self.env['product.template'].with_context(default_task_id=False, default_project_id=False).create({
-                    'name': "$$." + record.task_id.name,
+                    'name': name,
                     'type': 'consu',
                     'is_storable': True,
                     'shoes_campaign_id': record.task_id.project_id.id,
