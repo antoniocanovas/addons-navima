@@ -46,6 +46,7 @@
         'views/product_attribute_views.xml',
         'views/product_material_views.xml',
         'views/res_company_views.xml',
+        'views/shoes_last_views.xml',
     ],
     "demo": [],
     "installable": True,
