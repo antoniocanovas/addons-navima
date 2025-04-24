@@ -51,5 +51,6 @@ class ShoesProductCreationWizard(models.TransientModel):
                     'hs_code': record.task_id.intrastat_duty_id.intrastat_id.code,
                     'country_of_origin': record.task_id.intrastat_duty_id.country_id.id,
                     'exwork': record.task_id.exwork,
+                    'image_1920': record.task_id.displayed_image_id.datas,
                 })
                 li['shoes_product_tmpl_id'] = newproduct.id
