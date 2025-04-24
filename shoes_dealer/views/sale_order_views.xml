@@ -4,6 +4,7 @@
         <field name="name">sale.order.saleorder.inh.tree</field>
         <field name="arch" type="xml">
             <field name="state" position="after">
+                <field name="date_cancellation_limit" optional="hide"/>
                 <field name="pairs_count" optional="show" sum="Total pairs"/>
             </field>
         </field>
@@ -33,6 +34,10 @@
             </xpath>
             <field name="partner_id" position="before">
                 <field name="shoes_campaign_id" options="{'no_quick_create':1, 'no_create_edit':1}"/>
+            </field>
+            <field name="date_order" position="after">
+                <field name="date_cancellation_limit" readonly="state not in ['draft','sent']"/>
+                <field name="commitment_date" readonly="state not in ['draft','sent']"/>
             </field>
             <field name="note" position="before">
                 <field name="pairs_count"/>

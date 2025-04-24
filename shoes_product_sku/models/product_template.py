@@ -22,13 +22,14 @@ class ProductTemplate(models.Model):
 
             skuconfig = self.env['shoes.product.sku.item'].search([('id', 'in', config)], order="sequence")
 
+            productprefix = r.shoes_task_id.shoes_default_code_prefix
             for product in r.product_variant_ids:
                 code = ""
                 code_campaign = product.shoes_campaign_id.name if product.shoes_campaign_id.name else ""
                 code_material = product.material_id.code if product.material_id.code else ""
                 code_manufacturer = product.manufacturer_id.ref if product.manufacturer_id.ref else ""
-                code_product = product.campaign_code if product.campaign_code else ""
-                code_color = product.color_value_id.code if product.color_value_id.code else ""
+                code_product = productprefix if productprefix else ""
+                code_color = "-" + product.color_value_id.code + "-"  if product.color_value_id.code else ""
 
                 for item in skuconfig:
                     if item.id == id_campaign:       code += code_campaign

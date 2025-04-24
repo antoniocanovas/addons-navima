@@ -20,6 +20,8 @@ class SaleOrder(models.Model):
         "project.project", string="Campaign", store=True, copy=True, tracking=10
     )
 
+    date_cancellation_limit = fields.Date('Cancellation limit')
+
     @api.depends("shoes_campaign_id")
     def _get_campaign_top_sale(self):
         for record in self:
