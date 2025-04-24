@@ -26,6 +26,7 @@
         'product',
         'project',
         'product_brand',
+        'stock_delivery',
         'shoes_dealer',
         'intrastat_duty',
     ],

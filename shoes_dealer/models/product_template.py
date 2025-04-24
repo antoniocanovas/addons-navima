@@ -55,7 +55,7 @@ class ProductTemplate(models.Model):
 
     # Plantilla de producto "pares" generada desde el "surtido":
     product_tmpl_single_id = fields.Many2one(
-        "product.template", string="Child", store=True, copy=False, ondelete='restrict',
+        "product.template", string="Child", store=True, copy=False,
     )
     product_tmpl_single_list_price = fields.Float(
         "Precio del par", related="product_tmpl_single_id.list_price"
@@ -81,7 +81,7 @@ class ProductTemplate(models.Model):
     )
 
     product_tmpl_model_id = fields.Many2one(
-        "product.template", string="Model", store=True, ondelete='restrict', compute="_get_pt_shoes_model"
+        "product.template", string="Model", store=True, compute="_get_pt_shoes_model"
     )
     exwork_currency_id = fields.Many2one("res.currency", compute="_get_exwork_currency")
 
