@@ -397,6 +397,12 @@ class ProductTemplate(models.Model):
                             if ptav.id not in colors
                         )
 
+                # CHEQUEO de que está configurada la unidad de medida "Par" en la compañía:
+                pair_uom = self.env.company.shoes_pair_uom_id
+                if not pair_uom.id:
+                    raise UserError('Please set in company parameters => Shoes dealer => Shoes pair UOM.')
+
+
                 newpt = self.env["product.template"].create(
                     {
                         "name": str(prefix) + record.name,
@@ -414,6 +420,8 @@ class ProductTemplate(models.Model):
                         "campaign_code": campaign_code,
                         "shoes_task_id": record.shoes_task_id.id,
                         "product_add_mode": 'matrix',
+                        "uom_id": pair_uom.id,
+                        "uom_po_id": pair_uom.id,
                         "attribute_line_ids": [
                             (
                                 0,
