@@ -15,6 +15,7 @@
                             <field name="size_attribute_id" domain="[('create_variant','!=','no_variant')]" required="1"/>
                             <field name="color_attribute_id" domain="[('create_variant','!=','no_variant')]" required="1"/>
                             <field name="single_prefix" required="1"/>
+                            <field name="shoes_pair_uom_id" required="1"/>
                         </group>
                         <group name="shoes_commercial" string="Sale and purchases">
                             <field name="single_sale"/>

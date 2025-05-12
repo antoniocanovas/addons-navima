@@ -16,3 +16,4 @@ class ResCompany(models.Model):
                                          default=lambda self: self.env.user.company_id.currency_id)
     shoes_pair_weight_std = fields.Boolean("Pair standard price", default=True)
     shoes_hs_code_std = fields.Boolean("Standard HS code", default=True)
+    shoes_pair_uom_id = fields.Many2one('uom.uom', string="Pair UOM")

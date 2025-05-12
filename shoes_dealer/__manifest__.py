@@ -13,7 +13,7 @@
         # ODOO:
         "crm",
         "sale_management",
-        "sale_matrix_grid",
+        "sale_product_matrix",
         "account",
         "purchase",
         "stock",
@@ -23,6 +23,7 @@
         "base_automation",
         "sale_commission",
         "uom",
+        "l10n_es_edi_facturae",
         # OCA:
         "product_brand",
         "product_net_weight",
@@ -33,6 +34,7 @@
     "data": [
         "views/menu_views.xml",
         "data/server_actions.xml",
+        "data/shoes_data.xml",
         "security/ir.model.access.csv",
         "views/shoes_assortment_views.xml",
         "views/product_template_views.xml",

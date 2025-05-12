@@ -45,6 +45,7 @@ class ShoesProductCreationWizard(models.TransientModel):
                     'shoes_last_id': li.shoes_last_id.id,
                     'shoes_task_id': record.task_id.id,
                     'service_tracking': 'no',
+                    "product_add_mode": 'matrix',
                     'intrastat_duty_id': record.task_id.intrastat_duty_id.id,
                     'intrastat_code_id': record.task_id.intrastat_duty_id.intrastat_id.id,
                     'intrastat_origin_country_id': record.task_id.intrastat_duty_id.country_id.id,
