@@ -8,15 +8,22 @@
         <field name="inherit_id" ref="shoes_dealer.shoes_dealer_inh_form"/>
         <field name="arch" type="xml">
             <xpath expr="//page[@name='shoes_dealer']/group" position="after">
-                <group string="SKU" name="shoes_dealer_sku">
-                    <group name="shoes_sku_automation" string="Automation">
+                <group string="SKU Code" name="shoes_dealer_sku">
+                    <group name="shoes_sku_code" string="Codes">
+                        <field name="shoes_code_product" required="1"/>
+                        <field name="shoes_code_manufacturer" required="1"/>
+                        <field name="shoes_code_color" required="1"/>
+                        <field name="shoes_code_material" required="1"/>
+                        <field name="shoes_code_campaign" required="1"/>
+
                         <field name="shoes_sku_update"/>
                     </group>
+
                     <group name="shoes_sku_sequence" string="Sequence">
                         <field name="shoes_sku_item_ids" required="1" nolabel="1">
                             <list>
                                 <field name="sequence" widget="handle"/>
-                                <field name="name"/>
+                                <field name="name" nolabel="1"/>
                             </list>
                         </field>
                     </group>

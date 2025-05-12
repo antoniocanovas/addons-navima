@@ -8,9 +8,38 @@ class ResCompany(models.Model):
     _inherit = 'res.company'
 
     shoes_sku_item_ids = fields.Many2many('shoes.product.sku.item', string='SKU Items', default=[(6,0,[1,2,3,4,5])])
-    shoes_sku_update = fields.Boolean('Update on pair creation', default=True)
+    shoes_sku_update = fields.Boolean('Update on creation', default=True, help='Internal ref will be updated on pairs creation.')
 
+    # Parametrización para la cadena utilizada en la composición de la referencia interna del producto:
+    shoes_code_product = fields.Selection([
+        ('code','Code'),('name','Name'),('none','None')],
+        string='Product code',
+        default='code',
+    )
+    shoes_code_manufacturer = fields.Selection([
+        ('code', 'Code'), ('name', 'Name'), ('none', 'None')],
+        string='Manufacturer code',
+        default='code',
+    )
+    shoes_code_color = fields.Selection([
+        ('code','Code'),('name','Name'),('none','None')],
+        string='Color code',
+        default='code',
+    )
+    shoes_code_material = fields.Selection([
+        ('code','Code'),('name','Name'),('none','None')],
+        string='Material code',
+        default='code',
+    )
+    shoes_code_campaign = fields.Selection([
+        ('code','Code'),('name','Name'),('none','None')],
+        string='Campaign code',
+        default='name',
+    )
+
+    #  Forzar que todos los parámetros posibles estén establecidos:
     @api.constrains('shoes_sku_item_ids')
     def _ensure_unique_sku(self):
         if len(self.shoes_sku_item_ids.ids) != 5:
             raise UserError('Include all codes to ensure an unique SKU per product.')
+

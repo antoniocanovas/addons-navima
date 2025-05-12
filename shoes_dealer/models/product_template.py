@@ -413,6 +413,7 @@ class ProductTemplate(models.Model):
                         "product_brand_id": record.product_brand_id.id,
                         "campaign_code": campaign_code,
                         "shoes_task_id": record.shoes_task_id.id,
+                        "product_add_mode": 'matrix',
                         "attribute_line_ids": [
                             (
                                 0,

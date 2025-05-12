@@ -22,14 +22,57 @@ class ProductTemplate(models.Model):
 
             skuconfig = self.env['shoes.product.sku.item'].search([('id', 'in', config)], order="sequence")
 
+            code_campaign_type = self.env.company.shoes_code_campaign
+            code_material_type = self.env.company.shoes_code_material
+            code_manufacturer_type = self.env.company.shoes_code_manufacturer
+            code_product_type = self.env.company.shoes_code_product
+            code_color_type = self.env.company.shoes_code_color
+
             productprefix = r.shoes_task_id.shoes_default_code_prefix
+
             for product in r.product_variant_ids:
                 code = ""
-                code_campaign = product.shoes_campaign_id.name if product.shoes_campaign_id.name else ""
-                code_material = product.material_id.code if product.material_id.code else ""
-                code_manufacturer = product.manufacturer_id.ref if product.manufacturer_id.ref else ""
-                code_product = productprefix if productprefix else ""
-                code_color = "-" + product.color_value_id.code + "-"  if product.color_value_id.code else ""
+
+                # Código de campaña:
+                if code_campaign_type == 'name' and product.shoes_campaign_id.name:
+                    code_campaign = product.shoes_campaign_id.name
+                elif code_campaign_type == 'code' and product.shoes_campaign_id.task_code_prefix:
+                    code_campaign = product.shoes_campaign_id.task_code_prefix
+                else:
+                    code_campaign = ""
+
+                # Código de material:
+                if code_material_type == 'name' and product.material_id.name:
+                    code_material = product.material_id.name
+                elif code_material_type == 'code' and product.material_id.code:
+                    code_material = product.material_id.code
+                else:
+                    code_material = ""
+
+                # Código de fabricante:
+                if code_manufacturer_type == 'name' and product.manufacturer_id.name:
+                    code_manufacturer = product.manufacturer_id.name
+                elif code_manufacturer_type == 'code' and product.manufacturer_id.ref:
+                    code_manufacturer = product.manufacturer_id.ref
+                else:
+                    code_manufacturer = ""
+
+                # Código de producto:
+                if code_product_type == 'name' and product.name:
+                    code_product = product.name
+                elif code_product_type == 'code' and productprefix:
+                    code_product = productprefix
+                else:
+                    code_product = ""
+
+                # Código de color:
+                if code_color_type == 'name' and product.color_value_id.name:
+                    code_color = "-" + product.color_value_id.name + "-"
+                elif code_color_type == 'code' and product.color_value_id.code:
+                    code_color = "-" + product.color_value_id.code + "-"
+                else:
+                    code_color = ""
+
 
                 for item in skuconfig:
                     if item.id == id_campaign:       code += code_campaign

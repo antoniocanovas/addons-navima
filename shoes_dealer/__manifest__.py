@@ -13,6 +13,7 @@
         # ODOO:
         "crm",
         "sale_management",
+        "sale_matrix_grid",
         "account",
         "purchase",
         "stock",
