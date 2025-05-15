@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <odoo>
-    <template id="report_purchaseorder_inh_everak" inherit_id="purchase.report_purchaseorder_document" priority="999">
+    <template id="report_purchaseorder_inh_navima" inherit_id="purchase.report_purchaseorder_document" priority="999">
 
         <xpath expr="//td[@id='product']" position="inside">
             <t t-if="line.assortment_pair">

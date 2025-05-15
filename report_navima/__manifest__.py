@@ -33,6 +33,8 @@
     """,
     "data": [
         'reports/sale_order.xml',
+        'reports/purchase_order.xml',
+        'reports/report_delivery.xml',
 
     ],
     "demo": [],
