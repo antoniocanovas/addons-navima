@@ -8,10 +8,11 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="shoes_campaign.shoes_campaign_task_inh_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//label[@for='date_deadline']" position="before">
 
-            <field name="gender" position="after">
-                <field name="shoes_default_code_prefix"/>
-            </field>
+                    <field name="shoes_default_code_prefix" class="h2"/>
+
+            </xpath>
 
         </field>
         <field name="priority">99</field>

@@ -1582,7 +1582,7 @@ msgid "Shoes Color"
 msgstr "Color de zapatos"
 
 #. module: shoes_dealer
-#: model:ir.ui.menu,name:shoes_dealer.inventory_shoes_dealer_menu
+#: model:ir.ui.menu,name:shoes_dealer.shoes_dealer_configuration
 msgid "Shoes Dealer"
 msgstr ""
 

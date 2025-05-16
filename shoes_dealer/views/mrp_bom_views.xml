@@ -10,6 +10,7 @@
             <field name="company_id" position="after">
                 <field name="pairs_count" optional="show"/>
                 <field name="set_pairs_count" optional="show"/>
+                <field name="variant_default_code" optional="show"/>
             </field>
         </field>
     </record>

@@ -15,6 +15,8 @@ class MrpBom(models.Model):
 
     assortment_pair = fields.Char('Assortment pair', compute='_get_assortment_pair')
 
+    variant_default_code = fields.Char('Variant default code', related='product_id.default_code')
+
 
     # Pares por variante de producto, se usará en el cálculo de tarifas y líneas de venta:
     @api.depends('bom_line_ids','bom_line_ids.product_qty')

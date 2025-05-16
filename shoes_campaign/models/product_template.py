@@ -33,3 +33,16 @@ class ProductTemplate(models.Model):
                         'intrastat_code_id': intrastat,
                         'intrastat_origin_country_id': country,
                     })
+
+
+    def create_shoe_pairs(self):
+        # 1) Ejecutamos el comportamiento original: creación de pares
+        res = super(ProductTemplate, self).create_shoe_pairs()
+        # 2) Tras crear las plantillas “single”, propagamos shoes_last_id
+        for record in self:
+            if record.shoes_last_id and record.product_tmpl_single_id:
+                record.product_tmpl_single_id.write({
+                    'shoes_last_id': record.shoes_last_id.id,
+                })
+        # 3) Devolvemos lo que devolvía el super (si lo hubiera)
+        return res
