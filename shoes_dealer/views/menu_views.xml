@@ -8,7 +8,7 @@
         <field name="view_mode">kanban,list,form,calendar,activity</field>
         <field name="view_id" ref="project.view_project_kanban"/>
         <field name="domain">[('is_shoes_campaign','=',True)]</field>
-        <field name="view_id" ref="project.project_kanban_view_group_stage"/>
+        <field name="view_id" ref="project.view_project_kanban"/>
         <field name="search_view_id" ref="project.view_project_project_filter"/>
         <field name="target">main</field>
         <field name="help" type="html">
@@ -63,7 +63,6 @@
             id="shoes_dealer_main_menu"
             sequence="55"
             web_icon="shoes_dealer,static/description/icon.png"
-            groups="stock.group_stock_user,stock.group_stock_manager"
     >
         <!-- Campaigns: ahora sí existe action_open_shoes_dealer_campaigns -->
         <menuitem
@@ -71,7 +70,7 @@
                 id="shoes_dealer_campaigns"
                 sequence="1"
                 action="shoes_dealer.shoes_dealer_open_shoes_dealer_campaigns"
-                groups="stock.group_stock_user,stock.group_stock_manager"
+                groups="project.group_project_user"
         />
 
         <!-- Products -->
