@@ -38,6 +38,6 @@
         'views/shoes_pricelist_views.xml',
     ],
     "demo": [],
-    "installable": True,
+    "installable": False,
     "auto_install": False,
 }
