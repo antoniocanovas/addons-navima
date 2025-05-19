@@ -11,45 +11,25 @@ class ProjectTask(models.Model):
     # Datos comunes para creación de productos desde tareas:
 
     product_brand_id = fields.Many2one('product.brand', related='project_id.product_brand_id')
-    manufacturer_id = fields.Many2one('res.partner', string='Manufacturer')
-    shoes_shape_id = fields.Many2one('shoes.shape', string='Shape')
+    manufacturer_id = fields.Many2one('res.partner', string='Manufacturer', ondelete='restrict')
     code = fields.Char('Code')
+    displayed_image = fields.Binary(related='displayed_image_id.datas')
     gender = fields.Selection(
-        [("man", "Man"), ("woman", "Woman"), ("unisex", "Unisex")],
+        [("man", "Man"), ("woman", "Woman"), ("children", "Children")],
         string="Gender",
         copy=True,
         store=True,
     )
 
     shoes_pair_weight_id = fields.Many2one(
-        "shoes.pair.weight", string="Pair Weight", default=False
+        "shoes.pair.weight", string="Pair Weight", default=False, ondelete='restrict'
     )
-    shoes_hscode_id = fields.Many2one(
-        "shoes.hs.code", string="Shoes HS Code", default=False
-    )
+    intrastat_duty_id = fields.Many2one('intrastat.duty', string='Duty estimation', copy=False, ondelete='restrict')
 
-    material_id = fields.Many2one(
-        "product.material", string="Material", store=True, copy=True
-    )
-
-    shoes_product_tmpl_id = fields.Many2one('product.template', string="Product")
-
-    def create_shoe_model(self):
-        if not self.shoes_product_tmpl_id.id:
-            newproduct = self.env['product.template'].create({
-                'name': self.name,
-                'detailed_type': 'product',
-                'service_tracking': False,
-                'shoes_campaign_id':self.project_id.id,
-                'product_brand_id':self.product_brand_id.id,
-                'manufacturer_id':self.manufacturer_id.id,
-                'gender': self.gender,
-                'shoes_pair_weight_id': self.shoes_pair_weight_id.id,
-                'shoes_hscode_id': self.shoes_hscode_id.id,
-                'material_id': self.material_id.id,
-                'shoes_task_id': self.id,
-            })
-            self.shoes_product_tmpl_id = newproduct.id
+    # Para filtro en domain de la creación de productos (wizard):
+    shoes_model_material_ids = fields.One2many('shoes.model.material', 'task_id', string='Materials')
+    # Para pasar valor por defecto a líneas de materiales:
+    shoes_default_last_id = fields.Many2one('shoes.last', string='Default last', ondelete='restrict')
 
     @api.constrains('create_date')
     def task_code_sequence(self):
@@ -58,3 +38,38 @@ class ProjectTask(models.Model):
         code = prefix + str(seq + 1000)[-3:]
         self.code = code
         self.project_id.task_code_sequence = seq +1
+
+    # Datos adicionales ¿modelo o producto?:
+    shoes_material_main_id = fields.Many2one('product.material', string='Main', ondelete='restrict')
+    shoes_material_external1_id = fields.Many2one('product.material', string='External 1', ondelete='restrict')
+    shoes_material_external1_percent = fields.Float('External 1 (%)')
+    shoes_material_external2_id = fields.Many2one('product.material', string='External 2', ondelete='restrict')
+    shoes_material_external2_percent = fields.Float('External 2 (%)')
+    shoes_material_lin_internal1_id = fields.Many2one('product.material', string=' Internal Lin 1', ondelete='restrict')
+    shoes_material_lin_internal1_percent = fields.Float('Internal lin 1 (%)')
+    shoes_material_lin_internal2_id = fields.Many2one('product.material', string=' Internal Lin 2', ondelete='restrict')
+    shoes_material_lin_internal2_percent = fields.Float('Internal lin 2 (%)')
+    shoes_closure_id = fields.Many2one('shoes.closure', string='Closure', ondelete='restrict')
+    shoes_height = fields.Float('Shalft height')
+    shoes_shalft_categ = fields.Selection([('long','Long'),('half','Half'),('lower','Lower')], string='Shaft type')
+    shoes_type = fields.Many2one('shoes.type', string='Type')
+    shoes_with = fields.Char('With', translate=True)
+    exwork = fields.Float("Exwork", store=True, copy=True, tracking=10)
+
+    @api.depends("manufacturer_id")
+    def _get_exwork_currency(self):
+        for record in self:
+            if (
+                    record.manufacturer_id.id
+                    and record.manufacturer_id.property_purchase_currency_id.id
+            ):
+                currency = record.manufacturer_id.property_purchase_currency_id.id
+            elif (
+                    record.manufacturer_id.id
+                    and not record.manufacturer_id.property_purchase_currency_id.id
+            ):
+                currency = self.env.company.currency_id.id
+            else:
+                currency = self.env.user.company_id.exwork_currency_id.id
+            record["exwork_currency_id"] = currency
+    exwork_currency_id = fields.Many2one("res.currency", compute="_get_exwork_currency")

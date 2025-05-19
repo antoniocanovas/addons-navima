@@ -6,7 +6,7 @@
         <field name="name">product.attribute.value.group.inh.tree</field>
         <field name="model">product.attribute.value</field>
         <field name="inherit_id" ref="product.product_attribute_value_list"/>
-        <field name="type">tree</field>
+        <field name="type">list</field>
         <field name="arch" type="xml">
             <field name="name" position="after">
                 <field name="group_id"/>

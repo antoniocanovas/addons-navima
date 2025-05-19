@@ -5,7 +5,7 @@
         <field name="arch" type="xml">
             <xpath expr="//header" position="inside">
                 <button string="Create S/N" name="create_assortment_serial_numbers" type="object"
-                        invisible="picking_type_code != 'outgoing' or state not in ['assigned','done','cancel']"/>
+                        invisible="picking_type_code != 'outgoing' or state not in ['draft','waiting','confirmed']"/>
             </xpath>
         </field>
         <field name="inherit_id" ref="stock.view_picking_form"/>

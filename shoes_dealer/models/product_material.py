@@ -8,7 +8,7 @@ class ProductMaterial(models.Model):
     _name = 'product.material'
     _description = 'Product material'
 
-    name = fields.Char('Name', store=True)
-    image = fields.Binary('Image', store=True, copy=False)
-    comment = fields.Html('Comments', store=True, copy=False)
-    is_skin = fields.Boolean('Skin', store=True, copy=False)
+    name = fields.Char('Name' , translate=True)
+    image = fields.Binary('Image', copy=False)
+    comment = fields.Html('Comments',  copy=False , translate=True)
+    is_skin = fields.Boolean('Skin',  copy=False)

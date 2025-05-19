@@ -6,7 +6,7 @@ class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
 
     # Comercialmente en cada pedido quieren saber cuántos pares se han comprado:
-    @api.depends('product_id', 'product_qty')
+    @api.depends('product_id', 'product_qty', "product_qty")
     def _get_shoes_purchase_line_pair_count(self):
         for record in self:
             record['pairs_count'] = record.product_id.pairs_count * record.product_uom_qty

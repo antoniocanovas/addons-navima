@@ -7,6 +7,6 @@ class ShoesPairWeight(models.Model):
     _name = 'shoes.pair.weight'
     _description = 'Shoes pair standard weight'
 
-    name = fields.Char('Name')
+    name = fields.Char('Name', translate=True)
     pair_weight = fields.Float("Pair weight", digits="product.decimal_stock_weight")
     pair_net_weight = fields.Float("Net pair weight", digits="product.decimal_stock_weight")
