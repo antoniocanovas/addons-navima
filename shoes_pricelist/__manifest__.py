@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Punt Sistemes SL
-#    Copyright (C) 2024 - Punt Sistemes (http://www.puntsistemes.es). All Rights Reserved
+#    Copyright (C) 2024 - Punt Sistemes (http://www.puntsistemes.es). All Rights Reserved  # noqa: E501
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -20,24 +19,20 @@
 ##############################################################################
 
 {
-    "name": 'Shoes Pricelist',
-    "version": '18.0',
-    "depends": [
-        'sale_management',
-        'shoes_dealer',
-        'intrastat_duty',
-    ],
+    "name": "Shoes Pricelist",
+    "version": "18.0",
+    "depends": ["sale_management", "shoes_dealer", "intrastat_duty", "website_sale"],
     "author": "Punt Sistemes",
-    "category": 'Sales',
+    "category": "Sales",
     "website": "https://www.puntsistemes.es",
     "description": """
         Shoes dealer pricelist. 
     """,
     "data": [
-        'security/ir.model.access.csv',
-        'views/shoes_pricelist_views.xml',
+        "security/ir.model.access.csv",
+        "views/shoes_pricelist_views.xml",
     ],
     "demo": [],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
 }
