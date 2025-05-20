@@ -1,5 +1,5 @@
 # Copyright Serincloud SL - Ingenieriacloud.com
-from collections.abc import Iterable, Optional
+from collections.abc import Iterable
 from typing import Any
 
 from odoo import api, fields, models
@@ -82,13 +82,13 @@ class ProductProduct(models.Model):
     # Obtiene el valor del atributo de surtido
     def _get_assortment_attribute_value(
         self: Iterable["ProductProduct"],
-    ) -> Optional[int]:
+    ) -> int | None:
         """
         Devuelve el ID del valor de atributo 'assortment' para el primer registro
         de self,o None si no se encuentra.
         """
         for record in self:
-            value: Optional[int] = None
+            value: int | None = None
             # Buscamos sobre los valores ya asignados al variant
             for li in record.product_template_attribute_value_ids:
                 if li.attribute_id == record.env.company.assortment_attribute_id:
@@ -109,13 +109,13 @@ class ProductProduct(models.Model):
         store=True,
     )
 
-    def _get_size_attribute_value(self: Iterable["ProductProduct"]) -> Optional[int]:
+    def _get_size_attribute_value(self: Iterable["ProductProduct"]) -> int | None:
         """
         Devuelve el ID del valor de atributo 'size' para el primer registro de self,
         o None si no se encuentra.
         """
         for record in self:
-            value: Optional[int] = None
+            value: int | None = None
             for li in record.product_template_attribute_value_ids:
                 if li.attribute_id == record.env.company.size_attribute_id:
                     value = li.product_attribute_value_id.id
