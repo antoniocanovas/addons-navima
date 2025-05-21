@@ -9,6 +9,10 @@
         <field name="inherit_id" ref="shoes_dealer.shoes_dealer_product_inh_form"/>
         <field name="priority">90</field>
         <field name="arch" type="xml">
+            <!-- Código Material-Fabricante (nombre de shoes.model.material): -->
+            <xpath expr="//field[@name='pairs_sold']" position="after">
+                <field name="shoes_model_material_id" readonly="1"/>
+            </xpath>
             <!-- En Pestaña inicial para datos generales: -->
             <xpath expr="//field[@name='product_tmpl_set_id']" position="after">
                 <field name="shoes_task_id" readonly="shoes_task_id" force_save="1"

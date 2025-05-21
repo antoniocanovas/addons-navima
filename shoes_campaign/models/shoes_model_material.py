@@ -16,10 +16,11 @@ class ShoesModelMaterial(models.Model):
     task_id = fields.Many2one('project.task', string='Task', ondelete='restrict')
     shoes_campaign_id = fields.Many2one(related='task_id.project_id')
 
-    @api.depends('material_id','manufacturer_ref')
+    @api.depends('material_id','manufacturer_ref', 'task_id.shoes_default_code_prefix')
     def _get_name(self):
         for record in self:
             name = ""
-            if record.material_id: name = record.material_id.name
-            if record.manufacturer_ref: name += " (" + record.manufacturer_ref + ")"
+            if record.task_id.shoes_default_code_prefix: name += record.task_id.shoes_default_code_prefix
+            if record.material_id.code: name += record.material_id.code
+            if record.task_id.manufacturer_id.ref: name += record.task_id.manufacturer_id.ref
             record['name'] = name
