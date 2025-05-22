@@ -76,8 +76,9 @@
                         <field name="shoes_default_last_id"/>
                         <field name="shoes_model_material_ids" readonly="not manufacturer_id"
                                invisible="not is_shoes_campaign"
-                               context="{'default_shoes_last_id':shoes_default_last_id}">
+                               context="{'default_shoes_last_id':shoes_default_last_id}" nolabel="1">
                             <list editable="bottom">
+                                <field name="name" optional="show" readonly="1" string="Model code"/>
                                 <field name="material_id" required="1"
                                        options="{'no_create':true, 'no_create_edit':true}"/>
                                 <field name="shoes_last_id" required="1"

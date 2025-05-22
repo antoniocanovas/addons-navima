@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Punt Sistemes SL
-#    Copyright (C) 2024 - Punt Sistemes (http://www.puntsistemes.es). All Rights Reserved
+#    Copyright (C) 2024 - Punt Sistemes (http://www.puntsistemes.es).
+#    All Rights Reserved
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -20,25 +20,25 @@
 ##############################################################################
 
 {
-    "name": 'Intrastat duty estimation',
-    "version": '18.0',
+    "name": "Intrastat duty estimation",
+    "version": "18.0",
     "depends": [
-        'product',
-        'account_intrastat',
-        'sale_management',
-        'project',
+        "product",
+        "account_intrastat",
+        "sale_management",
+        "project",
     ],
     "author": "Punt Sistemes",
-    "category": 'Stock',
+    "category": "Stock",
     "website": "https://www.puntsistemes.es",
     "description": """
         Intrastat duty estimation for product, material and country combinations.
     """,
     "data": [
-        'security/ir.model.access.csv',
-        'views/intrastat_duty_views.xml',
-        'views/product_template_views.xml',
-        'views/purchase_order_views.xml',
+        "security/ir.model.access.csv",
+        "views/intrastat_duty_views.xml",
+        "views/product_template_views.xml",
+        "views/purchase_order_views.xml",
     ],
     "demo": [],
     "installable": True,
