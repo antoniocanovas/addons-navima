@@ -35,11 +35,13 @@ class ProjectTask(models.Model):
 
     @api.constrains('create_date')
     def task_code_sequence(self):
-        prefix = self.project_id.task_code_prefix
-        seq = self.project_id.task_code_sequence
-        code = prefix + str(seq + 1000)[-3:]
-        self.code = code
-        self.project_id.task_code_sequence = seq +1
+        for rec in self:
+            if not rec.code:
+                prefix = rec.project_id.task_code_prefix
+                seq = rec.project_id.task_code_sequence
+                code = prefix + str(seq + 1000)[-3:]
+                rec.code = code
+                rec.project_id.task_code_sequence = seq +1
 
     # Datos adicionales ¿modelo o producto?:
     shoes_material_main_id = fields.Many2one('product.material', string='Main', ondelete='restrict')

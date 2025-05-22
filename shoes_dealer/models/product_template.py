@@ -422,6 +422,9 @@ class ProductTemplate(models.Model):
                         "product_add_mode": 'matrix',
                         "uom_id": pair_uom.id,
                         "uom_po_id": pair_uom.id,
+                        "type": 'consu',
+                        "is_storable": True,
+                        "tracking": self.env.company.shoes_pair_tracking,
                         "attribute_line_ids": [
                             (
                                 0,
@@ -442,7 +445,12 @@ class ProductTemplate(models.Model):
                         ],
                     }
                 )
-                record.write({"product_tmpl_single_id": newpt.id})
+                record.write({
+                    "product_tmpl_single_id": newpt.id,
+                    "type": 'consu',
+                    "is_storable": True,
+                    "tracking": self.env.company.shoes_assortment_tracking,
+                })
                 # Creación de listas de material en surtidos, con los nuevos pares:
                 for p in record.product_variant_ids:
                     p.create_set_bom()

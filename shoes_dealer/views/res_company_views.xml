@@ -10,12 +10,23 @@
             <xpath expr="//page[@name='general_info']" position="after">
                 <page string="Shoes dealer" name="shoes_dealer">
                     <group>
+                        <group>
+                            <field name="is_shoes_company"/>
+                        </group>
+                    </group>
+
+                    <group invisible="not is_shoes_company">
                         <group name="shoes_attributes" string="Attributes">
-                            <field name="assortment_attribute_id" domain="[('create_variant','!=','no_variant')]" required="1"/>
-                            <field name="size_attribute_id" domain="[('create_variant','!=','no_variant')]" required="1"/>
-                            <field name="color_attribute_id" domain="[('create_variant','!=','no_variant')]" required="1"/>
-                            <field name="single_prefix" required="1"/>
-                            <field name="shoes_pair_uom_id" required="1"/>
+                            <field name="assortment_attribute_id" domain="[('create_variant','!=','no_variant')]"
+                                   required="is_shoes_company"/>
+                            <field name="size_attribute_id" domain="[('create_variant','!=','no_variant')]"
+                                   required="is_shoes_company"/>
+                            <field name="color_attribute_id" domain="[('create_variant','!=','no_variant')]"
+                                   required="is_shoes_company"/>
+                            <field name="single_prefix"
+                                   required="is_shoes_company"/>
+                            <field name="shoes_pair_uom_id"
+                                   required="is_shoes_company"/>
                         </group>
                         <group name="shoes_commercial" string="Sale and purchases">
                             <field name="single_sale"/>
@@ -24,6 +35,10 @@
                             <field name="single_purchase"/>
                             <field name="exwork_currency_id"/>
                         </group>
+                    </group>
+                    <group name="shoes_tracking" string="Tracking" invisible="not is_shoes_company">
+                        <field name="shoes_assortment_tracking" required="is_shoes_company"/>
+                        <field name="shoes_pair_tracking" required="is_shoes_company"/>
                     </group>
                 </page>
             </xpath>

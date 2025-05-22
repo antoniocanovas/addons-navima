@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- 1) PRIMERO: la acción filtrada para Campaigns -->
+    <!-- 1) PRIMERO: la acción para Campaigns -->
     <record id="shoes_dealer_open_shoes_dealer_campaigns" model="ir.actions.act_window">
         <field name="name">Campaigns</field>
         <field name="res_model">project.project</field>
         <field name="view_mode">kanban,list,form,calendar,activity</field>
         <field name="view_id" ref="project.view_project_kanban"/>
-        <field name="domain">[('is_shoes_campaign','=',True)]</field>
         <field name="view_id" ref="project.view_project_kanban"/>
         <field name="search_view_id" ref="project.view_project_project_filter"/>
         <field name="target">main</field>

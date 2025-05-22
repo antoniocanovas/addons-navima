@@ -55,5 +55,9 @@
         <field name="priority">99</field>
     </record>
 
-
+    <!-- 1) DOMINIO: la acción para Campaigns en menú shoes.dealer -->
+    <record id="shoes_dealer.shoes_dealer_open_shoes_dealer_campaigns" model="ir.actions.act_window">
+        <field name="res_model">project.project</field>
+        <field name="domain">[('is_shoes_campaign','=',True)]</field>
+    </record>
 </odoo>

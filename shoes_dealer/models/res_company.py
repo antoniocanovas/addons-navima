@@ -6,6 +6,7 @@ from odoo import fields, models, api
 class ResCompany(models.Model):
     _inherit = 'res.company'
 
+    is_shoes_company = fields.Boolean('Shoes company', default=True)
     assortment_attribute_id = fields.Many2one('product.attribute', string='Assortment attribute', store=True)
     size_attribute_id = fields.Many2one('product.attribute', string='Size attribute', store=True)
     color_attribute_id = fields.Many2one('product.attribute', string='Color attribute', store=True)
@@ -17,3 +18,9 @@ class ResCompany(models.Model):
     shoes_pair_weight_std = fields.Boolean("Pair standard price", default=True)
     shoes_hs_code_std = fields.Boolean("Standard HS code", default=True)
     shoes_pair_uom_id = fields.Many2one('uom.uom', string="Pair UOM")
+
+    # Shoes tracking:
+    shoes_assortment_tracking = fields.Selection([('lot','Lot'),('serial','Serial Number'),('none','None')],
+                                                 string='Assortment tracking', default='lot')
+    shoes_pair_tracking = fields.Selection([('lot','Lot'),('serial','Serial Number'),('none','None')],
+                                           string='Pair tracking', default='none')

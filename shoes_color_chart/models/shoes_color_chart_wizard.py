@@ -24,9 +24,10 @@ class ShoesColorChartWizard(models.TransientModel):
             message = "Manufacturer reference required (Sale/Purchases => Reference)"
         if not self.material_id.code:
             message = "Material code required."
-        for li in self.color_value_ids:
-            if not li.code:
-                message = "Color code required (Color => Code): " + li.name
+        # Quitado para poder asignar en códigos el nombre del color si no está asignado el code:
+        #for li in self.color_value_ids:
+        #    if not li.code:
+        #        message = "Color code required (Color => Code): " + li.name
         if message != "":
             raise UserError(message)
 

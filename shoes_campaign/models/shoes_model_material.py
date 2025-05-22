@@ -15,6 +15,8 @@ class ShoesModelMaterial(models.Model):
     shoes_product_tmpl_id = fields.Many2one('product.template', string='Product')
     task_id = fields.Many2one('project.task', string='Task', ondelete='restrict')
     shoes_campaign_id = fields.Many2one(related='task_id.project_id')
+    # Para añadir QR en tarifas:
+    shoes_url = fields.Char('URL')
 
     @api.depends('material_id','manufacturer_ref', 'task_id.shoes_default_code_prefix')
     def _get_name(self):

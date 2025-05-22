@@ -85,6 +85,7 @@
                                        options="{'no_create':true, 'no_create_edit':true}"/>
                                 <field name="manufacturer_ref" required="1"/>
                                 <field name="shoes_product_tmpl_id" readonly="1" optional="show"/>
+                                <field name="shoes_url" widget="url" optional="show"/>
                                 <field name="task_id" column_invisible="1"/>
                             </list>
                         </field>
