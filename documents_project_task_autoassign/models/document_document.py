@@ -18,7 +18,7 @@ class DocumentsDocument(models.Model):
                     .project_id
                 )
 
-            if project.id:
+            if project:
                 for task in project.task_ids:
                     tasklen = len(task.name)
                     if record.name[:tasklen].lower() == task.name.lower():
