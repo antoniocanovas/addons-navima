@@ -27,14 +27,6 @@
         <field name="sequence">100</field>
         <field name="web_icon" eval="False"/>
     </record>
-    <record id="intrastat_duty_projecct_menu" model="ir.ui.menu">
-        <field name="action" ref="intrastat_duty_act_window"/>
-        <field name="active" eval="True"/>
-        <field name="name">Duty estimations</field>
-        <field name="parent_id" ref="project.menu_project_config"/>
-        <field name="sequence">100</field>
-        <field name="web_icon" eval="False"/>
-    </record>
 
     <!-- TREE VIEW: -->
     <record id="intrastat_duty_default_tree" model="ir.ui.view">

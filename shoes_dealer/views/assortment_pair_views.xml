@@ -23,7 +23,7 @@
         <field name="action" ref="action_assortment_pair"/>
         <field name="active" eval="True"/>
         <field name="name">Assortment pair</field>
-        <field name="parent_id" ref="shoes_dealer.shoes_dealer_configuration"/>
+        <field name="parent_id" ref="shoes_dealer.shoes_dealer_configuration_details"/>
         <field name="sequence">110</field>
         <field name="web_icon" eval="False"/>
         <field name="groups_id" eval="[(6, 0, [ref('base.group_no_one')])]"/>

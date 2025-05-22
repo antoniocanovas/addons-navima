@@ -26,7 +26,6 @@
         "product",
         "account_intrastat",
         "sale_management",
-        "project",
     ],
     "author": "Punt Sistemes",
     "category": "Stock",

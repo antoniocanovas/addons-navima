@@ -23,7 +23,7 @@
         <field name="action" ref="action_product_material"/>
         <field name="active" eval="True"/>
         <field name="name">Product materials</field>
-        <field name="parent_id" ref="shoes_dealer.shoes_dealer_configuration"/>
+        <field name="parent_id" ref="shoes_dealer.shoes_dealer_configuration_inventory"/>
         <field name="sequence">100</field>
         <field name="web_icon" eval="False"/>
     </record>
