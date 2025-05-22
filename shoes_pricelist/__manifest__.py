@@ -21,7 +21,11 @@
 {
     "name": "Shoes Pricelist",
     "version": "18.0",
-    "depends": ["sale_management", "shoes_dealer", "intrastat_duty"],
+    "depends": [
+        "sale_management",
+        "shoes_dealer",
+        "intrastat_duty"
+    ],
     "author": "Punt Sistemes",
     "category": "Sales",
     "website": "https://www.puntsistemes.es",
