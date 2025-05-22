@@ -7,6 +7,8 @@ class ProjectTask(models.Model):
     _inherit = "project.task"
 
     is_shoes_campaign = fields.Boolean('Is shoes campaign', related='project_id.is_shoes_campaign')
+    # Para componer el default_code del producto automáticamente:
+    shoes_default_code_prefix = fields.Char("Internal ref. prefix")
 
     # Datos comunes para creación de productos desde tareas:
 

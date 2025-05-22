@@ -39,7 +39,6 @@
         'security/ir.model.access.csv',
         'data/shoes_product_sku_item.xml',
         'views/res_company_views.xml',
-        'views/project_task_views.xml',
         'data/server_actions.xml',
     ],
     "demo": [],

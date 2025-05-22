@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    # BASE AUTOMATION al modificar el nombre de un documento:
+    <record id="documents_project_task_autoassign_aa" model="base.automation">
+        <field name="name">=> Documents project task autoassign</field>
+        <field name="model_id" ref="documents.model_documents_document"/>
+        <field name="trigger">on_create_or_write</field>
+    </record>
+    # SERVER ACTION al modificar el nombre de un documento:
+    <record id="documents_project_task_autoassign_as" model="ir.actions.server">
+        <field name="name">=> Documents project task autoassign</field>
+        <field name="model_id" ref="documents.model_documents_document"/>
+        <field name="evaluation_type">value</field>
+        <field name="state">code</field>
+        <field name="code">
+            record.documents_project_task_autoassign()
+        </field>
+        <field name="base_automation_id" ref="documents_project_task_autoassign.documents_project_task_autoassign_aa"/>
+    </record>
+
+</odoo>

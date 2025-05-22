@@ -35,7 +35,8 @@
                         <group>
                             <field name="product_brand_id"/>
                             <field name="code" readonly="code"/>
-                            <field name="manufacturer_id" readonly="shoes_model_material_ids" options="{'no_create':true, 'no_create_edit':true}" force_save="1"/>
+                            <field name="manufacturer_id" readonly="shoes_model_material_ids"
+                                   options="{'no_create':true, 'no_create_edit':true}" force_save="1"/>
                             <field name="displayed_image_id" options="{'no_create': True}"
                                    domain="[('res_model','=','project.task'),('res_id','=',id),('mimetype','ilike','image')]"/>
                             <field name="gender"/>
@@ -52,15 +53,19 @@
                             <field name="shoes_type"/>
                             <field name="shoes_closure_id"/>
                             <field name="shoes_material_main_id" options="{'no_create':true, 'no_create_edit':true}"/>
-                            <field name="shoes_material_external1_id" options="{'no_create':true, 'no_create_edit':true}"/>
+                            <field name="shoes_material_external1_id"
+                                   options="{'no_create':true, 'no_create_edit':true}"/>
                             <field name="shoes_material_external1_percent"/>
-                            <field name="shoes_material_external2_id" options="{'no_create':true, 'no_create_edit':true}"/>
+                            <field name="shoes_material_external2_id"
+                                   options="{'no_create':true, 'no_create_edit':true}"/>
                             <field name="shoes_material_external2_percent"/>
                         </group>
                         <group name="shoes_detail_right">
-                            <field name="shoes_material_lin_internal1_id" options="{'no_create':true, 'no_create_edit':true}"/>
+                            <field name="shoes_material_lin_internal1_id"
+                                   options="{'no_create':true, 'no_create_edit':true}"/>
                             <field name="shoes_material_lin_internal1_percent"/>
-                            <field name="shoes_material_lin_internal2_id" options="{'no_create':true, 'no_create_edit':true}"/>
+                            <field name="shoes_material_lin_internal2_id"
+                                   options="{'no_create':true, 'no_create_edit':true}"/>
                             <field name="shoes_material_lin_internal2_percent"/>
                             <field name="shoes_height"/>
                             <field name="shoes_shalft_categ"/>
@@ -73,8 +78,10 @@
                                invisible="not is_shoes_campaign"
                                context="{'default_shoes_last_id':shoes_default_last_id}">
                             <list editable="bottom">
-                                <field name="material_id" required="1" options="{'no_create':true, 'no_create_edit':true}"/>
-                                <field name="shoes_last_id" required="1" options="{'no_create':true, 'no_create_edit':true}"/>
+                                <field name="material_id" required="1"
+                                       options="{'no_create':true, 'no_create_edit':true}"/>
+                                <field name="shoes_last_id" required="1"
+                                       options="{'no_create':true, 'no_create_edit':true}"/>
                                 <field name="manufacturer_ref" required="1"/>
                                 <field name="shoes_product_tmpl_id" readonly="1" optional="show"/>
                                 <field name="task_id" column_invisible="1"/>
@@ -83,6 +90,9 @@
                     </group>
                     <field name="is_shoes_campaign" invisible="1"/>
                     <field name="exwork_currency_id" invisible="1"/>
+                </xpath>
+                <xpath expr="//label[@for='date_deadline']" position="before">
+                    <field name="shoes_default_code_prefix" class="h2"/>
                 </xpath>
             </data>
 
