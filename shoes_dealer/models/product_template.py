@@ -425,6 +425,7 @@ class ProductTemplate(models.Model):
                         "type": 'consu',
                         "is_storable": True,
                         "tracking": self.env.company.shoes_pair_tracking,
+                        'image_1920': record.image_1920,
                         "attribute_line_ids": [
                             (
                                 0,
