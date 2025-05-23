@@ -1,8 +1,6 @@
 # Copyright Serincloud SL - Ingenieriacloud.com
 from typing import Any
 
-from typing_extensions import LiteralString
-
 from odoo import api, fields, models
 from odoo.exceptions import UserError
 
@@ -565,7 +563,7 @@ class ProductTemplate(models.Model):
 
                 record.shoes_campaign_id.campaign_code += 1
 
-    def name_get(self) -> list[tuple[Any, LiteralString | str]]:
+    def name_get(self) -> list[tuple[Any, str]]:
         # Prefetch the fields used by the `name_get`, so `browse`
         # doesn't fetch other fields
         self.browse(self.ids).read(["name", "default_code", "campaign_code"])
