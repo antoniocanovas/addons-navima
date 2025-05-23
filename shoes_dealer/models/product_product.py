@@ -1,4 +1,5 @@
 # Copyright Serincloud SL - Ingenieriacloud.com
+
 from collections.abc import Iterable
 from typing import Any
 
@@ -89,6 +90,7 @@ class ProductProduct(models.Model):
         """
         for record in self:
             value: int | None = None
+
             # Buscamos sobre los valores ya asignados al variant
             for li in record.product_template_attribute_value_ids:
                 if li.attribute_id == record.env.company.assortment_attribute_id:
@@ -116,6 +118,7 @@ class ProductProduct(models.Model):
         """
         for record in self:
             value: int | None = None
+
             for li in record.product_template_attribute_value_ids:
                 if li.attribute_id == record.env.company.size_attribute_id:
                     value = li.product_attribute_value_id.id

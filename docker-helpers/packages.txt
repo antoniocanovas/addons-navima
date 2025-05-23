@@ -1,0 +1,2 @@
+paquetes PIP:
+schwifty==2024.4.0

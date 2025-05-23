@@ -1,7 +1,9 @@
 # Copyright Serincloud SL - Ingenieriacloud.com
+from typing import Any
 
+from typing_extensions import LiteralString
 
-from odoo import fields, models, api, _
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -15,7 +17,12 @@ class ProductTemplate(models.Model):
     )
 
     shoes_campaign_id = fields.Many2one(
-        "project.project", string="Campaign", store=True, copy=True, tracking=10, ondelete='restrict'
+        "project.project",
+        string="Campaign",
+        store=True,
+        copy=True,
+        tracking=10,
+        ondelete="restrict",
     )
 
     shoes_campaign_ids = fields.Many2many(
@@ -23,7 +30,7 @@ class ProductTemplate(models.Model):
     )
 
     shoes_pair_campaign_ids = fields.Many2many(
-        "project.project", related='product_tmpl_set_id.shoes_campaign_ids'
+        "project.project", related="product_tmpl_set_id.shoes_campaign_ids"
     )
 
     gender = fields.Selection(
@@ -34,34 +41,36 @@ class ProductTemplate(models.Model):
     )
 
     shoes_pair_weight_id = fields.Many2one(
-        "shoes.pair.weight", string="Pair Weight", default=False, ondelete='restrict'
+        "shoes.pair.weight", string="Pair Weight", default=False, ondelete="restrict"
     )
 
     manufacturer_id = fields.Many2one(
-        "res.partner", string="Manufacturer", copy=True, ondelete='restrict'
+        "res.partner", string="Manufacturer", copy=True, ondelete="restrict"
     )
 
     material_id = fields.Many2one(
-        "product.material", string="Material", copy=True, ondelete='restrict'
+        "product.material", string="Material", copy=True, ondelete="restrict"
     )
 
-    shoes_last_id = fields.Many2one(
-        "shoes.last", string="Last", ondelete='restrict'
-    )
+    shoes_last_id = fields.Many2one("shoes.last", string="Last", ondelete="restrict")
 
     product_tmpl_set_id = fields.Many2one(
-        "product.template", string="Parent", store=True, copy=False, ondelete='restrict'
+        "product.template", string="Parent", store=True, copy=False, ondelete="restrict"
     )
 
     # Plantilla de producto "pares" generada desde el "surtido":
     product_tmpl_single_id = fields.Many2one(
-        "product.template", string="Child", store=True, copy=False,
+        "product.template",
+        string="Child",
+        store=True,
+        copy=False,
     )
     product_tmpl_single_list_price = fields.Float(
         "Precio del par", related="product_tmpl_single_id.list_price"
     )
 
-    # Campos para calcular los pares vendidos y usarlo de base para sacar el TOP en la pantalla de ventas:
+    # Campos para calcular los pares vendidos y usarlo de base para sacar el TOP
+    # en la pantalla de ventas:
     sale_line_ids = fields.One2many(
         "sale.order.line",
         "product_tmpl_id",
@@ -77,7 +86,11 @@ class ProductTemplate(models.Model):
 
     # Llevar a aml y shoes_report como related
     shoes_model_id = fields.Many2one(
-        "product.template", string="Model", store=True, ondelete='restrict', compute="_get_shoes_model"
+        "product.template",
+        string="Model",
+        store=True,
+        ondelete="restrict",
+        compute="_get_shoes_model",
     )
 
     product_tmpl_model_id = fields.Many2one(
@@ -94,9 +107,7 @@ class ProductTemplate(models.Model):
         related="product_tmpl_single_id.exwork",
         readonly=False,
     )
-    shipping_price = fields.Monetary(
-        "Shipping", store=True, copy=True, tracking=10
-    )
+    shipping_price = fields.Monetary("Shipping", store=True, copy=True, tracking=10)
     shipping_single_price = fields.Monetary(
         "Single Shipping",
         store=True,
@@ -114,7 +125,8 @@ class ProductTemplate(models.Model):
         compute="_get_product_colors",
     )
 
-    # Campo que sobreescribirá website_sale, pero lo creamos aquí para evitar la dependencia:
+    # Campo que sobreescribirá website_sale, pero lo creamos aquí para evitar
+    # la dependencia:
     base_unit_count = fields.Float(string="Base Unit Count", required=True, default=0)
 
     # Actualiza el nombre del par basado en el nombre del template
@@ -130,11 +142,13 @@ class ProductTemplate(models.Model):
             if record.exwork_currency_id.name == "EUR":
                 record["exwork_euro"] = record.exwork
             elif (
-                    record.exwork_currency_id.name != "EUR"
-                    and record.shoes_campaign_id.id
-                    and record.shoes_campaign_id.dollar_exchange != 0
+                record.exwork_currency_id.name != "EUR"
+                and record.shoes_campaign_id.id
+                and record.shoes_campaign_id.dollar_exchange != 0
             ):
-                record["exwork_euro"] = record.exwork / record.shoes_campaign_id.dollar_exchange
+                record["exwork_euro"] = (
+                    record.exwork / record.shoes_campaign_id.dollar_exchange
+                )
             else:
                 record["exwork_euro"] = 0
 
@@ -145,13 +159,17 @@ class ProductTemplate(models.Model):
             if record.exwork_currency_id.name == "EUR":
                 record["exwork_single_euro"] = record.exwork_single
             elif (
-                    record.exwork_currency_id.name != "EUR"
-                    and record.shoes_campaign_id.id
-                    and record.shoes_campaign_id.dollar_exchange != 0
+                record.exwork_currency_id.name != "EUR"
+                and record.shoes_campaign_id.id
+                and record.shoes_campaign_id.dollar_exchange != 0
             ):
-                record["exwork_single_euro"] = record.exwork_single / record.shoes_campaign_id.dollar_exchange
+                record["exwork_single_euro"] = (
+                    record.exwork_single / record.shoes_campaign_id.dollar_exchange
+                )
             else:
                 record["exwork_single_euro"] = 0
+
+    pairs_sold = fields.Integer("Pairs sold", store=True, compute="_get_pairs_sold")  # noqa: F841
 
     # Calcula el total de pares vendidos
     @api.depends("sale_line_ids")
@@ -169,15 +187,17 @@ class ProductTemplate(models.Model):
                     total += li.pairs_count
             record["pairs_sold"] = total
 
-    pairs_sold = fields.Integer("Pairs sold", store=True, compute="_get_pairs_sold")
-
     # Determina si el producto es un surtido basado en sus atributos
     @api.depends("attribute_line_ids")
     def _get_is_assortment(self):
         color_attribute = self.env.company.color_attribute_id
         assortment_attribute = self.env.company.assortment_attribute_id
-        color = any(li.attribute_id == color_attribute for li in self.attribute_line_ids)
-        assortment = any(li.attribute_id == assortment_attribute for li in self.attribute_line_ids)
+        color = any(
+            li.attribute_id == color_attribute for li in self.attribute_line_ids
+        )
+        assortment = any(
+            li.attribute_id == assortment_attribute for li in self.attribute_line_ids
+        )
         self.is_assortment = color and assortment
 
     # Determina si el producto es un par basado en sus atributos
@@ -185,7 +205,9 @@ class ProductTemplate(models.Model):
     def _get_is_pair(self):
         color_attribute = self.env.company.color_attribute_id
         size_attribute = self.env.company.size_attribute_id
-        color = any(li.attribute_id == color_attribute for li in self.attribute_line_ids)
+        color = any(
+            li.attribute_id == color_attribute for li in self.attribute_line_ids
+        )
         size = any(li.attribute_id == size_attribute for li in self.attribute_line_ids)
         self.is_pair = color and size
 
@@ -200,7 +222,6 @@ class ProductTemplate(models.Model):
         "shoes_pair_weight_id",
     )
     def _get_pair_and_variants_sync(self):
-
         if self.gender:
             self.product_tmpl_single_id.gender = self.gender
         if self.manufacturer_id:
@@ -211,7 +232,7 @@ class ProductTemplate(models.Model):
             for assortment in self.product_variant_ids:
                 weight = assortment.pairs_count * self.shoes_pair_weight_id.pair_weight
                 net_weight = (
-                        assortment.pairs_count * self.shoes_pair_weight_id.pair_net_weight
+                    assortment.pairs_count * self.shoes_pair_weight_id.pair_net_weight
                 )
                 assortment.write({"weight": weight, "net_weight": net_weight})
             for pair in self.product_tmpl_single_id.product_variant_ids:
@@ -228,7 +249,8 @@ class ProductTemplate(models.Model):
                 shoes_model = record.id
             record["shoes_model_id"] = shoes_model
 
-    # Plantilla de producto para relacionar surtidos y pares con el modelo para informes (independiente de talla):
+    # Plantilla de producto para relacionar surtidos y pares con el modelo para informes
+    # (independiente de talla):
     @api.depends("product_tmpl_single_id", "product_tmpl_set_id")
     def _get_pt_shoes_model(self):
         for record in self:
@@ -239,18 +261,19 @@ class ProductTemplate(models.Model):
                 model = record.id
             record["product_tmpl_model_id"] = model
 
-    # El precio de coste es la suma de Exwork + portes, si existe el par se mostrará uno u otro campo:
+    # El precio de coste es la suma de Exwork + portes, si existe el par se mostrará
+    # uno u otro campo:
     @api.depends("manufacturer_id")
     def _get_exwork_currency(self):
         for record in self:
             if (
-                    record.manufacturer_id.id
-                    and record.manufacturer_id.property_purchase_currency_id.id
+                record.manufacturer_id.id
+                and record.manufacturer_id.property_purchase_currency_id.id
             ):
                 currency = record.manufacturer_id.property_purchase_currency_id.id
             elif (
-                    record.manufacturer_id.id
-                    and not record.manufacturer_id.property_purchase_currency_id.id
+                record.manufacturer_id.id
+                and not record.manufacturer_id.property_purchase_currency_id.id
             ):
                 currency = self.env.company.currency_id.id
             else:
@@ -264,8 +287,10 @@ class ProductTemplate(models.Model):
             color_attribute = self.env.user.company_id.color_attribute_id
 
             # El campo en el product.template es attribute_line_ids
-            # Este campo es un o2m a product.template.attribute.line, que tiene product_tmpl_id y attribute_id
-            # attribute_id que apunta a product_attribute (que ha de ser el de la compañía) y
+            # Este campo es un o2m a product.template.attribute.line, que tiene
+            # product_tmpl_id y attribute_id
+            # attribute_id que apunta a product_attribute
+            # (que ha de ser el de la compañía) y
             # un value_ids que apunta a directamente a product.attribute.value
 
             if record.attribute_line_ids.ids:
@@ -291,7 +316,6 @@ class ProductTemplate(models.Model):
                 for pp in record.product_variant_ids:
                     pp.write({"lst_price": record.list_price * pp.pairs_count})
 
-
     def update_assortment_weights(self):
         if not self.shoes_pair_weight_id:
             return
@@ -305,7 +329,9 @@ class ProductTemplate(models.Model):
             assortment.write({"weight": weight, "net_weight": net_weight})
 
         if self.product_tmpl_single_id:
-            self.product_tmpl_single_id.shoes_pair_weight_id = self.shoes_pair_weight_id.id
+            self.product_tmpl_single_id.shoes_pair_weight_id = (
+                self.shoes_pair_weight_id.id
+            )
             for pair in self.product_tmpl_single_id.product_variant_ids:
                 pair.write({"weight": pair_weight, "net_weight": pair_net_weight})
 
@@ -321,17 +347,14 @@ class ProductTemplate(models.Model):
                     p.create_set_bom()
 
             # Limpieza de BOMS huérfanas:
-            bomsdelete = (
-                self.env["mrp.bom"]
-                .search(
-                    [
-                        ("is_assortment", "=", True),
-                        ("product_tmpl_id", "=", self.id),
-                        ("product_id", "=", False),
-                    ]
-                )
-                .unlink()
-            )
+
+            self.env["mrp.bom"].search(
+                [
+                    ("is_assortment", "=", True),
+                    ("product_tmpl_id", "=", self.id),
+                    ("product_id", "=", False),
+                ]
+            ).unlink()
 
     def create_shoe_pairs(self):
         self.ensure_one()
@@ -353,7 +376,8 @@ class ProductTemplate(models.Model):
     def create_single_products(self):
         # Nueva versión desde variantes desde atributo:
         for record in self:
-            # 1. Chequeo variante parametrizada de empresa y producto, con sus mensajes de alerta:
+            # 1. Chequeo variante parametrizada de empresa y producto,
+            # con sus mensajes de alerta:
             bom_attribute = self.env.user.company_id.assortment_attribute_id
             size_attribute = self.env.user.company_id.size_attribute_id
             color_attribute = self.env.user.company_id.color_attribute_id
@@ -363,7 +387,8 @@ class ProductTemplate(models.Model):
 
             if not bom_attribute.id or not size_attribute.id:
                 raise UserError(
-                    "Please set shoes dealer attributes in this company form (Settings => User & companies => Company"
+                    "Please set shoes dealer attributes in this company form (Settings"
+                    " => User & companies => Company"
                 )
 
             # CREACIÓN DEL PRODUCTO PAR, SI NO EXISTE:
@@ -374,12 +399,12 @@ class ProductTemplate(models.Model):
                 # Cálculo de precio de coste con cambio de moneda:
                 standard_price = record.standard_price
                 if (
-                        (record.shoes_campaign_id.id)
-                        and (record.shoes_campaign_id.dollar_exchange)
-                        and (record.exwork)
+                    (record.shoes_campaign_id.id)
+                    and (record.shoes_campaign_id.dollar_exchange)
+                    and (record.exwork)
                 ):
                     standard_price = (
-                            record.exwork / record.shoes_campaign_id.dollar_exchange
+                        record.exwork / record.shoes_campaign_id.dollar_exchange
                     )
 
                 for li in record.attribute_line_ids:
@@ -392,16 +417,17 @@ class ProductTemplate(models.Model):
                         )
                     elif li.attribute_id.id == color_attribute.id:
                         colors.extend(
-                            ptav.id
-                            for ptav in li.value_ids
-                            if ptav.id not in colors
+                            ptav.id for ptav in li.value_ids if ptav.id not in colors
                         )
 
-                # CHEQUEO de que está configurada la unidad de medida "Par" en la compañía:
+                # CHEQUEO de que está configurada la unidad de medida "Par"
+                # en la compañía:
                 pair_uom = self.env.company.shoes_pair_uom_id
                 if not pair_uom.id:
-                    raise UserError('Please set in company parameters => Shoes dealer => Shoes pair UOM.')
-
+                    raise UserError(
+                        "Please set in company parameters => Shoes dealer"
+                        " => Shoes pair UOM."
+                    )
 
                 newpt = self.env["product.template"].create(
                     {
@@ -409,7 +435,7 @@ class ProductTemplate(models.Model):
                         "product_tmpl_set_id": record.id,
                         "shoes_campaign_id": record.shoes_campaign_id.id,
                         "list_price": record.list_price,
-                        "standard_price": record.standard_price,
+                        "standard_price": standard_price,
                         "exwork": record.exwork,
                         "shipping_price": record.shipping_price,
                         "sale_ok": single_sale,
@@ -419,13 +445,12 @@ class ProductTemplate(models.Model):
                         "product_brand_id": record.product_brand_id.id,
                         "campaign_code": campaign_code,
                         "shoes_task_id": record.shoes_task_id.id,
-                        "product_add_mode": 'matrix',
+                        "product_add_mode": "matrix",
                         "uom_id": pair_uom.id,
                         "uom_po_id": pair_uom.id,
-                        "type": 'consu',
                         "is_storable": True,
                         "tracking": self.env.company.shoes_pair_tracking,
-                        'image_1920': record.image_1920,
+                        "image_1920": record.image_1920,
                         "attribute_line_ids": [
                             (
                                 0,
@@ -446,17 +471,20 @@ class ProductTemplate(models.Model):
                         ],
                     }
                 )
-                record.write({
-                    "product_tmpl_single_id": newpt.id,
-                    "type": 'consu',
-                    "is_storable": True,
-                    "tracking": self.env.company.shoes_assortment_tracking,
-                })
+                record.write(
+                    {
+                        "product_tmpl_single_id": newpt.id,
+                        "type": "consu",
+                        "is_storable": True,
+                        "tracking": self.env.company.shoes_assortment_tracking,
+                    }
+                )
                 # Creación de listas de material en surtidos, con los nuevos pares:
                 for p in record.product_variant_ids:
                     p.create_set_bom()
 
-    # Actualizar precios de coste, en base al exwork y cambio de moneda (NO FUNCIONA ONCHANGE => AA):
+    # Actualizar precios de coste, en base al exwork y cambio de moneda
+    # (NO FUNCIONA ONCHANGE => AA):
     # @api.onchange('exwork', 'exwork_single', 'product_variant_ids', 'campaing_id')
     def update_standard_price_on_variants(self):
         # Caso de actualizar el precio desde el PAR:
@@ -537,17 +565,17 @@ class ProductTemplate(models.Model):
 
                 record.shoes_campaign_id.campaign_code += 1
 
-    def name_get(self):
-        # Prefetch the fields used by the `name_get`, so `browse` doesn't fetch other fields
+    def name_get(self) -> list[tuple[Any, LiteralString | str]]:
+        # Prefetch the fields used by the `name_get`, so `browse`
+        # doesn't fetch other fields
         self.browse(self.ids).read(["name", "default_code", "campaign_code"])
         return [
             (
                 template.id,
-                "%s%s%s"
-                % (
-                    template.default_code and "[%s] " % template.default_code or "",
+                "{}{}{}".format(
+                    template.default_code and f"[{template.default_code}] " or "",
                     template.name,
-                    template.campaign_code and " [%s] " % template.campaign_code or "",
+                    template.campaign_code and f" [{template.campaign_code}] " or "",
                 ),
             )
             for template in self

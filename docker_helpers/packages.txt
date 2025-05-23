@@ -1,0 +1,4 @@
+Paquetes PIP:
+schwifty==2024.4.0
+Paquetes deb:
+

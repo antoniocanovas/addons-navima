@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Punt Sistemes SL
-#    Copyright (C) 2024 - Punt Sistemes (http://www.puntsistemes.es). All Rights Reserved
+#    Copyright (C) 2024 - Punt Sistemes (http://www.puntsistemes.es).
+#    All Rights Reserved
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -20,26 +20,26 @@
 ##############################################################################
 
 {
-    "name": 'Shoes Product SKU',
-    "version": '18.0',
+    "name": "Shoes Product SKU",
+    "version": "18.0",
     "depends": [
-        'base',
-        'product',
-        'shoes_dealer',
-        'shoes_campaign',
-        'shoes_color_chart',
+        "base",
+        "product",
+        "shoes_dealer",
+        "shoes_campaign",
+        "shoes_color_chart",
     ],
     "author": "Punt Sistemes",
-    "category": 'Project',
+    "category": "Project",
     "website": "https://www.puntsistemes.es",
     "description": """
         Shoes product auto SKU. 
     """,
     "data": [
-        'security/ir.model.access.csv',
-        'data/shoes_product_sku_item.xml',
-        'views/res_company_views.xml',
-        'data/server_actions.xml',
+        "security/ir.model.access.csv",
+        "data/shoes_product_sku_item.xml",
+        "views/res_company_views.xml",
+        "data/server_actions.xml",
     ],
     "demo": [],
     "installable": True,

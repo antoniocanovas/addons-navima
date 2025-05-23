@@ -9,13 +9,20 @@ class ShoesColorChartWizard(models.TransientModel):
     _name = "shoes.color.chart.wizard"
     _description = "Shoes color chart wizard"
 
-
     #    name = fields.Char = fields.Char('Name', related='shoes_campaign_id.name')
-    shoes_campaign_id = fields.Many2one('project.project', string="Campaign")
-    manufacturer_id = fields.Many2one('res.partner', string="Manufacturer", required=True)
-    material_id = fields.Many2one('product.material', string="Material", required=True, ondelete='restrict')
-    color_value_ids = fields.Many2many('product.attribute.value', string='Colors', required=True)
-    color_attribute_id = fields.Many2one("product.attribute", related='shoes_campaign_id.color_attribute_id')
+    shoes_campaign_id = fields.Many2one("project.project", string="Campaign")
+    manufacturer_id = fields.Many2one(
+        "res.partner", string="Manufacturer", required=True
+    )
+    material_id = fields.Many2one(
+        "product.material", string="Material", required=True, ondelete="restrict"
+    )
+    color_value_ids = fields.Many2many(
+        "product.attribute.value", string="Colors", required=True
+    )
+    color_attribute_id = fields.Many2one(
+        "product.attribute", related="shoes_campaign_id.color_attribute_id"
+    )
 
     def action_apply(self):
         # Chequeo de referencias y códigos requeridos para componer el campo name:
@@ -24,8 +31,9 @@ class ShoesColorChartWizard(models.TransientModel):
             message = "Manufacturer reference required (Sale/Purchases => Reference)"
         if not self.material_id.code:
             message = "Material code required."
-        # Quitado para poder asignar en códigos el nombre del color si no está asignado el code:
-        #for li in self.color_value_ids:
+        # Quitado para poder asignar en códigos el nombre del color si no está asignado
+        # el code:
+        # for li in self.color_value_ids:
         #    if not li.code:
         #        message = "Color code required (Color => Code): " + li.name
         if message != "":
@@ -33,9 +41,11 @@ class ShoesColorChartWizard(models.TransientModel):
 
         # Creación de ítems en carta de color:
         for li in self.color_value_ids:
-            self.env['shoes.color.chart.item'].create({
-                'shoes_campaign_id': self.shoes_campaign_id.id,
-                'manufacturer_id': self.manufacturer_id.id,
-                'material_id': self.material_id.id,
-                'color_value_id': li.id,
-            })
+            self.env["shoes.color.chart.item"].create(
+                {
+                    "shoes_campaign_id": self.shoes_campaign_id.id,
+                    "manufacturer_id": self.manufacturer_id.id,
+                    "material_id": self.material_id.id,
+                    "color_value_id": li.id,
+                }
+            )
