@@ -9,7 +9,7 @@ class ShoesPricelist(models.Model):
     _description = "Shoes Pricelist Line"
 
     name = fields.Char(related="product_tmpl_single_id.name", string="Name")
-    shoes_pricelist_id = fields.Many2one("shoes.pricelist", string="Pricelist")
+    shoes_pricelist_id = fields.Many2one("shoes.pricelist", string="Pricelist report")
     product_tmpl_single_id = fields.Many2one(
         "product.template", string="Model", domain="[('is_pair','=',True)]"
     )
