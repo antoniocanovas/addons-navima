@@ -23,8 +23,8 @@
                                    required="is_shoes_company"/>
                             <field name="color_attribute_id" domain="[('create_variant','!=','no_variant')]"
                                    required="is_shoes_company"/>
-                            <field name="single_prefix"
-                                   required="is_shoes_company"/>
+                            <field name="assortment_prefix"/>
+                            <field name="single_prefix"/>
                             <field name="shoes_pair_uom_id"
                                    required="is_shoes_company"/>
                         </group>

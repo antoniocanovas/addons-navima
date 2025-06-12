@@ -143,12 +143,10 @@ class ProductProduct(models.Model):
         assortment_attribute = self.env.user.company_id.assortment_attribute_id
         size_attribute = self.env.user.company_id.size_attribute_id
         color_attribute = self.env.user.company_id.color_attribute_id
-        prefix = self.env.user.company_id.single_prefix
         if (
             not assortment_attribute.id
             or not size_attribute.id
             or not color_attribute.id
-            or prefix == ""
         ):
             raise UserError(
                 "Please set shoes dealer attributes in this company form (Settings => User & companies => Company"  # noqa: E501

@@ -10,6 +10,7 @@
                 <field name="code"/>
                 <field name="manufacturer_id"/>
                 <field name="manufacturer_code"/>
+                <field name="material_manufacturer_code"/>
                 <field name="shoes_campaign_ids" widget="many2many_tags"/>
             </field>
         </field>
@@ -23,10 +24,11 @@
         <field name="name">shoes.color.chart.inh.list</field>
         <field name="model">product.material</field>
         <field name="arch" type="xml">
-            <xpath expr="//list[1]/field[@name='name']" position="before">
-                <field name="code" optional="show"/>
+            <xpath expr="//list[1]/field[@name='name']" position="after">
+                <field name="material_manufacturer_code" optional="show"/>
+                <field name="code" optional="hide"/>
                 <field name="manufacturer_id" optional="show"/>
-                <field name="manufacturer_code" optional="show"/>
+                <field name="manufacturer_code" optional="hide"/>
                 <field name="shoes_campaign_ids" widget="many2many_tags" optional="show"/>
             </xpath>
         </field>
@@ -42,12 +44,13 @@
         <field name="model">product.material</field>
         <field name="arch" type="xml">
             <search string="Product search">
-                <field name="name" string="Name" filter_domain="[('name', 'ilike', self)]"/>
+                <field name="name" string="Name" filter_domain="['|',('name', 'ilike', self),('material_manufacturer_code', 'ilike', self)]"/>
                 <field name="shoes_campaign_ids" string="Shoes campaign" filter_domain="[('shoes_campaign_ids', 'ilike', self)]"/>
                 <field name="manufacturer_id" string="Manufacturer" filter_domain="[('manufacturer_id', 'ilike', self)]"/>
                 <field name="code" string="Code" filter_domain="[('code', 'ilike', self)]"/>
                 <group expand="0" string="Group By">
                     <filter string="Manufacturer" name="manufacturer_group" context="{'group_by': 'manufacturer_id'}"/>
+                    <filter string="Material code" name="material_code_group" context="{'group_by': 'code'}"/>
                 </group>
             </search>
         </field>

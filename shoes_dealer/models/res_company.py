@@ -17,6 +17,7 @@ class ResCompany(models.Model):
     color_attribute_id = fields.Many2one(
         "product.attribute", string="Color attribute", store=True
     )
+    assortment_prefix = fields.Char("Assortment prefix", store=True)
     single_prefix = fields.Char("Single prefix", store=True)
     single_sale = fields.Boolean("Enable pair sales", store=True, default=False)
     single_purchase = fields.Boolean("Enable pair purchase", store=True, default=False)

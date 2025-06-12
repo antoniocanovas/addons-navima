@@ -28,12 +28,12 @@
                 <field name="product_tmpl_single_id"/>
                 <field name="product_tmpl_single_list_price"/>
             </xpath>
-            <xpath expr="//templates[1]/t[1]/main[1]/span[1]" position="replace">
-                <span t-if="!record.product_tmpl_single_id">
+            <xpath expr="//templates[1]/t[1]/main[1]/span[2]" position="replace">
+                <span>
                     Price: <field name="lst_price"/>
                 </span>
-                <span t-else="">
-                    Price: <field name="product_tmpl_single_list_price"/>
+                <span t-if="record.product_tmpl_single_id.value">
+                    Pair price: <field name="product_tmpl_single_list_price"/>
                 </span>
             </xpath>
         </field>

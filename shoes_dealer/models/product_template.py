@@ -127,11 +127,20 @@ class ProductTemplate(models.Model):
     # la dependencia:
     base_unit_count = fields.Float(string="Base Unit Count", required=True, default=0)
 
-    # Actualiza el nombre del par basado en el nombre del template
+    """
+    # Actualiza el nombre del par basado en el nombre del template (comentado Junio 2025 para que pongan lo que quieran)
     @api.constrains("name")
     def _update_pair_name(self):
         if self.product_tmpl_single_id:
+            assortment_prefix = self.env.user.company_id.assortment_prefix
+            single_prefix = self.env.user.company_id.single_prefix
+
+            len_assortment_prefix = len(assortment_prefix)
+            len_name = len(record.name)
+            
+            if len_assortment_prefix > 0 and record.name[:len_assortment_prefix] == assortment_prefix ...
             self.product_tmpl_single_id.name = "P." + self.name
+    """
 
     # Calcula el valor de exwork_euro basado en la moneda
     @api.onchange("exwork")
@@ -379,7 +388,8 @@ class ProductTemplate(models.Model):
             bom_attribute = self.env.user.company_id.assortment_attribute_id
             size_attribute = self.env.user.company_id.size_attribute_id
             color_attribute = self.env.user.company_id.color_attribute_id
-            prefix = self.env.user.company_id.single_prefix
+            assortment_prefix = self.env.user.company_id.assortment_prefix
+            single_prefix = self.env.user.company_id.single_prefix
             single_sale = self.env.user.company_id.single_sale
             single_purchase = self.env.user.company_id.single_purchase
 
@@ -427,9 +437,14 @@ class ProductTemplate(models.Model):
                         " => Shoes pair UOM."
                     )
 
+                # Nombre del nuevo producto par:
+                single_name = record.name
+                if single_prefix:
+                    single_name = str(single_prefix) + record.name
+
                 newpt = self.env["product.template"].create(
                     {
-                        "name": str(prefix) + record.name,
+                        "name": single_name,
                         "product_tmpl_set_id": record.id,
                         "shoes_campaign_id": record.shoes_campaign_id.id,
                         "list_price": record.list_price,
@@ -469,8 +484,15 @@ class ProductTemplate(models.Model):
                         ],
                     }
                 )
+
+                # Renombramos el producto surtido con el prefijo, si existe:
+                assortment_name = record.name
+                if assortment_prefix:
+                    assortment_name = str(assortment_prefix) + record.name
+
                 record.write(
                     {
+                        "name": assortment_name,
                         "product_tmpl_single_id": newpt.id,
                         "type": "consu",
                         "is_storable": True,
