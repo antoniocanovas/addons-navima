@@ -1,14 +1,11 @@
-# Copyright 2023 Serincloud SL - Ingenieriacloud.com
+    # Copyright 2023 Serincloud SL - Ingenieriacloud.com
 
 from odoo import fields, models, api
 from odoo.exceptions import UserError, ValidationError
 
+
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
-
-    referrer_id = fields.Many2one(
-        "res.partner", related="order_id.referrer_id", store=True
-    )
 
     purchase_line_id = fields.Many2one("purchase.order.line", string="Purchase line")
 
@@ -16,32 +13,51 @@ class SaleOrderLine(models.Model):
     @api.depends("product_id", "product_uom_qty", "custom_assortment_pairs")
     def _get_shoes_sale_line_pair_count(self):
         for record in self:
-            total = 0
-            if record.product_custom_attribute_value_ids.ids:
-                total = record.custom_assortment_pairs * record.product_uom_qty
+            if record.product_custom_attribute_value_ids:
+                record.pairs_count = record.custom_assortment_pairs * record.product_uom_qty
             else:
-                total = record.product_id.pairs_count * record.product_uom_qty
-            record["pairs_count"] = total
+                record.pairs_count = record.product_id.pairs_count * record.product_uom_qty
 
     pairs_count = fields.Integer(
         "Pairs", store=True, compute="_get_shoes_sale_line_pair_count"
     )
 
-    @api.depends('write_date')
+    def _get_pricelist_price(self):
+        self.ensure_one()
+        self.product_id.ensure_one()
+
+        price = super(SaleOrderLine, self)._get_pricelist_price()
+        if self.product_custom_attribute_value_ids and self.product_id.product_tmpl_single_id:
+            customvalue = self.product_custom_attribute_value_ids[0].custom_value
+            # Quitar espacios del campo custom del surtido:
+            customvalue = customvalue.replace(" ", "").lower()
+            customvalues = customvalue.split(",")
+            pairs_count = sum(int(element.split("x")[1]) for element in customvalues)
+            order = self.order_id
+            product = self.env['product.product'].search([('product_tmpl_id','=',self.product_id.product_tmpl_single_id.id)], limit=1)
+            price = order.pricelist_id._get_product_price(product, 1.0)
+            return price * pairs_count
+        else:
+            return price
+
+    #Añadido product_id para actualización dinámica
+    @api.depends('write_date', 'product_id')
     def _get_custom_assortment_pairs(self):
         for record in self:
             pairs_count = 0
-            if record.product_id.is_assortment and record.name and record.product_custom_attribute_value_ids.ids:
+            # eliminado el .ids de prodcut_custom_attribute_value_ids para que entre antes de escribir
+            if record.product_id.is_assortment and record.name and record.product_custom_attribute_value_ids:
                 customvalue = record.product_custom_attribute_value_ids[0].custom_value
                 # Quitar espacios del campo custom del surtido:
                 customvalue = customvalue.replace(" ", "").lower()
                 customvalues = customvalue.split(",")
-                for li in customvalues:
-                    element = li.split("x")
-                    pairs_count += int(element[1])
+                pairs_count = sum(int(element.split("x")[1]) for element in customvalues)
             record.custom_assortment_pairs = pairs_count
+
+
     custom_assortment_pairs = fields.Integer("Custom assortment pairs", store=True,
                                              compute='_get_custom_assortment_pairs')
+
 
     @api.depends('write_date')
     def _get_assortment_pair(self):
@@ -49,7 +65,7 @@ class SaleOrderLine(models.Model):
             customvalue, cleanvalues, sizes, pairs, pair_products, pairs_count = "", "", "", "", "", 0
             if record.product_id.is_assortment and record.name:
                 if record.product_custom_attribute_value_ids.ids:
-                    customvalue =  record.product_custom_attribute_value_ids[0].custom_value
+                    customvalue = record.product_custom_attribute_value_ids[0].custom_value
                     if customvalue:
                         # Quitar espacios del campo custom del surtido:
                         customvalue = customvalue.replace(" ", "").lower()
@@ -57,14 +73,15 @@ class SaleOrderLine(models.Model):
                         for li in customvalues:
                             element = li.split("x")
                             # Para tallas (encontrar si existe la talla y color en el par):
-                            color_attribute_value_id = record.product_id.color_attribute_id
+                            color_value_id = record.product_id.color_value_id
                             size_attribute = self.env.company.size_attribute_id
-                            size_attribute_value_id = self.env['product.attribute.value'].search(
+                            size_value_id = self.env['product.attribute.value'].search(
                                 [('attribute_id', '=', size_attribute.id), ('name', '=', element[0])])
 
-                            pppair = self.env['product.product'].search([('color_attribute_id', '=', color_attribute_value_id.id),
-                                                                         ('size_attribute_id', '=', size_attribute_value_id.id),
-                                                                         ('product_tmpl_id', '=', record.product_id.product_tmpl_single_id.id)])
+                            pppair = self.env['product.product'].search([('color_value_id', '=', color_value_id.id),
+                                                                         ('size_value_id', '=', size_value_id.id),
+                                                                         ('product_tmpl_id', '=',
+                                                                          record.product_id.product_tmpl_single_id.id)])
                             sizes += element[0] + ","
                             pairs += element[1] + ","
                             pair_products += str(pppair.id) + ","
@@ -81,10 +98,13 @@ class SaleOrderLine(models.Model):
                     bom = record.product_id.bom_ids[0]
                     cleanvalues = bom.assortment_pair
             record['assortment_pair'] = cleanvalues
+
+
     assortment_pair = fields.Char('Assortment pairs', compute='_get_assortment_pair')
 
     # Precio especial del para en la línea de ventas, recalculará precio unitario del producto surtido:
     special_pair_price = fields.Monetary("SPP", help="Special pair price")
+
 
     @api.onchange("special_pair_price")
     def _update_price_unit_from_spp(self):
@@ -92,6 +112,7 @@ class SaleOrderLine(models.Model):
             record["price_unit"] = (
                     record.pairs_count * record.special_pair_price / record.product_uom_qty
             )
+
 
     # Para informes:
     state_id = fields.Many2one(
@@ -116,11 +137,11 @@ class SaleOrderLine(models.Model):
         store=True,
         related="product_id.product_tmpl_model_id",
     )
-    color_attribute_id = fields.Many2one(
+    color_value_id = fields.Many2one(
         "product.attribute.value",
         string="Shoes Color",
         store=True,
-        related="product_id.color_attribute_id",
+        related="product_id.color_value_id",
     )
     shoes_campaign_id = fields.Many2one(
         "project.project",
@@ -149,22 +170,20 @@ class SaleOrderLine(models.Model):
         help="Used for group by manufacturer in sale order line views",
     )
 
+
     @api.depends("state")
     def _get_quoted_quantity(self):
         for record in self:
-            total = 0
-            if record.state not in ["sale", "done", "cancel"]:
-                total = record.product_uom_qty
-            record["qty_quoted"] = total
+            record.qty_quoted = record.product_uom_qty if record.state not in ["sale", "done", "cancel"] else 0
+
 
     qty_quoted = fields.Float(
         "Quoted qty", store=True, copy=False, compute="_get_quoted_quantity"
     )
 
-    # ========= FIN INFORMES
 
     # Precio por par según tarifa:
-    @api.depends("product_id", "price_unit")
+    @api.depends("product_id", "price_unit","product_uom_qty")
     def _get_shoes_pair_price(self):
         for record in self:
             total = 0
@@ -172,11 +191,13 @@ class SaleOrderLine(models.Model):
                 total = record.price_subtotal / record.pairs_count
             record["pair_price"] = total
 
+
     pair_price = fields.Float("Pair price", store=True, compute="_get_shoes_pair_price")
 
     product_saleko_id = fields.Many2one(
         "product.product", string="Product KO", store=True, copy=True
     )
+
 
     @api.onchange("product_saleko_id")
     def change_saleproductok_2_saleproductko(self):
@@ -189,7 +210,7 @@ class SaleOrderLine(models.Model):
             #            cleanvalues, sizes, pairs, pair_products, pairs_count = "", "", "", "", 0
             size_attribute = self.env.company.size_attribute_id
             sale_line_product = record.product_id
-            sale_line_product_color = sale_line_product.color_attribute_id
+            sale_line_product_color = sale_line_product.color_value_id
             shoes_pair_model = sale_line_product.product_tmpl_single_id
 
             # Si pongo en el if record.product_custom_attribute_value_ids, no pasa (uso name) !!
@@ -208,36 +229,21 @@ class SaleOrderLine(models.Model):
                     for li in customvalues:
                         element = li.split("x")
                         # Para tallas (encontrar si existe la talla y color en el par):
-                        color_attribute_value_id = sale_line_product_color
-                        size_attribute_value_id = self.env['product.attribute.value'].search(
+                        color_value_id = sale_line_product_color
+                        size_value_id = self.env['product.attribute.value'].search(
                             [('attribute_id', '=', size_attribute.id), ('name', '=', element[0])])
-                        if not size_attribute_value_id.id:
+                        if not size_value_id.id:
                             raise UserError("La talla " + str(element[0]) + " no existe en el sistema.")
 
-                        pppair = self.env['product.product'].search([('color_attribute_id', '=', color_attribute_value_id.id),
-                                                                     ('size_attribute_id', '=', size_attribute_value_id.id),
+                        pppair = self.env['product.product'].search([('color_value_id', '=', color_value_id.id),
+                                                                     ('size_value_id', '=', size_value_id.id),
                                                                      ('product_tmpl_id', '=', shoes_pair_model.id)])
                         if not pppair.id:
                             raise UserError("No encuentro el par suelto de talla " + str(
-                                element[0]) + " y color " + color_attribute_value_id.name + " en este modelo.")
+                                element[0]) + " y color " + color_value_id.name + " en este modelo.")
 
                         # Para cantidades (ok):
                         try:
                             qty = int(element[1])
                         except:
                             raise UserError(element[1] + ", no parece una cantidad válida. Indica un número entero válido.")
-"""
-                        sizes += element[0] + ","
-                        pairs += element[1] + ","
-                        pair_products += str(pppair.id) + ","
-                        pairs_count += int(element[1])
-
-                    # OK, guardamos valores, tras quitar la última coma:
-                    if len(sizes) > 0: sizes = sizes[:-1]
-                    if len(pairs) > 0: pairs = pairs[:-1]
-                    if len(pair_products) > 0: pair_products = pair_products[:-1]
-
-                    cleanvalues = sizes + ";" + pairs + ";" + pair_products
-                    record.write(
-                        {'assortment_pair': cleanvalues, 'custom_assortment_pairs': pairs_count})
-"""

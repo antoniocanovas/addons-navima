@@ -19,13 +19,12 @@ class AssortmentPair(models.Model):
     sm_id = fields.Many2one('stock.move', string='Stock move', related='sml_id.move_id')
     lot_id = fields.Many2one('stock.lot', string='Lot', related='sml_id.lot_id')
 
+    # Calcula la cantidad de pares en función de la cantidad de la línea de movimiento de stock y la lista de materiales
     @api.depends('sml_id.quantity_product_uom', 'product_id')
     def _get_sml_qty(self):
         for record in self:
-            factor = 1
-            if (record.sml_id.location_usage in ('internal', 'transit')) and (
-                    record.sml_id.location_dest_usage not in ('internal', 'transit')):
-                factor = -1
+            factor = -1 if (record.sml_id.location_usage in ('internal', 'transit') and
+                            record.sml_id.location_dest_usage not in ('internal', 'transit')) else 1
             record['qty'] = record.bom_qty * record.sml_qty * factor
 
     # CRON ACTION TO DELETE NULL ASSORTMENT PAIRS (revisar no es así porque los sm y sml son fijos, se van adicionando):

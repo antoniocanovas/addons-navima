@@ -9,5 +9,5 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     manufacturer_id = fields.Many2one(
-        "res.partner", string="Manufacturer", store=True, copy=True
+        "res.partner", string="Manufacturer", copy=True
     )

@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Punt Sistemes SL
-#    Copyright (C) 2024 - Punt Sistemes (http://www.puntsistemes.es). All Rights Reserved
+#    Copyright (C) 2024 - Punt Sistemes (http://www.puntsistemes.es).
+#    All Rights Reserved
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -20,23 +20,26 @@
 ##############################################################################
 
 {
-    "name": 'Custom Navima',
-    "version": '1.0',
+    "name": "Custom Navima",
+    "version": "18.0",
     "depends": [
-        'product',
-        'stock',
-        'shoes_dealer',
-        'shoes_campaign',
+        "product",
+        "stock",
+        "shoes_dealer",
+        "shoes_campaign",
+        "intrastat_duty",
     ],
     "author": "Punt Sistemes",
-    "category": 'Stock',
+    "category": "Stock",
     "website": "https://www.puntsistemes.es",
     "description": """
         Custom devs Navima.
     """,
     "data": [
-        'views/project_project_views.xml',
-        'views/stock_picking_views.xml',
+        "views/project_project_views.xml",
+        "views/stock_picking_views.xml",
+        "views/res_partner_views.xml",
+        "views/intrastat_duty_views.xml",
     ],
     "demo": [],
     "installable": True,
