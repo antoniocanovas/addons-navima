@@ -19,3 +19,14 @@ class ResPartner(models.Model):
     mig_provincia = fields.Char('mig_provincia')
     mig_vat = fields.Char('mig_vat')
     mig_nombrecomercial= fields.Char('mig_nombrecomercial')
+
+    # Campo para etiquetas imprimibles reutilizando res.partner.category
+    printed_label_ids = fields.Many2many(
+        'res.partner.category',
+        'res_partner_printed_label_rel',
+        'partner_id',
+        'category_id',
+        string='Etiquetas Imprimibles',
+        help='Etiquetas que se mostrarán en formatos impresos como presupuestos y facturas. '
+             'Por ejemplo: "NO PIG", "ECOLOGIC", etc.'
+    )

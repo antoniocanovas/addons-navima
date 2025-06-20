@@ -8,11 +8,20 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
+            <!-- Añadir campo de etiquetas imprimibles justo debajo del VAT -->
+            <xpath expr="//sheet/group/group" position="inside">
+                <field name="printed_label_ids"
+                       widget="many2many_tags"
+                       options="{'color_field': 'color'}"
+                       placeholder='e.g. "NO PIG", "ECOLOGIC", "VIP", ...'
+                       string="Etiquetas Imprimibles"
+                       help="Etiquetas que aparecerán en los documentos impresos"/>
+            </xpath>
+            
+            <!-- Campos de migración existentes -->
             <xpath expr="//notebook" position="inside">
                 <page name="migration_page">
                     <group name="migration_fields">
-
-
                         <field name="mig_subcuenta"/>
                         <field name="mig_agente"/>
                         <field name="mig_inconterm"/>

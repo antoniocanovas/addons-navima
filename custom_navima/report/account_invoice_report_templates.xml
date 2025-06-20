@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Herencia para añadir etiquetas imprimibles en informes de factura -->
+    <template id="report_invoice_document_inherit" inherit_id="account.report_invoice_document">
+        <!-- Añadir etiquetas imprimibles antes del div informations -->
+        <xpath expr="//div[@id='informations']" position="before">
+            <!-- Mostrar etiquetas imprimibles si existen -->
+            <div t-if="o.partner_id.printed_label_ids" class="row mb-3" name="printed_labels_section">
+                <div class="col-12">
+                    <div class="mt-2">
+                        <t t-foreach="o.partner_id.printed_label_ids" t-as="label">
+                            <!-- Colores exactos de Odoo basados en el índice -->
+                            <t t-set="odoo_colors" t-value="['#a2a2a2', '#ee2d2d', '#dc8534', '#e8bb1d', '#5794dd', '#9f628f', '#db8865', '#41a9a2', '#304be0', '#ee2f8a', '#61c36e', '#9872e6']"/>
+                            <t t-set="color_hex" t-value="odoo_colors[label.color] if label.color and label.color &lt; len(odoo_colors) else '#a2a2a2'"/>
+                            <span class="text-white" 
+                                  t-attf-style="background-color: #{color_hex}; 
+                                                border: 1px solid #{color_hex}; 
+                                                padding: 4px 12px; 
+                                                margin: 2px 4px 2px 0; 
+                                                border-radius: 15px; 
+                                                font-size: 11px; 
+                                                font-weight: 500; 
+                                                display: inline-block; 
+                                                line-height: 1.2;">
+                                <t t-out="label.name"/>
+                            </span>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

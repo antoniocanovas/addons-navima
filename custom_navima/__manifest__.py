@@ -25,6 +25,8 @@
     "depends": [
         "product",
         "stock",
+        "sale",
+        "account",
         "shoes_dealer",
         "shoes_campaign",
         "intrastat_duty",
@@ -40,6 +42,8 @@
         "views/stock_picking_views.xml",
         "views/res_partner_views.xml",
         "views/intrastat_duty_views.xml",
+        "report/sale_order_report_templates.xml",
+        "report/account_invoice_report_templates.xml",
     ],
     "demo": [],
     "installable": True,
