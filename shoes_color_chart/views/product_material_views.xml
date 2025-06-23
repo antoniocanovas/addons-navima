@@ -24,8 +24,10 @@
         <field name="name">shoes.color.chart.inh.list</field>
         <field name="model">product.material</field>
         <field name="arch" type="xml">
-            <xpath expr="//list[1]/field[@name='name']" position="after">
+            <xpath expr="//list[1]/field[@name='name']" position="before">
                 <field name="material_manufacturer_code" optional="show"/>
+            </xpath>
+            <xpath expr="//list[1]/field[@name='name']" position="after">
                 <field name="code" optional="hide"/>
                 <field name="manufacturer_id" optional="show"/>
                 <field name="manufacturer_code" optional="hide"/>

@@ -38,6 +38,7 @@
         Custom devs Navima.
     """,
     "data": [
+        "views/product_template_views.xml",
         "views/project_project_views.xml",
         "views/stock_picking_views.xml",
         "views/res_partner_views.xml",

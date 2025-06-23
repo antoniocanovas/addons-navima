@@ -13,6 +13,11 @@
                 <field name="color_value_id" optional="hide"/>
                 <field name="size_value_id" optional="hide"/>
                 <field name="assortment_attribute_id" optional="hide"/>
+                <field name="product_tmpl_single_list_price" 
+                       string="Precio del par" 
+                       optional="show"
+                       invisible="not is_assortment"/>
+                <field name="is_assortment" column_invisible="True"/>
             </field>
         </field>
     </record>

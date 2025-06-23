@@ -15,6 +15,12 @@ class ProductProduct(models.Model):
         "Assortment pairs", compute="get_assortment_pair"
     )
 
+    # Campo para mostrar el precio del par en vistas de product.product
+    product_tmpl_single_list_price = fields.Float(
+        "Precio del par", 
+        related="product_tmpl_id.product_tmpl_single_list_price"
+    )
+
     @api.depends("image_variant_1920", "product_tmpl_id.image_1920")
     def _compute_image_1920(self):
         records = self.sudo()

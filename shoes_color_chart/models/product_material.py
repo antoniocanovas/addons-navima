@@ -2,7 +2,8 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class ProductMaterial(models.Model):
@@ -25,6 +26,35 @@ class ProductMaterial(models.Model):
     shoes_campaign_ids = fields.Many2many(
         "project.project", string="Campaigns", domain="[('is_shoes_campaign','=',True)]"
     )
+
+    _sql_constraints = [
+        (
+            "material_manufacturer_code_unique",
+            "UNIQUE(material_manufacturer_code)",
+            "The Material Manufacturer Code must be unique!",
+        )
+    ]
+
+    @api.constrains("material_manufacturer_code")
+    def _check_material_manufacturer_code_unique(self):
+        for record in self:
+            if record.material_manufacturer_code:
+                domain = [
+                    (
+                        "material_manufacturer_code",
+                        "=",
+                        record.material_manufacturer_code,
+                    ),
+                    ("id", "!=", record.id),
+                ]
+                if self.search_count(domain) > 0:
+                    raise ValidationError(
+                        _(
+                            'The Material Manufacturer Code "%s" already exists!'
+                            ' It must be unique.'
+                        )
+                        % record.material_manufacturer_code
+                    )
 
     @api.depends("name", "code", "manufacturer_code")
     def _compute_display_name(self):

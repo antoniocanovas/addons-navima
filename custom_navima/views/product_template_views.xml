@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_template_kanban_display_name_inh" model="ir.ui.view">
+        <field name="name">product.template.kanban.display.name.inh</field>
+        <field name="model">product.template</field>
+        <field name="type">kanban</field>
+        <field name="inherit_id" ref="product.product_template_kanban_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="replace">
+                <field name="display_name"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

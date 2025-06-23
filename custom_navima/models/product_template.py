@@ -19,7 +19,7 @@ class ProductTemplate(models.Model):
             if (
                 record.is_pair or record.is_assortment
             ) and record.shoes_model_material_id:
-                name = f" [{record.shoes_model_material_id.name}] "
-                name += record.name
+                name = record.name
+                name += f" [{record.shoes_model_material_id.name}]"
 
             record.display_name = name
