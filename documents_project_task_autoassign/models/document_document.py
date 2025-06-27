@@ -7,6 +7,10 @@ class DocumentsDocument(models.Model):
     def documents_project_task_autoassign(self):
         project = False
         for record in self:
+            # Skip folders to avoid errors
+            if record.type == "folder":
+                continue
+
             if record.res_model == "project.project":
                 project = self.env["project.project"].search(
                     [("id", "=", record.res_id)]
